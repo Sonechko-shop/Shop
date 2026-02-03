@@ -6,52 +6,72 @@
     <title>СОНЕЧКО — Супермаркет</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
-        :root { --primary: #83b735; --bg: #f4f7f6; --white: #ffffff; --text: #333333; --shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        body.dark-mode { --bg: #1a1a1a; --white: #2d2d2d; --text: #f0f2f5; --shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        :root { --primary: #83b735; --bg: #f0f2f5; --white: #ffffff; --text: #2d3436; --shadow: 0 15px 35px rgba(0,0,0,0.08); }
+        body.dark-mode { --bg: #121212; --white: #1e1e1e; --text: #e0e0e0; --shadow: 0 15px 35px rgba(0,0,0,0.4); }
         body { font-family: 'Inter', sans-serif; margin: 0; background: var(--bg); color: var(--text); transition: 0.3s; overflow-x: hidden; }
 
-        .navbar { background: var(--white); padding: 12px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.03); }
-        .logo { font-size: 22px; font-weight: 900; color: #444; text-decoration: none; text-transform: uppercase; }
+        /* ШАПКА */
+        .navbar { background: var(--white); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 20px rgba(0,0,0,0.03); }
+        .logo { font-size: 24px; font-weight: 900; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 8px; }
         .logo span { color: #f39c12; }
-        .nav-btns { display: flex; gap: 10px; align-items: center; position: relative; }
-        .icon-btn { background: #f8f9fa; border: none; width: 42px; height: 42px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: 0.3s; color: #666; }
 
-        /* БАНЕР З ВІДЕО */
-        .video-banner { width: 92%; margin: 20px auto; height: 320px; border-radius: 35px; overflow: hidden; position: relative; box-shadow: var(--shadow); }
-        .video-banner video { width: 100%; height: 100%; object-fit: cover; }
-        .video-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; }
-        .video-text { color: white; font-size: 28px; font-weight: 800; text-align: center; z-index: 2; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        /* ГАРНИЙ БАНЕР */
+        .hero-banner { 
+            width: 90%; margin: 25px auto; height: 350px; border-radius: 40px; 
+            background: linear-gradient(135deg, #83b735 0%, #5d8a1f 100%);
+            position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 20px 40px rgba(131, 183, 53, 0.3);
+        }
+        .hero-circle { position: absolute; background: rgba(255,255,255,0.1); border-radius: 50%; }
+        .c1 { width: 300px; height: 300px; top: -100px; right: -50px; }
+        .c2 { width: 200px; height: 200px; bottom: -50px; left: -30px; }
+        .hero-content { 
+            position: relative; z-index: 5; text-align: center; color: white;
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);
+            padding: 40px 60px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.2);
+        }
+        .hero-content h1 { font-size: 36px; margin: 0; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; }
 
-        /* ФІЛЬТРИ */
-        .filter-bar { display: flex; justify-content: center; gap: 10px; padding: 20px; flex-wrap: wrap; }
-        .btn-filter { background: var(--white); border: none; padding: 10px 20px; border-radius: 25px; cursor: pointer; font-weight: 700; box-shadow: var(--shadow); color: #666; transition: 0.3s; }
-        .btn-filter.active { color: var(--primary); outline: 2px solid var(--primary); }
+        /* СТИЛЬНІ ФІЛЬТРИ */
+        .filter-container { display: flex; justify-content: center; gap: 15px; padding: 30px 5%; flex-wrap: wrap; }
+        .filter-pill { 
+            background: var(--white); border: none; padding: 12px 25px; border-radius: 50px; 
+            cursor: pointer; font-weight: 700; color: #7f8c8d; box-shadow: var(--shadow);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; align-items: center; gap: 8px;
+        }
+        .filter-pill:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .filter-pill.active { background: var(--primary); color: white; }
 
-        /* СІТКА ТОВАРІВ */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; padding: 0 5% 50px; }
-        .card { background: var(--white); border-radius: 30px; padding: 25px; text-align: center; box-shadow: var(--shadow); transition: 0.3s; position: relative; }
-        .stock-tag { background: #f1f3f2; color: var(--primary); padding: 4px 12px; border-radius: 10px; font-size: 11px; font-weight: 700; margin-bottom: 15px; display: inline-block; }
-        .card img { width: 100%; height: 150px; object-fit: contain; margin-bottom: 15px; }
-        .price { font-size: 20px; font-weight: 800; color: var(--primary); margin: 10px 0; }
-        .btn-buy { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 18px; width: 100%; font-weight: 800; cursor: pointer; }
+        /* КАРТКИ */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; padding: 0 5% 60px; }
+        .card { 
+            background: var(--white); border-radius: 35px; padding: 30px; text-align: center; 
+            box-shadow: var(--shadow); transition: 0.4s; position: relative; border: 1px solid rgba(0,0,0,0.02);
+        }
+        .card:hover { transform: translateY(-10px); }
+        .stock-badge { 
+            position: absolute; top: 20px; left: 20px; background: #f1f3f2; 
+            padding: 5px 15px; border-radius: 12px; font-size: 12px; font-weight: 800; color: var(--primary); 
+        }
+        .card img { width: 100%; height: 180px; object-fit: contain; margin-bottom: 20px; }
+        .price-tag { font-size: 24px; font-weight: 900; color: var(--primary); margin: 15px 0; }
+        .btn-add { 
+            background: var(--primary); color: white; border: none; padding: 15px; 
+            border-radius: 20px; width: 100%; font-weight: 800; cursor: pointer; transition: 0.3s;
+        }
+        .btn-add:hover { filter: brightness(1.1); box-shadow: 0 8px 20px rgba(131, 183, 53, 0.4); }
 
         /* КОШИК */
-        .cart-panel { position: fixed; right: -100%; top: 0; width: 380px; height: 100%; background: var(--white); z-index: 2500; transition: 0.5s; display: flex; flex-direction: column; box-shadow: -10px 0 30px rgba(0,0,0,0.1); }
+        .cart-panel { position: fixed; right: -100%; top: 0; width: 400px; height: 100%; background: var(--white); z-index: 2500; transition: 0.6s cubic-bezier(0.77, 0, 0.175, 1); display: flex; flex-direction: column; box-shadow: -20px 0 50px rgba(0,0,0,0.1); }
         .cart-panel.active { right: 0; }
-        .cart-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
-        .cart-items { flex: 1; overflow-y: auto; padding: 15px; }
-        .cart-item { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 15px; padding: 10px; border-radius: 15px; background: #f9f9f9; }
-        .cart-item img { width: 45px; height: 45px; object-fit: contain; }
-        .item-controls { display: flex; align-items: center; gap: 8px; background: #fff; padding: 4px 8px; border-radius: 10px; }
-        .qty-btn { background: none; border: none; color: var(--primary); font-weight: 900; font-size: 16px; cursor: pointer; }
-        .badge { background: var(--primary); color: white; padding: 2px 7px; border-radius: 50%; font-size: 11px; position: absolute; top: -5px; right: -5px; font-weight: bold; }
-
-        /* ПОЛІТ ТОВАРУ */
-        .fly-item { position: fixed; z-index: 9999; object-fit: contain; pointer-events: none; transition: all 1.2s cubic-bezier(0.42, 0, 0.58, 1); border-radius: 10px; background: white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-
-        .drop-menu { position: absolute; top: 55px; right: 0; background: var(--white); border-radius: 18px; box-shadow: var(--shadow); display: none; flex-direction: column; width: 200px; z-index: 1001; border: 1px solid rgba(0,0,0,0.05); overflow: hidden; }
-        .drop-menu.active { display: flex; }
-        .drop-item { padding: 12px 15px; cursor: pointer; font-size: 14px; border-bottom: 1px solid #f1f1f1; }
+        .cart-header { padding: 30px; border-bottom: 1px solid rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
+        .cart-item { display: flex; align-items: center; gap: 15px; padding: 20px; margin: 10px 20px; background: #f8f9fa; border-radius: 20px; }
+        .cart-item img { width: 50px; height: 50px; object-fit: contain; }
+        .item-ctrl { display: flex; align-items: center; gap: 10px; background: white; padding: 5px 12px; border-radius: 12px; }
+        .qty-btn { border: none; background: none; color: var(--primary); font-weight: 900; cursor: pointer; }
+        
+        .fly-item { position: fixed; z-index: 9999; object-fit: contain; pointer-events: none; transition: all 1.2s cubic-bezier(0.42, 0, 0.58, 1); border-radius: 15px; }
+        .badge { background: var(--primary); color: white; padding: 2px 8px; border-radius: 50px; font-size: 11px; position: absolute; top: -5px; right: -5px; font-weight: 900; }
     </style>
 </head>
 <body>
@@ -59,40 +79,36 @@
 <nav class="navbar">
     <a href="#" class="logo">СОНЕЧКО <span>☀️</span></a>
     <div class="nav-btns">
-        <button class="icon-btn" onclick="toggleM('setM')">⚙️</button>
-        <div class="drop-menu" id="setM">
-            <div class="drop-item" onclick="document.body.classList.toggle('dark-mode')">Темна тема 🌓</div>
-        </div>
-        <button class="icon-btn" id="cart-btn" onclick="tCart(true)" style="position:relative">🛒 <span id="count" class="badge">0</span></button>
+        <button class="icon-btn" onclick="document.body.classList.toggle('dark-mode')" style="background:none; border:none; font-size:20px; cursor:pointer">🌓</button>
+        <button class="icon-btn" id="cart-btn" onclick="tCart(true)" style="position:relative; background:#f8f9fa; border:none; width:45px; height:45px; border-radius:14px; cursor:pointer">
+            🛒 <span id="count" class="badge">0</span>
+        </button>
     </div>
 </nav>
 
-<div id="shop">
-    <div class="video-banner">
-        <video autoplay muted loop playsinline>
-            <source src="https://assets.mixkit.co/videos/preview/mixkit-sunny-forest-landscape-with-a-gentle-breeze-41300-large.mp4" type="video/mp4">
-        </video>
-        <div class="video-overlay">
-            <div class="video-text">НОВЕ НАДХОДЖЕННЯ! 👋</div>
-        </div>
+<div class="hero-banner">
+    <div class="hero-circle c1"></div>
+    <div class="hero-circle c2"></div>
+    <div class="hero-content">
+        <h1>Нове надходження! 👋</h1>
     </div>
-
-    <div class="filter-bar">
-        <button class="btn-filter active" onclick="fCat('all', this)">Все разом</button>
-        <button class="btn-filter" onclick="fCat('baby', this)">Дитяче 👶</button>
-        <button class="btn-filter" onclick="fCat('pets', this)">Тварини 🐾</button>
-        <button class="btn-filter" onclick="fCat('chem', this)">Хімія 🧼</button>
-    </div>
-
-    <div class="grid" id="products"></div>
 </div>
 
+<div class="filter-container">
+    <button class="filter-pill active" onclick="fCat('all', this)">🌈 Все разом</button>
+    <button class="filter-pill" onclick="fCat('baby', this)">👶 Дитяче</button>
+    <button class="filter-pill" onclick="fCat('pets', this)">🐾 Тварини</button>
+    <button class="filter-pill" onclick="fCat('chem', this)">🧼 Хімія</button>
+</div>
+
+<div class="grid" id="products"></div>
+
 <div class="cart-panel" id="cart-p">
-    <div class="cart-header"><h2>Кошик</h2><button onclick="tCart(false)" style="background:none; border:none; font-size:24px; cursor:pointer">✕</button></div>
-    <div class="cart-items" id="items"></div>
-    <div style="padding:20px; border-top:1px solid #eee;">
-        <div style="display:flex; justify-content:space-between; margin-bottom:15px;"><span>Разом:</span><b><span id="total">0</span> грн</b></div>
-        <button class="btn-buy" onclick="alert('Оформлено!')">ОФОРМИТИ</button>
+    <div class="cart-header"><h2>Твій кошик</h2><button onclick="tCart(false)" style="background:none; border:none; font-size:28px; cursor:pointer">✕</button></div>
+    <div id="items" style="flex:1; overflow-y:auto;"></div>
+    <div style="padding:30px; background:var(--white); border-top:1px solid rgba(0,0,0,0.05)">
+        <div style="display:flex; justify-content:space-between; margin-bottom:20px; font-size:18px;"><span>Всього:</span><b><span id="total">0</span> грн</b></div>
+        <button class="btn-add" style="padding:20px">ОФОРМИТИ ЗАМОВЛЕННЯ</button>
     </div>
 </div>
 
@@ -100,26 +116,24 @@
     let cart = [];
     const prods = [
         { id: 1, name: "Dada Extra Soft 6", price: 250, stock: "100 шт.", cat: "baby", img: "https://i.ibb.co/vyDyh7g/image.jpg" },
-        { id: 2, name: "Корм Kitty 2кг", price: 250, stock: "100 шт.", cat: "pets", img: "https://i.ibb.co/2FDgpWxPc3/2F619939933.webp" },
-        { id: 3, name: "Ariel Gel 5.5L", price: 600, stock: "10 шт.", cat: "chem", img: "https://i.ibb.co/dsyN5hwf/image-processing20250930-161-45fnds.webp" }
+        { id: 2, name: "Корм Kitty 2кг", price: 250, stock: "85 шт.", cat: "pets", img: "https://i.ibb.co/2FDgpWxPc3/2F619939933.webp" },
+        { id: 3, name: "Ariel Gel 5.5L", price: 600, stock: "12 шт.", cat: "chem", img: "https://i.ibb.co/dsyN5hwf/image-processing20250930-161-45fnds.webp" }
     ];
-
-    function toggleM(id) { document.getElementById(id).classList.toggle('active'); }
 
     function render() {
         document.getElementById('products').innerHTML = prods.map(p => `
             <div class="card" data-cat="${p.cat}">
-                <div class="stock-tag">${p.stock}</div>
+                <div class="stock-badge">${p.stock}</div>
                 <img src="${p.img}" class="prod-img">
-                <div style="font-weight:700; margin-bottom:10px; height:40px;">${p.name}</div>
-                <div class="price">${p.price} грн</div>
-                <button class="btn-buy" onclick="addToCart(${p.id}, this)">Додати в кошик</button>
+                <div style="font-weight:800; font-size:18px; margin-bottom:10px;">${p.name}</div>
+                <div class="price-tag">${p.price} грн</div>
+                <button class="btn-add" onclick="addToCart(${p.id}, this)">В кошик</button>
             </div>
         `).join('');
     }
 
     function fCat(cat, btn) {
-        document.querySelectorAll('.btn-filter').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         document.querySelectorAll('.card').forEach(card => {
             card.style.display = (cat === 'all' || card.dataset.cat === cat) ? 'block' : 'none';
@@ -133,18 +147,18 @@
         const rect = img.getBoundingClientRect();
         const cartRect = cartBtn.getBoundingClientRect();
 
-        Object.assign(clone.style, { position: 'fixed', left: rect.left+'px', top: rect.top+'px', width: rect.width+'px', height: rect.height+'px', zIndex: 10000 });
+        Object.assign(clone.style, { position: 'fixed', left: rect.left+'px', top: rect.top+'px', width: rect.width+'px', zIndex: 10000 });
         clone.classList.add('fly-item');
         document.body.appendChild(clone);
 
         setTimeout(() => {
-            Object.assign(clone.style, { left: cartRect.left+'px', top: cartRect.top+'px', width: '20px', height: '20px', opacity: '0.2', transform: 'rotate(720deg)' });
+            Object.assign(clone.style, { left: cartRect.left+'px', top: cartRect.top+'px', width: '15px', opacity: '0.1', transform: 'rotate(720deg)' });
         }, 50);
 
         setTimeout(() => { 
             clone.remove(); 
-            cartBtn.classList.add('animate__animated', 'animate__bounceIn');
-            setTimeout(() => cartBtn.classList.remove('animate__animated', 'animate__bounceIn'), 500);
+            cartBtn.classList.add('animate__animated', 'animate__headShake');
+            setTimeout(() => cartBtn.classList.remove('animate__animated', 'animate__headShake'), 500);
             
             const item = cart.find(x => x.id === id);
             if(item) item.qty++; else cart.push({...prods.find(x => x.id === id), qty: 1});
@@ -158,10 +172,10 @@
         document.getElementById('items').innerHTML = cart.map((i, idx) => `
             <div class="cart-item">
                 <img src="${i.img}">
-                <div style="flex:1"><b>${i.name}</b><br>${i.price * i.qty} грн</div>
-                <div class="item-controls">
+                <div style="flex:1"><b>${i.name}</b><br><small>${i.price * i.qty} грн</small></div>
+                <div class="item-ctrl">
                     <button class="qty-btn" onclick="changeQty(${idx}, -1)">-</button>
-                    <span>${i.qty}</span>
+                    <span style="font-weight:900">${i.qty}</span>
                     <button class="qty-btn" onclick="changeQty(${idx}, 1)">+</button>
                 </div>
             </div>
