@@ -16,39 +16,42 @@
         .icon-btn { background: #f8f9fa; border: none; width: 45px; height: 45px; border-radius: 14px; cursor: pointer; font-size: 20px; position: relative; }
         .cart-count { position: absolute; top: -5px; right: -5px; background: #ff4757; color: white; font-size: 12px; padding: 2px 6px; border-radius: 10px; font-weight: 700; display: none; }
 
-        /* ВІДЕО-ШАПКА */
-        .hero { width: 92%; margin: 20px auto; height: 300px; border-radius: 35px; position: relative; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        /* ВІДЕО-БАПНЕР */
+        .hero { width: 92%; margin: 20px auto; height: 350px; border-radius: 35px; position: relative; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
         .hero video { width: 100%; height: 100%; object-fit: cover; position: absolute; }
         .hero-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; }
         .hero-tag { background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); padding: 20px 40px; border-radius: 20px; color: white; font-weight: 800; font-size: 24px; border: 1px solid rgba(255,255,255,0.3); text-align: center; }
 
-        /* ФІЛЬТРИ */
+        /* ФІЛЬТРИ ТА КАРТКИ */
         .filters { display: flex; justify-content: center; gap: 10px; padding: 20px; flex-wrap: wrap; }
-        .pill { background: var(--white); border: none; padding: 10px 22px; border-radius: 50px; cursor: pointer; font-weight: 600; box-shadow: 0 4px 10px rgba(0,0,0,0.05); color: #666; transition: 0.3s; }
+        .pill { background: var(--white); border: none; padding: 10px 22px; border-radius: 50px; cursor: pointer; font-weight: 600; box-shadow: 0 4px 10px rgba(0,0,0,0.05); color: #666; }
         .pill.active { background: var(--primary); color: white; }
-
-        /* КАРТКИ */
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; padding: 0 5% 50px; }
-        .card { background: var(--white); border-radius: 30px; padding: 25px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.05); transition: 0.3s; }
+        .card { background: var(--white); border-radius: 30px; padding: 25px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
         .card img { width: 100%; height: 160px; object-fit: contain; margin-bottom: 15px; }
         .price { font-size: 22px; font-weight: 800; color: var(--primary); margin: 10px 0; }
         .buy-btn { background: var(--primary); color: white; border: none; width: 100%; padding: 14px; border-radius: 18px; font-weight: 700; cursor: pointer; }
 
-        /* ПАНЕЛЬ КОШИКА */
-        .cart-panel { position: fixed; right: -100%; top: 0; width: 380px; height: 100%; background: var(--white); z-index: 3000; transition: 0.5s; padding: 30px; box-sizing: border-box; box-shadow: -10px 0 30px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
+        /* КОШИК В ОДИН РЯДОК */
+        .cart-panel { position: fixed; right: -100%; top: 0; width: 400px; height: 100%; background: var(--white); z-index: 3000; transition: 0.5s; padding: 30px; box-sizing: border-box; box-shadow: -10px 0 30px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
         .cart-panel.active { right: 0; }
-        .cart-items { flex-grow: 1; overflow-y: auto; margin: 20px 0; }
-        .cart-item { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; background: #f8f9fa; padding: 10px; border-radius: 15px; color: #333; }
-        .cart-item img { width: 50px; height: 50px; }
+        .cart-item { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 15px; background: #f8f9fa; padding: 10px; border-radius: 15px; }
+        .cart-item img { width: 45px; height: 45px; object-fit: contain; }
+        .item-info { flex-grow: 1; font-size: 13px; font-weight: 700; }
+        .qty-controls { display: flex; align-items: center; gap: 8px; background: #fff; border-radius: 10px; padding: 2px 8px; border: 1px solid #eee; }
+        .qty-btn { border: none; background: none; font-size: 18px; font-weight: 900; cursor: pointer; color: var(--primary); }
+
+        /* ВІДГУКИ */
+        .reviews { width: 92%; margin: 20px auto 60px; padding: 30px; background: var(--white); border-radius: 35px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        .rev-form { display: flex; flex-direction: column; gap: 10px; margin-bottom: 30px; }
+        .rev-form input, .rev-form textarea { padding: 12px; border-radius: 12px; border: 1px solid #ddd; background: #f8f9fa; font-family: inherit; }
+        .rev-item { background: #f8f9fa; padding: 15px; border-radius: 15px; margin-bottom: 10px; border-left: 5px solid var(--primary); }
 
         /* МОДАЛКИ */
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(5px); display: none; align-items: center; justify-content: center; z-index: 4000; }
         .modal-overlay.active { display: flex; }
         .modal-card { background: var(--white); padding: 30px; border-radius: 35px; width: 90%; max-width: 400px; text-align: center; }
         
-        .lang-btn { padding: 8px 15px; border-radius: 10px; border: 1px solid #ddd; cursor: pointer; background: #fff; font-weight: 600; }
-        .lang-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
-
         .flyer { position: fixed; z-index: 9999; pointer-events: none; transition: all 1s; border-radius: 50%; }
     </style>
 </head>
@@ -81,7 +84,7 @@
     <button class="pill" data-lang="chem" onclick="filter('chem', this)">🧼 Хімія</button>
 </div>
 
-<div class="grid">
+<div class="grid" id="productGrid">
     <div class="card" data-cat="baby">
         <img src="https://i.ibb.co/vyDyh7g/image.jpg" class="p-img">
         <div style="font-weight:700;">Dada Extra Soft 6</div>
@@ -102,65 +105,71 @@
     </div>
 </div>
 
+<div class="reviews">
+    <h3 id="lang-rev-title">💬 Відгуки покупців</h3>
+    <div class="rev-form">
+        <input type="text" id="revName" placeholder="Ваше ім'я">
+        <textarea id="revText" rows="3" placeholder="Ваш відгук"></textarea>
+        <button class="buy-btn" style="width:150px" onclick="addReview()" id="lang-rev-send">Надіслати</button>
+    </div>
+    <div id="revList">
+        <div class="rev-item"><b>Марія:</b> Дуже зручний кошик, кнопки + та - працюють супер!</div>
+    </div>
+</div>
+
 <div class="cart-panel" id="cartPanel">
     <h2 id="lang-cart-title">Ваш кошик</h2>
     <div class="cart-items" id="cartContent"></div>
-    <div style="font-weight:900; font-size:20px; margin-bottom:15px;">
+    <div style="font-weight:900; font-size:20px; margin:20px 0;">
         <span id="lang-total">Разом:</span> <span id="totalSum">0 грн</span>
     </div>
-    <button class="buy-btn" id="lang-checkout" onclick="alert('OK!')">ОФОРМИТИ</button>
-    <button onclick="toggleCart(false)" style="margin-top:10px; background:none; border:none; cursor:pointer">Закрити</button>
-</div>
-
-<div class="modal-overlay" id="settingsModal">
-    <div class="modal-card">
-        <h2 id="lang-set-title">Налаштування ⚙️</h2>
-        <button class="buy-btn" style="background:#444" onclick="document.body.classList.toggle('dark-mode')">Тема 🌓</button>
-        <div style="margin: 20px 0;">
-            <p id="lang-select">Мова:</p>
-            <button class="lang-btn active" onclick="setLang('uk', this)">🇺🇦 УКР</button>
-            <button class="lang-btn" onclick="setLang('en', this)">🇺🇸 ENG</button>
-            <button class="lang-btn" onclick="setLang('ru', this)">🇷🇺 RUS</button>
-        </div>
-        <button onclick="closeModal('settingsModal')" class="buy-btn">OK</button>
-    </div>
+    <button class="buy-btn" id="lang-checkout" onclick="alert('Замовлення прийнято!')">ОФОРМИТИ</button>
+    <button onclick="toggleCart(false)" style="margin-top:15px; background:none; border:none; cursor:pointer; font-weight:700">Закрити</button>
 </div>
 
 <div class="modal-overlay" id="callModal">
     <div class="modal-card">
         <h2 id="lang-call-title">Зв'язок 📞</h2>
         <p style="font-size:20px; font-weight:700;">+38 (068) 490 00 68</p>
-        <button class="buy-btn" data-lang="call-btn" onclick="window.location.href='tel:+380684900068'">ПОДЗВОНИТИ</button>
-        <button onclick="closeModal('callModal')" style="margin-top:15px; display:block; width:100%; border:none; background:none; cursor:pointer">Закрити</button>
+        <button class="buy-btn" onclick="window.location.href='tel:+380684900068'">ПОДЗВОНИТИ</button>
+        <button onclick="closeModal('callModal')" style="margin-top:20px; border:none; background:none; cursor:pointer">Закрити</button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="settingsModal">
+    <div class="modal-card">
+        <h2 id="lang-set-title">Налаштування ⚙️</h2>
+        <button class="buy-btn" style="background:#444" onclick="document.body.classList.toggle('dark-mode')">Змінити тему 🌓</button>
+        <p style="margin-top:20px">Мова / Language:</p>
+        <div style="display:flex; justify-content:center; gap:10px">
+            <button class="pill" onclick="setLang('uk')">🇺🇦 UA</button>
+            <button class="pill" onclick="setLang('en')">🇺🇸 EN</button>
+            <button class="pill" onclick="setLang('ru')">🇷🇺 RU</button>
+        </div>
+        <button onclick="closeModal('settingsModal')" style="margin-top:20px; border:none; background:none; cursor:pointer">Закрити</button>
     </div>
 </div>
 
 <script>
     let cart = [];
     const translations = {
-        uk: { logo: "СОНЕЧКО ☀️", hero: "СОНЕЧКО: НОВЕ НАДХОДЖЕННЯ! 👋", all: "🌈 Все", baby: "👶 Дитяче", pets: "🐾 Тварини", chem: "🧼 Хімія", buy: "В кошик", cart: "Ваш кошик", total: "Разом:", checkout: "ОФОРМИТИ", settings: "Налаштування ⚙️", select: "Мова:", call: "Зв'язок 📞", callBtn: "ПОДЗВОНИТИ" },
-        en: { logo: "SUNNY ☀️", hero: "SUNNY: NEW ARRIVAL! 👋", all: "🌈 All", baby: "👶 Baby", pets: "🐾 Pets", chem: "🧼 Chem", buy: "To Cart", cart: "Your Cart", total: "Total:", checkout: "CHECKOUT", settings: "Settings ⚙️", select: "Language:", call: "Contact 📞", callBtn: "CALL NOW" },
-        ru: { logo: "СОЛНЫШКО ☀️", hero: "СОЛНЫШКО: НОВОЕ ПОСТУПЛЕНИЕ! 👋", all: "🌈 Все", baby: "👶 Детское", pets: "🐾 Животные", chem: "🧼 Химия", buy: "В корзину", cart: "Ваша корзина", total: "Итого:", checkout: "ОФОРМИТЬ", settings: "Настройки ⚙️", select: "Язык:", call: "Связь 📞", callBtn: "ПОЗВОНИТЬ" }
+        uk: { logo:"СОНЕЧКО ☀️", hero:"НОВЕ НАДХОДЖЕННЯ! 👋", all:"🌈 Все", baby:"👶 Дитяче", pets:"🐾 Тварини", chem:"🧼 Хімія", buy:"В кошик", cart:"Ваш кошик", total:"Разом:", checkout:"ОФОРМИТИ", revTitle:"💬 Відгуки", revSend:"Надіслати", setT:"Налаштування ⚙️", callT:"Зв'язок 📞" },
+        en: { logo:"SUNNY ☀️", hero:"NEW ARRIVAL! 👋", all:"🌈 All", baby:"👶 Baby", pets:"🐾 Pets", chem:"🧼 Chem", buy:"To Cart", cart:"Your Cart", total:"Total:", checkout:"CHECKOUT", revTitle:"💬 Reviews", revSend:"Send", setT:"Settings ⚙️", callT:"Contact 📞" },
+        ru: { logo:"СОЛНЫШКО ☀️", hero:"НОВОЕ ПОСТУПЛЕНИЕ! 👋", all:"🌈 Все", baby:"👶 Детское", pets:"🐾 Животные", chem:"🧼 Химия", buy:"В корзину", cart:"Ваша корзина", total:"Итого:", checkout:"ОФОРМИТЬ", revTitle:"💬 Отзывы", revSend:"Отправить", setT:"Настройки ⚙️", callT:"Связь 📞" }
     };
 
-    function setLang(lang, btn) {
-        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const t = translations[lang];
+    function setLang(l) {
+        const t = translations[l];
         document.getElementById('lang-logo').innerText = t.logo;
         document.getElementById('lang-hero').innerText = t.hero;
         document.getElementById('lang-cart-title').innerText = t.cart;
         document.getElementById('lang-total').innerText = t.total;
         document.getElementById('lang-checkout').innerText = t.checkout;
-        document.getElementById('lang-set-title').innerText = t.settings;
-        document.getElementById('lang-select').innerText = t.select;
-        document.getElementById('lang-call-title').innerText = t.call;
+        document.getElementById('lang-rev-title').innerText = t.revTitle;
+        document.getElementById('lang-rev-send').innerText = t.revSend;
+        document.getElementById('lang-set-title').innerText = t.setT;
+        document.getElementById('lang-call-title').innerText = t.callT;
         document.querySelectorAll('[data-lang="buy"]').forEach(b => b.innerText = t.buy);
-        document.querySelectorAll('[data-lang="all"]').forEach(b => b.innerText = t.all);
-        document.querySelectorAll('[data-lang="baby"]').forEach(b => b.innerText = t.baby);
-        document.querySelectorAll('[data-lang="pets"]').forEach(b => b.innerText = t.pets);
-        document.querySelectorAll('[data-lang="chem"]').forEach(b => b.innerText = t.chem);
-        document.querySelectorAll('[data-lang="call-btn"]').forEach(b => b.innerText = t.callBtn);
     }
 
     function toggleCart(s) { document.getElementById('cartPanel').classList.toggle('active', s); }
@@ -168,29 +177,55 @@
     function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
     function addToCart(name, price, img, btn) {
-        cart.push({name, price, img});
+        const found = cart.find(i => i.name === name);
+        if (found) { found.qty++; } else { cart.push({ name, price, img, qty: 1 }); }
         updateUI();
-        const clone = img.cloneNode();
-        const r = btn.parentElement.querySelector('.p-img').getBoundingClientRect();
-        const tr = document.getElementById('cart-btn-main').getBoundingClientRect();
-        Object.assign(clone.style, { position: 'fixed', left: r.left+'px', top: r.top+'px', width: r.width+'px', zIndex: 9999 });
-        clone.classList.add('flyer');
-        document.body.appendChild(clone);
-        setTimeout(() => { Object.assign(clone.style, { left: tr.left+'px', top: tr.top+'px', width: '20px', opacity: '0' }); }, 50);
-        setTimeout(() => clone.remove(), 1000);
+        animateFly(btn.parentElement.querySelector('.p-img'));
     }
 
     function updateUI() {
         const list = document.getElementById('cartContent');
         const badge = document.getElementById('cart-badge');
-        badge.innerText = cart.length;
+        badge.innerText = cart.reduce((s, i) => s + i.qty, 0);
         badge.style.display = cart.length ? 'block' : 'none';
+        
         let sum = 0;
         list.innerHTML = cart.map((item, i) => {
-            sum += item.price;
-            return `<div class="cart-item"><img src="${item.img}"><div><b>${item.name}</b><br>${item.price} грн</div><button onclick="cart.splice(${i},1);updateUI()">🗑️</button></div>`;
+            sum += item.price * item.qty;
+            return `
+                <div class="cart-item">
+                    <img src="${item.img}">
+                    <div class="item-info">${item.name}<br>${item.price} грн</div>
+                    <div class="qty-controls">
+                        <button class="qty-btn" onclick="changeQty(${i}, -1)">-</button>
+                        <span>${item.qty}</span>
+                        <button class="qty-btn" onclick="changeQty(${i}, 1)">+</button>
+                    </div>
+                </div>`;
         }).join('');
         document.getElementById('totalSum').innerText = sum + ' грн';
+    }
+
+    function changeQty(i, delta) {
+        cart[i].qty += delta;
+        if (cart[i].qty <= 0) cart.splice(i, 1);
+        updateUI();
+    }
+
+    function addReview() {
+        const n = document.getElementById('revName').value, t = document.getElementById('revText').value;
+        if(n && t) {
+            document.getElementById('revList').insertAdjacentHTML('afterbegin', `<div class="rev-item"><b>${n}:</b> ${t}</div>`);
+            document.getElementById('revName').value = ''; document.getElementById('revText').value = '';
+        }
+    }
+
+    function animateFly(img) {
+        const target = document.getElementById('cart-btn-main'), clone = img.cloneNode(), r = img.getBoundingClientRect(), tr = target.getBoundingClientRect();
+        Object.assign(clone.style, { position:'fixed', left:r.left+'px', top:r.top+'px', width:r.width+'px', zIndex:9999, transition:'all 1s' });
+        clone.classList.add('flyer'); document.body.appendChild(clone);
+        setTimeout(() => { Object.assign(clone.style, { left:tr.left+'px', top:tr.top+'px', width:'20px', opacity:'0' }); }, 50);
+        setTimeout(() => clone.remove(), 1000);
     }
 
     function filter(cat, btn) {
