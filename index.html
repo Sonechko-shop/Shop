@@ -4,177 +4,137 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ЯСНО — Супермаркет</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
-        :root { --primary: #83b735; --bg: #f4f7f6; --white: #ffffff; --text: #333333; --shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        body.dark-mode { --bg: #1a1a1a; --white: #2d2d2d; --text: #f0f2f5; --shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        body { font-family: 'Inter', sans-serif; margin: 0; background: var(--bg); color: var(--text); transition: 0.3s; overflow-x: hidden; }
+        :root { --primary: #83b735; --bg: #f4f7f6; --white: #ffffff; --text: #333333; }
+        body { font-family: 'Inter', sans-serif; margin: 0; background: var(--bg); color: var(--text); overflow-x: hidden; }
 
         /* ШАПКА */
-        .navbar { background: var(--white); padding: 12px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.03); }
-        .logo { font-size: 24px; font-weight: 900; color: #444; text-decoration: none; text-transform: uppercase; }
+        .navbar { background: var(--white); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.05); }
+        .logo { font-size: 26px; font-weight: 900; text-decoration: none; color: #333; }
         .logo span { color: #f39c12; }
-        .nav-btns { display: flex; gap: 10px; align-items: center; position: relative; }
-        .icon-btn { background: #f8f9fa; border: none; width: 42px; height: 42px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: 0.3s; color: #666; }
+        .nav-icons { display: flex; gap: 15px; }
+        .icon-btn { background: #f8f9fa; border: none; width: 45px; height: 45px; border-radius: 14px; cursor: pointer; font-size: 20px; }
 
-        /* МЕНЮ (ВИКЛИК ТА НАЛАШТУВАННЯ) */
-        .drop-menu { position: absolute; top: 55px; right: 0; background: var(--white); border-radius: 18px; box-shadow: var(--shadow); display: none; flex-direction: column; width: 200px; z-index: 1001; border: 1px solid rgba(0,0,0,0.05); overflow: hidden; }
-        .drop-menu.active { display: flex; }
-        .drop-item { padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #f1f1f1; cursor: pointer; font-size: 14px; color: var(--text); text-decoration: none; }
+        /* ВІДЕО-БАНЕР */
+        .hero { width: 94%; margin: 20px auto; height: 350px; border-radius: 40px; position: relative; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .hero video { width: 100%; height: 100%; object-fit: cover; position: absolute; }
+        .hero-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.25); display: flex; align-items: center; justify-content: center; }
+        .glass-box { background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(15px); padding: 40px 60px; border-radius: 35px; border: 1px solid rgba(255,255,255,0.3); text-align: center; }
+        .glass-box h1 { color: white; margin: 0; font-size: 38px; text-transform: uppercase; letter-spacing: 2px; }
 
-        /* ГАРНИЙ БАНЕР */
-        .hero-banner { 
-            width: 92%; margin: 20px auto; height: 300px; border-radius: 35px; 
-            background: linear-gradient(135deg, #f39c12 0%, #ffcc33 100%);
-            display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;
-            box-shadow: 0 15px 30px rgba(243, 156, 18, 0.2);
+        /* КНОПКИ ФІЛЬТРІВ (ЯКІ ЗНИКЛИ) */
+        .filter-section { display: flex; justify-content: center; gap: 15px; padding: 30px; flex-wrap: wrap; }
+        .btn-f { 
+            background: var(--white); border: 2px solid transparent; padding: 12px 25px; border-radius: 50px; 
+            font-weight: 700; color: #666; cursor: pointer; transition: 0.3s;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 8px;
         }
-        .hero-glass { background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); padding: 30px 50px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.3); text-align: center; }
-        .hero-glass h1 { color: white; margin: 0; font-size: 32px; font-weight: 900; text-transform: uppercase; }
-
-        /* ФІЛЬТРИ */
-        .filter-bar { display: flex; justify-content: center; gap: 12px; padding: 20px; flex-wrap: wrap; }
-        .pill { background: var(--white); border: none; padding: 10px 25px; border-radius: 25px; cursor: pointer; font-weight: 700; box-shadow: var(--shadow); color: #666; transition: 0.3s; }
-        .pill.active { background: var(--primary); color: white; }
+        .btn-f:hover { transform: translateY(-3px); }
+        .btn-f.active { border-color: var(--primary); color: var(--primary); background: #f0f9eb; }
 
         /* ТОВАРИ */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; padding: 0 5% 50px; }
-        .card { background: var(--white); border-radius: 30px; padding: 25px; text-align: center; box-shadow: var(--shadow); transition: 0.3s; position: relative; }
-        .card img { width: 100%; height: 150px; object-fit: contain; margin-bottom: 15px; }
-        .btn-buy { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 18px; width: 100%; font-weight: 800; cursor: pointer; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; padding: 0 5% 50px; }
+        .card { background: var(--white); border-radius: 35px; padding: 30px; text-align: center; transition: 0.4s; box-shadow: 0 15px 35px rgba(0,0,0,0.05); }
+        .card img { width: 100%; height: 180px; object-fit: contain; margin-bottom: 20px; }
+        .price { font-size: 24px; font-weight: 900; color: var(--primary); margin-bottom: 20px; }
+        .buy-btn { background: var(--primary); color: white; border: none; width: 100%; padding: 16px; border-radius: 20px; font-weight: 800; cursor: pointer; transition: 0.3s; }
+        .buy-btn:hover { filter: brightness(1.1); }
 
-        /* ПОЛІТ */
-        .fly-item { position: fixed; z-index: 9999; object-fit: contain; pointer-events: none; transition: all 1.2s cubic-bezier(0.42, 0, 0.58, 1); }
-
-        /* ВІДГУКИ */
-        .rev-section { padding: 40px 5%; background: var(--white); border-radius: 40px 40px 0 0; text-align: center; }
-        .rev-input { width: 90%; max-width: 500px; padding: 12px; margin-bottom: 10px; border-radius: 10px; border: 1px solid #ddd; }
-
-        /* КОШИК */
-        .cart-panel { position: fixed; right: -100%; top: 0; width: 380px; height: 100%; background: var(--white); z-index: 2500; transition: 0.5s; display: flex; flex-direction: column; box-shadow: -10px 0 30px rgba(0,0,0,0.1); }
-        .cart-panel.active { right: 0; }
-        .badge { background: var(--primary); color: white; padding: 2px 7px; border-radius: 50%; font-size: 11px; position: absolute; top: -5px; right: -5px; font-weight: bold; }
+        /* АНІМАЦІЯ ПОЛЬОТУ */
+        .flyer { position: fixed; z-index: 9999; pointer-events: none; transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 15px; }
     </style>
 </head>
 <body>
 
 <nav class="navbar">
-    <a href="#" class="logo">ЯСНО <span>☀️</span></a>
-    <div class="nav-btns">
-        <button class="icon-btn" onclick="toggleM('callM')">📞</button>
-        <div class="drop-menu" id="callM">
-            <a href="tel:+380680000000" class="drop-item">📞 Подзвонити</a>
-        </div>
-        <button class="icon-btn" onclick="toggleM('setM')">⚙️</button>
-        <div class="drop-menu" id="setM">
-            <div class="drop-item" onclick="document.body.classList.toggle('dark-mode')">Тема 🌓</div>
-        </div>
-        <button class="icon-btn" id="cart-btn" onclick="tCart(true)" style="position:relative">🛒 <span id="count" class="badge">0</span></button>
+    <a href="#" class="logo">ЯСНО<span>☀️</span></a>
+    <div class="nav-icons">
+        <button class="icon-btn">📞</button>
+        <button class="icon-btn">⚙️</button>
+        <button class="icon-btn" id="cart-icon">🛒</button>
     </div>
 </nav>
 
-<div class="hero-banner">
-    <div class="hero-glass">
-        <h1>ЯСНО. Свіжо. Твоє.</h1>
+<div class="hero">
+    <video autoplay muted loop playsinline>
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-sunny-forest-landscape-with-a-gentle-breeze-41300-large.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay">
+        <div class="glass-box">
+            <h1>ЯСНО. СВІЖО. ТВОЄ. 👋</h1>
+        </div>
     </div>
 </div>
 
-<div class="filter-bar">
-    <button class="pill active" onclick="fCat('all', this)">Все разом</button>
-    <button class="pill" onclick="fCat('baby', this)">Дитяче 👶</button>
-    <button class="pill" onclick="fCat('pets', this)">Тварини 🐾</button>
-    <button class="pill" onclick="fCat('chem', this)">Хімія 🧼</button>
+<div class="filter-section">
+    <button class="btn-f active" onclick="filterItems('all', this)">🌈 Все разом</button>
+    <button class="btn-f" onclick="filterItems('baby', this)">👶 Дитяче</button>
+    <button class="btn-f" onclick="filterItems('pets', this)">🐾 Тварини</button>
+    <button class="btn-f" onclick="filterItems('chem', this)">🧼 Хімія</button>
 </div>
 
-<div class="grid" id="products"></div>
-
-<div class="rev-section">
-    <h2>💬 Відгуки</h2>
-    <input type="text" id="rn" class="rev-input" placeholder="Ім'я"><br>
-    <textarea id="rm" class="rev-input" placeholder="Відгук"></textarea><br>
-    <button class="pill active" onclick="addR()">Надіслати</button>
-    <div id="rl" style="margin-top:20px; text-align:left; max-width:500px; margin-inline:auto;"></div>
-</div>
-
-<div class="cart-panel" id="cart-p">
-    <div style="padding:20px; border-bottom:1px solid #eee; display:flex; justify-content:space-between;">
-        <h2>Кошик</h2><button onclick="tCart(false)" style="background:none; border:none; font-size:24px;">✕</button>
+<div class="grid" id="product-grid">
+    <div class="card" data-cat="baby">
+        <img src="https://i.ibb.co/vyDyh7g/image.jpg" class="p-img">
+        <h3>Dada Extra Soft 6</h3>
+        <div class="price">250 грн</div>
+        <button class="buy-btn" onclick="flyToCart(this)">В кошик</button>
     </div>
-    <div id="items" style="flex:1; overflow-y:auto; padding:20px;"></div>
-    <div style="padding:20px; border-top:1px solid #eee;">
-        <b>Разом: <span id="total">0</span> грн</b>
+    <div class="card" data-cat="pets">
+        <img src="https://i.ibb.co/2FDgpWxPc3/2F619939933.webp" class="p-img">
+        <h3>Корм Kitty 2кг</h3>
+        <div class="price">250 грн</div>
+        <button class="buy-btn" onclick="flyToCart(this)">В кошик</button>
+    </div>
+    <div class="card" data-cat="chem">
+        <img src="https://i.ibb.co/dsyN5hwf/image-processing20250930-161-45fnds.webp" class="p-img">
+        <h3>Ariel Gel 5.5L</h3>
+        <div class="price">600 грн</div>
+        <button class="buy-btn" onclick="flyToCart(this)">В кошик</button>
     </div>
 </div>
 
 <script>
-    let cart = [];
-    const prods = [
-        { id: 1, name: "Dada Soft 6", price: 250, cat: "baby", img: "https://i.ibb.co/vyDyh7g/image.jpg" },
-        { id: 2, name: "Корм Kitty", price: 250, cat: "pets", img: "https://i.ibb.co/2FDgpWxPc3/2F619939933.webp" },
-        { id: 3, name: "Ariel Gel", price: 600, cat: "chem", img: "https://i.ibb.co/dsyN5hwf/image-processing20250930-161-45fnds.webp" }
-    ];
-
-    function toggleM(id) {
-        document.querySelectorAll('.drop-menu').forEach(m => { if(m.id !== id) m.classList.remove('active'); });
-        document.getElementById(id).classList.toggle('active');
-    }
-
-    function render() {
-        document.getElementById('products').innerHTML = prods.map(p => `
-            <div class="card" data-cat="${p.cat}">
-                <img src="${p.img}" class="p-img">
-                <div style="font-weight:700;">${p.name}</div>
-                <div style="color:var(--primary); font-weight:900; margin:10px 0;">${p.price} грн</div>
-                <button class="btn-buy" onclick="addToCart(${p.id}, this)">В кошик</button>
-            </div>
-        `).join('');
-    }
-
-    function fCat(cat, btn) {
-        document.querySelectorAll('.pill').forEach(b => b.classList.remove('active'));
+    // Логіка фільтрації
+    function filterItems(cat, btn) {
+        document.querySelectorAll('.btn-f').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        document.querySelectorAll('.card').forEach(c => {
-            c.style.display = (cat === 'all' || c.dataset.cat === cat) ? 'block' : 'none';
+        
+        document.querySelectorAll('.card').forEach(card => {
+            if (cat === 'all' || card.getAttribute('data-cat') === cat) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
         });
     }
 
-    function addToCart(id, btn) {
+    // Логіка польоту
+    function flyToCart(btn) {
         const img = btn.parentElement.querySelector('.p-img');
-        const cartBtn = document.getElementById('cart-btn');
+        const cart = document.getElementById('cart-icon');
         const clone = img.cloneNode();
         const r = img.getBoundingClientRect();
-        const cr = cartBtn.getBoundingClientRect();
+        const cr = cart.getBoundingClientRect();
 
-        Object.assign(clone.style, { position: 'fixed', left: r.left+'px', top: r.top+'px', width: r.width+'px', zIndex: 10000 });
-        clone.classList.add('fly-item');
+        Object.assign(clone.style, {
+            position: 'fixed', left: r.left + 'px', top: r.top + 'px',
+            width: r.width + 'px', height: r.height + 'px', zIndex: 10000
+        });
+
+        clone.classList.add('flyer');
         document.body.appendChild(clone);
 
         setTimeout(() => {
-            Object.assign(clone.style, { left: cr.left+'px', top: cr.top+'px', width: '20px', opacity: '0', transform: 'rotate(720deg)' });
+            Object.assign(clone.style, {
+                left: cr.left + 'px', top: cr.top + 'px',
+                width: '20px', height: '20px', opacity: '0', transform: 'rotate(720deg)'
+            });
         }, 50);
 
-        setTimeout(() => {
-            clone.remove();
-            const item = cart.find(x => x.id === id);
-            if(item) item.qty++; else cart.push({...prods.find(x => x.id === id), qty: 1});
-            updateUI();
-        }, 1200);
+        setTimeout(() => clone.remove(), 1200);
     }
-
-    function updateUI() {
-        document.getElementById('count').innerText = cart.reduce((a, b) => a + b.qty, 0);
-        document.getElementById('total').innerText = cart.reduce((a, b) => a + (b.price * b.qty), 0);
-        document.getElementById('items').innerHTML = cart.map(i => `<div>${i.name} x${i.qty}</div>`).join('');
-    }
-
-    function addR() {
-        const n = document.getElementById('rn').value, m = document.getElementById('rm').value;
-        if(n && m) { document.getElementById('rl').innerHTML += `<div><b>${n}:</b> ${m}</div>`; }
-    }
-
-    function tCart(s) { document.getElementById('cart-p').classList.toggle('active', s); }
-    window.onclick = (e) => { if(!e.target.closest('.nav-btns')) document.querySelectorAll('.drop-menu').forEach(m => m.classList.remove('active')); }
-    render();
 </script>
+
 </body>
 </html>
