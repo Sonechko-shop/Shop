@@ -5,168 +5,199 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>СОНЕЧКО — Супермаркет</title>
     <style>
-        :root { --primary: #83b735; --bg: #f4f7f6; --white: #ffffff; --text: #333333; --glass: rgba(255, 255, 255, 0.9); }
-        body.dark-mode { --bg: #1a1a1a; --white: #2d2d2d; --text: #f0f2f5; --glass: rgba(45, 45, 45, 0.9); }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: var(--text); transition: 0.3s; }
+        :root { --primary: #83b735; --bg: #f4f7f6; --white: #ffffff; --text: #333333; }
+        body.dark-mode { --bg: #1a1a1a; --white: #2d2d2d; --text: #f0f2f5; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: var(--text); transition: 0.3s; overflow-x: hidden; }
 
         /* ШАПКА */
         .navbar { background: var(--white); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; }
-        .logo { font-size: 26px; font-weight: 900; text-decoration: none; color: var(--text); display: flex; align-items: center; gap: 8px; }
+        .logo { font-size: 26px; font-weight: 900; text-decoration: none; color: var(--text); }
         .nav-icons { display: flex; gap: 12px; }
-        .icon-btn { background: #f8f9fa; border: none; width: 45px; height: 45px; border-radius: 14px; cursor: pointer; font-size: 20px; transition: 0.3s; display: flex; align-items: center; justify-content: center; }
-        .icon-btn:hover { background: #eef1f0; }
+        .icon-btn { background: #f8f9fa; border: none; width: 45px; height: 45px; border-radius: 14px; cursor: pointer; font-size: 20px; position: relative; }
+        .cart-count { position: absolute; top: -5px; right: -5px; background: #ff4757; color: white; font-size: 12px; padding: 2px 6px; border-radius: 10px; font-weight: 700; display: none; }
 
-        /* БАНЕР ЯК НА СКРІНШОТІ */
-        .hero { width: 92%; margin: 20px auto; height: 300px; border-radius: 35px; background: #83b735 url('https://i.ibb.co/vyDyh7g/image.jpg') center/cover; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .hero-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; }
-        .hero-tag { background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); padding: 20px 40px; border-radius: 20px; color: white; font-weight: 800; font-size: 24px; border: 1px solid rgba(255,255,255,0.3); }
+        /* ВІДЕО-ШАПКА */
+        .hero { width: 92%; margin: 20px auto; height: 300px; border-radius: 35px; position: relative; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .hero video { width: 100%; height: 100%; object-fit: cover; position: absolute; }
+        .hero-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; }
+        .hero-tag { background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); padding: 20px 40px; border-radius: 20px; color: white; font-weight: 800; font-size: 24px; border: 1px solid rgba(255,255,255,0.3); text-align: center; }
 
         /* ФІЛЬТРИ */
         .filters { display: flex; justify-content: center; gap: 10px; padding: 20px; flex-wrap: wrap; }
-        .pill { background: var(--white); border: none; padding: 10px 20px; border-radius: 50px; cursor: pointer; font-weight: 600; box-shadow: 0 4px 10px rgba(0,0,0,0.05); color: #666; }
+        .pill { background: var(--white); border: none; padding: 10px 22px; border-radius: 50px; cursor: pointer; font-weight: 600; box-shadow: 0 4px 10px rgba(0,0,0,0.05); color: #666; transition: 0.3s; }
         .pill.active { background: var(--primary); color: white; }
 
-        /* ГАРНЕ МЕНЮ НАЛАШТУВАНЬ */
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(5px); display: none; align-items: center; justify-content: center; z-index: 2000; }
-        .modal-overlay.active { display: flex; }
-        .modal-card { background: var(--white); padding: 30px; border-radius: 35px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.2); animation: slideUp 0.3s; }
-        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        
-        .modal-card h2 { margin-top: 0; font-size: 20px; }
-        .modal-btn { background: var(--primary); color: white; border: none; width: 100%; padding: 15px; border-radius: 18px; font-weight: 700; cursor: pointer; margin: 10px 0; font-size: 16px; }
-        .modal-close { background: #eee; color: #333; border: none; width: 100%; padding: 12px; border-radius: 15px; cursor: pointer; }
-        
-        .lang-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; }
-        .lang-btn { background: #f0f2f5; border: 2px solid transparent; padding: 10px; border-radius: 12px; cursor: pointer; font-weight: 600; }
-        .lang-btn.active { border-color: var(--primary); background: #f0f9eb; }
-
-        /* КАРТКИ ТОВАРІВ */
+        /* КАРТКИ */
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; padding: 0 5% 50px; }
-        .card { background: var(--white); border-radius: 30px; padding: 25px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.05); transition: 0.3s; position: relative; }
+        .card { background: var(--white); border-radius: 30px; padding: 25px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.05); transition: 0.3s; }
         .card img { width: 100%; height: 160px; object-fit: contain; margin-bottom: 15px; }
-        .qty-tag { position: absolute; top: 15px; left: 15px; background: #f0f9eb; color: var(--primary); padding: 4px 10px; border-radius: 10px; font-size: 12px; font-weight: 700; }
         .price { font-size: 22px; font-weight: 800; color: var(--primary); margin: 10px 0; }
         .buy-btn { background: var(--primary); color: white; border: none; width: 100%; padding: 14px; border-radius: 18px; font-weight: 700; cursor: pointer; }
 
-        /* ПОЛІТ */
-        .flyer { position: fixed; z-index: 9999; pointer-events: none; transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1); }
+        /* ПАНЕЛЬ КОШИКА */
+        .cart-panel { position: fixed; right: -100%; top: 0; width: 380px; height: 100%; background: var(--white); z-index: 3000; transition: 0.5s; padding: 30px; box-sizing: border-box; box-shadow: -10px 0 30px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
+        .cart-panel.active { right: 0; }
+        .cart-items { flex-grow: 1; overflow-y: auto; margin: 20px 0; }
+        .cart-item { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; background: #f8f9fa; padding: 10px; border-radius: 15px; color: #333; }
+        .cart-item img { width: 50px; height: 50px; }
+
+        /* МОДАЛКИ */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(5px); display: none; align-items: center; justify-content: center; z-index: 4000; }
+        .modal-overlay.active { display: flex; }
+        .modal-card { background: var(--white); padding: 30px; border-radius: 35px; width: 90%; max-width: 400px; text-align: center; }
+        
+        .lang-btn { padding: 8px 15px; border-radius: 10px; border: 1px solid #ddd; cursor: pointer; background: #fff; font-weight: 600; }
+        .lang-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        .flyer { position: fixed; z-index: 9999; pointer-events: none; transition: all 1s; border-radius: 50%; }
     </style>
 </head>
 <body>
 
 <nav class="navbar">
-    <a href="#" class="logo">СОНЕЧКО ☀️</a>
+    <a href="#" class="logo" id="lang-logo">СОНЕЧКО ☀️</a>
     <div class="nav-icons">
         <button class="icon-btn" onclick="openModal('callModal')">📞</button>
         <button class="icon-btn" onclick="openModal('settingsModal')">⚙️</button>
-        <button class="icon-btn" id="cart-btn" style="position:relative">🛒</button>
+        <button class="icon-btn" onclick="toggleCart(true)" id="cart-btn-main">
+            🛒 <span class="cart-count" id="cart-badge">0</span>
+        </button>
     </div>
 </nav>
 
 <div class="hero">
+    <video autoplay muted loop playsinline>
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-sun-shining-through-the-leaves-of-a-tree-4322-large.mp4" type="video/mp4">
+    </video>
     <div class="hero-overlay">
-        <div class="hero-tag">НОВЕ НАДХОДЖЕННЯ! 👋</div>
+        <div class="hero-tag" id="lang-hero">СОНЕЧКО: НОВЕ НАДХОДЖЕННЯ! 👋</div>
     </div>
 </div>
 
 <div class="filters">
-    <button class="pill active" onclick="filterCat('all', this)">🌈 Все разом</button>
-    <button class="pill" onclick="filterCat('baby', this)">👶 Дитяче</button>
-    <button class="pill" onclick="filterCat('pets', this)">🐾 Тварини</button>
-    <button class="pill" onclick="filterCat('chem', this)">🧼 Хімія</button>
+    <button class="pill active" data-lang="all" onclick="filter('all', this)">🌈 Все</button>
+    <button class="pill" data-lang="baby" onclick="filter('baby', this)">👶 Дитяче</button>
+    <button class="pill" data-lang="pets" onclick="filter('pets', this)">🐾 Тварини</button>
+    <button class="pill" data-lang="chem" onclick="filter('chem', this)">🧼 Хімія</button>
 </div>
 
 <div class="grid">
     <div class="card" data-cat="baby">
-        <div class="qty-tag">100 шт.</div>
         <img src="https://i.ibb.co/vyDyh7g/image.jpg" class="p-img">
         <div style="font-weight:700;">Dada Extra Soft 6</div>
         <div class="price">250 грн</div>
-        <button class="buy-btn" onclick="fly(this)">В кошик</button>
+        <button class="buy-btn" data-lang="buy" onclick="addToCart('Dada Extra Soft 6', 250, 'https://i.ibb.co/vyDyh7g/image.jpg', this)">В кошик</button>
     </div>
     <div class="card" data-cat="pets">
-        <div class="qty-tag">85 шт.</div>
         <img src="https://i.ibb.co/2FDgpWxPc3/2F619939933.webp" class="p-img">
         <div style="font-weight:700;">Корм Kitty 2кг</div>
         <div class="price">250 грн</div>
-        <button class="buy-btn" onclick="fly(this)">В кошик</button>
+        <button class="buy-btn" data-lang="buy" onclick="addToCart('Корм Kitty 2кг', 250, 'https://i.ibb.co/2FDgpWxPc3/2F619939933.webp', this)">В кошик</button>
     </div>
     <div class="card" data-cat="chem">
-        <div class="qty-tag">12 шт.</div>
         <img src="https://i.ibb.co/dsyN5hwf/image-processing20250930-161-45fnds.webp" class="p-img">
         <div style="font-weight:700;">Ariel Gel 5.5L</div>
         <div class="price">600 грн</div>
-        <button class="buy-btn" onclick="fly(this)">В кошик</button>
+        <button class="buy-btn" data-lang="buy" onclick="addToCart('Ariel Gel 5.5L', 600, 'https://i.ibb.co/dsyN5hwf/image-processing20250930-161-45fnds.webp', this)">В кошик</button>
+    </div>
+</div>
+
+<div class="cart-panel" id="cartPanel">
+    <h2 id="lang-cart-title">Ваш кошик</h2>
+    <div class="cart-items" id="cartContent"></div>
+    <div style="font-weight:900; font-size:20px; margin-bottom:15px;">
+        <span id="lang-total">Разом:</span> <span id="totalSum">0 грн</span>
+    </div>
+    <button class="buy-btn" id="lang-checkout" onclick="alert('OK!')">ОФОРМИТИ</button>
+    <button onclick="toggleCart(false)" style="margin-top:10px; background:none; border:none; cursor:pointer">Закрити</button>
+</div>
+
+<div class="modal-overlay" id="settingsModal">
+    <div class="modal-card">
+        <h2 id="lang-set-title">Налаштування ⚙️</h2>
+        <button class="buy-btn" style="background:#444" onclick="document.body.classList.toggle('dark-mode')">Тема 🌓</button>
+        <div style="margin: 20px 0;">
+            <p id="lang-select">Мова:</p>
+            <button class="lang-btn active" onclick="setLang('uk', this)">🇺🇦 УКР</button>
+            <button class="lang-btn" onclick="setLang('en', this)">🇺🇸 ENG</button>
+            <button class="lang-btn" onclick="setLang('ru', this)">🇷🇺 RUS</button>
+        </div>
+        <button onclick="closeModal('settingsModal')" class="buy-btn">OK</button>
     </div>
 </div>
 
 <div class="modal-overlay" id="callModal">
     <div class="modal-card">
-        <div style="color:var(--primary); font-size: 30px; margin-bottom: 10px;">📞</div>
-        <h2 style="margin-bottom: 5px;">Зв'язок</h2>
-        <div style="font-size: 18px; font-weight: 700; margin-bottom: 20px;">+38 (068) 490 00 68</div>
-        <button class="modal-btn" onclick="window.location.href='tel:+380684900068'">ПОДЗВОНИТИ</button>
-        <button class="modal-close" onclick="closeModal('callModal')">Закрити</button>
-    </div>
-</div>
-
-<div class="modal-overlay" id="settingsModal">
-    <div class="modal-card">
-        <h2>Налаштування ⚙️</h2>
-        <button class="modal-btn" style="background:#444" onclick="document.body.classList.toggle('dark-mode')">Перемкнути тему 🌓</button>
-        
-        <div style="margin-top: 20px; font-weight: 700;">Виберіть мову:</div>
-        <div class="lang-grid">
-            <button class="lang-btn active">🇺🇦 УКР</button>
-            <button class="lang-btn">🇺🇸 ENG</button>
-            <button class="lang-btn">🇷🇺 RUS</button>
-            <button class="lang-btn">✨ СВОЯ</button>
-        </div>
-
-        <div style="margin: 15px 0; padding: 10px; background: #f0f9eb; border-radius: 12px; color: #83b735; font-weight: 700;">
-            🏪 Магазин зараз: ВІДЧИНЕНО
-        </div>
-        
-        <button class="modal-close" onclick="closeModal('settingsModal')">Готово</button>
+        <h2 id="lang-call-title">Зв'язок 📞</h2>
+        <p style="font-size:20px; font-weight:700;">+38 (068) 490 00 68</p>
+        <button class="buy-btn" data-lang="call-btn" onclick="window.location.href='tel:+380684900068'">ПОДЗВОНИТИ</button>
+        <button onclick="closeModal('callModal')" style="margin-top:15px; display:block; width:100%; border:none; background:none; cursor:pointer">Закрити</button>
     </div>
 </div>
 
 <script>
+    let cart = [];
+    const translations = {
+        uk: { logo: "СОНЕЧКО ☀️", hero: "СОНЕЧКО: НОВЕ НАДХОДЖЕННЯ! 👋", all: "🌈 Все", baby: "👶 Дитяче", pets: "🐾 Тварини", chem: "🧼 Хімія", buy: "В кошик", cart: "Ваш кошик", total: "Разом:", checkout: "ОФОРМИТИ", settings: "Налаштування ⚙️", select: "Мова:", call: "Зв'язок 📞", callBtn: "ПОДЗВОНИТИ" },
+        en: { logo: "SUNNY ☀️", hero: "SUNNY: NEW ARRIVAL! 👋", all: "🌈 All", baby: "👶 Baby", pets: "🐾 Pets", chem: "🧼 Chem", buy: "To Cart", cart: "Your Cart", total: "Total:", checkout: "CHECKOUT", settings: "Settings ⚙️", select: "Language:", call: "Contact 📞", callBtn: "CALL NOW" },
+        ru: { logo: "СОЛНЫШКО ☀️", hero: "СОЛНЫШКО: НОВОЕ ПОСТУПЛЕНИЕ! 👋", all: "🌈 Все", baby: "👶 Детское", pets: "🐾 Животные", chem: "🧼 Химия", buy: "В корзину", cart: "Ваша корзина", total: "Итого:", checkout: "ОФОРМИТЬ", settings: "Настройки ⚙️", select: "Язык:", call: "Связь 📞", callBtn: "ПОЗВОНИТЬ" }
+    };
+
+    function setLang(lang, btn) {
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const t = translations[lang];
+        document.getElementById('lang-logo').innerText = t.logo;
+        document.getElementById('lang-hero').innerText = t.hero;
+        document.getElementById('lang-cart-title').innerText = t.cart;
+        document.getElementById('lang-total').innerText = t.total;
+        document.getElementById('lang-checkout').innerText = t.checkout;
+        document.getElementById('lang-set-title').innerText = t.settings;
+        document.getElementById('lang-select').innerText = t.select;
+        document.getElementById('lang-call-title').innerText = t.call;
+        document.querySelectorAll('[data-lang="buy"]').forEach(b => b.innerText = t.buy);
+        document.querySelectorAll('[data-lang="all"]').forEach(b => b.innerText = t.all);
+        document.querySelectorAll('[data-lang="baby"]').forEach(b => b.innerText = t.baby);
+        document.querySelectorAll('[data-lang="pets"]').forEach(b => b.innerText = t.pets);
+        document.querySelectorAll('[data-lang="chem"]').forEach(b => b.innerText = t.chem);
+        document.querySelectorAll('[data-lang="call-btn"]').forEach(b => b.innerText = t.callBtn);
+    }
+
+    function toggleCart(s) { document.getElementById('cartPanel').classList.toggle('active', s); }
     function openModal(id) { document.getElementById(id).classList.add('active'); }
     function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
-    function filterCat(cat, btn) {
-        document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
-        btn.classList.add('active');
-        document.querySelectorAll('.card').forEach(c => {
-            c.style.display = (cat === 'all' || c.dataset.cat === cat) ? 'block' : 'none';
-        });
-    }
-
-    function fly(btn) {
-        const img = btn.parentElement.querySelector('.p-img');
-        const cart = document.getElementById('cart-btn');
+    function addToCart(name, price, img, btn) {
+        cart.push({name, price, img});
+        updateUI();
         const clone = img.cloneNode();
-        const r = img.getBoundingClientRect();
-        const cr = cart.getBoundingClientRect();
-
-        Object.assign(clone.style, { position: 'fixed', left: r.left+'px', top: r.top+'px', width: r.width+'px', zIndex: 10000 });
+        const r = btn.parentElement.querySelector('.p-img').getBoundingClientRect();
+        const tr = document.getElementById('cart-btn-main').getBoundingClientRect();
+        Object.assign(clone.style, { position: 'fixed', left: r.left+'px', top: r.top+'px', width: r.width+'px', zIndex: 9999 });
         clone.classList.add('flyer');
         document.body.appendChild(clone);
-
-        setTimeout(() => {
-            Object.assign(clone.style, { left: cr.left+'px', top: cr.top+'px', width: '20px', opacity: '0', transform: 'rotate(720deg)' });
-        }, 50);
-        setTimeout(() => clone.remove(), 1200);
+        setTimeout(() => { Object.assign(clone.style, { left: tr.left+'px', top: tr.top+'px', width: '20px', opacity: '0' }); }, 50);
+        setTimeout(() => clone.remove(), 1000);
     }
 
-    // Закриття модалок при кліку на фон
-    window.onclick = function(event) {
-        if (event.target.className === 'modal-overlay active') {
-            event.target.classList.remove('active');
-        }
+    function updateUI() {
+        const list = document.getElementById('cartContent');
+        const badge = document.getElementById('cart-badge');
+        badge.innerText = cart.length;
+        badge.style.display = cart.length ? 'block' : 'none';
+        let sum = 0;
+        list.innerHTML = cart.map((item, i) => {
+            sum += item.price;
+            return `<div class="cart-item"><img src="${item.img}"><div><b>${item.name}</b><br>${item.price} грн</div><button onclick="cart.splice(${i},1);updateUI()">🗑️</button></div>`;
+        }).join('');
+        document.getElementById('totalSum').innerText = sum + ' грн';
+    }
+
+    function filter(cat, btn) {
+        document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.card').forEach(c => c.style.display = (cat === 'all' || c.dataset.cat === cat) ? 'block' : 'none');
     }
 </script>
-
 </body>
 </html>
