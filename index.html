@@ -6,92 +6,303 @@
     <title>СОНЕЧКО - Супермаркет</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
-        :root { --primary: #83b735; --bg: #f0f2f5; --white: #ffffff; --text: #2d3436; --shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        body.dark-mode { --bg: #1a1a1a; --white: #2d2d2d; --text: #f0f2f5; --shadow: 0 10px 30px rgba(0,0,0,0.4); }
-        body { font-family: 'Inter', sans-serif; margin: 0; background: var(--bg); color: var(--text); transition: 0.3s; overflow-x: hidden; }
-        
-        /* ШАПКА */
-        .navbar { background: var(--white); padding: 10px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .logo { font-size: 22px; font-weight: 800; color: var(--text); text-decoration: none; text-transform: uppercase; }
-        .nav-btns { display: flex; gap: 8px; align-items: center; position: relative; }
-        .icon-btn { background: #f0f0f0; border: none; width: 40px; height: 40px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: 0.3s; color: inherit; }
+        /* ОСНОВНІ КОЛЬОРИ ТА ШРИФТИ */
+        :root { 
+            --primary: #83b735; 
+            --bg: #f4f7f6; 
+            --white: #ffffff; 
+            --text: #333333; 
+            --shadow: 0 10px 25px rgba(0,0,0,0.05); 
+        }
+        body.dark-mode { 
+            --bg: #1a1a1a; 
+            --white: #2d2d2d; 
+            --text: #f0f2f5; 
+            --shadow: 0 10px 30px rgba(0,0,0,0.3); 
+        }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            margin: 0; 
+            background: var(--bg); 
+            color: var(--text); 
+            transition: 0.3s; 
+        }
 
-        /* МЕНЮ */
-        .drop-menu { position: absolute; top: 50px; right: 0; background: var(--white); border-radius: 15px; box-shadow: var(--shadow); display: none; flex-direction: column; width: 210px; overflow: hidden; z-index: 1001; border: 1px solid #eee; }
+        /* ШАПКА ЯК НА СКРІНШОТІ */
+        .navbar { 
+            background: var(--white); 
+            padding: 15px 8%; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+            box-shadow: 0 2px 15px rgba(0,0,0,0.03); 
+        }
+        .logo { 
+            font-size: 24px; 
+            font-weight: 900; 
+            color: #444; 
+            text-decoration: none; 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+        }
+        .logo span { color: #f39c12; }
+
+        .nav-btns { display: flex; gap: 12px; align-items: center; position: relative; }
+        .icon-btn { 
+            background: #f8f9fa; 
+            border: none; 
+            width: 44px; 
+            height: 44px; 
+            border-radius: 14px; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 20px; 
+            transition: 0.3s; 
+            color: #666; 
+        }
+        .icon-btn:hover { background: #eee; }
+
+        /* МЕНЮ НАЛАШТУВАНЬ ТА ДЗВІНКІВ */
+        .drop-menu { 
+            position: absolute; 
+            top: 55px; 
+            right: 0; 
+            background: var(--white); 
+            border-radius: 18px; 
+            box-shadow: var(--shadow); 
+            display: none; 
+            flex-direction: column; 
+            width: 220px; 
+            overflow: hidden; 
+            z-index: 1001; 
+            border: 1px solid rgba(0,0,0,0.05); 
+        }
         .drop-menu.active { display: flex; }
-        .drop-item { padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #eee; cursor: pointer; font-size: 14px; color: var(--text); }
-        .drop-item:hover { background: rgba(0,0,0,0.05); }
-        
-        .lang-switch { display: flex; gap: 4px; }
-        .l-btn { padding: 2px 6px; border-radius: 6px; border: 1px solid #ccc; font-size: 11px; font-weight: bold; cursor: pointer; }
-        .l-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+        .drop-item { 
+            padding: 14px 18px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            border-bottom: 1px solid rgba(0,0,0,0.05); 
+            cursor: pointer; 
+            font-size: 14px; 
+            text-decoration: none; 
+            color: var(--text);
+        }
+        .drop-item:hover { background: #f9f9f9; }
 
-        /* СЛАЙДЕР ТА КАТЕГОРІЇ */
-        .slider { width: 92%; margin: 20px auto; height: 300px; border-radius: 35px; overflow: hidden; position: relative; box-shadow: var(--shadow); }
-        .slide { width: 100%; height: 100%; position: absolute; opacity: 0; transition: 1.5s; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; }
+        /* СЛАЙДЕР */
+        .slider { 
+            width: 90%; 
+            max-width: 1200px; 
+            margin: 25px auto; 
+            height: 350px; 
+            border-radius: 40px; 
+            overflow: hidden; 
+            position: relative; 
+            box-shadow: var(--shadow); 
+        }
+        .slide { 
+            width: 100%; 
+            height: 100%; 
+            position: absolute; 
+            opacity: 0; 
+            transition: 1s ease-in-out; 
+            background-size: cover; 
+            background-position: center; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+        }
         .slide.active { opacity: 1; }
-        .slide-text { color: white; font-size: 26px; font-weight: 900; text-transform: uppercase; text-shadow: 2px 2px 15px rgba(0,0,0,0.5); text-align: center; }
+        .slide-overlay { 
+            position: absolute; 
+            inset: 0; 
+            background: rgba(0,0,0,0.2); 
+        }
+        .slide-text { 
+            position: relative; 
+            color: white; 
+            font-size: 32px; 
+            font-weight: 800; 
+            text-transform: uppercase; 
+            text-shadow: 0 4px 15px rgba(0,0,0,0.3); 
+            text-align: center;
+            z-index: 2;
+        }
 
-        .filter-bar { display: flex; justify-content: center; gap: 10px; padding: 20px; flex-wrap: wrap; }
-        .btn-filter { background: var(--white); border: 1.5px solid #eee; padding: 10px 22px; border-radius: 25px; cursor: pointer; font-weight: 700; font-size: 14px; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.05); color: var(--text); }
-        .btn-filter.active { border-color: var(--primary); color: var(--primary); }
+        /* КАТЕГОРІЇ */
+        .filter-bar { display: flex; justify-content: center; gap: 12px; padding: 30px 0; flex-wrap: wrap; }
+        .btn-filter { 
+            background: var(--white); 
+            border: 2px solid transparent; 
+            padding: 10px 25px; 
+            border-radius: 30px; 
+            cursor: pointer; 
+            font-weight: 700; 
+            font-size: 14px; 
+            box-shadow: var(--shadow); 
+            color: #555; 
+            transition: 0.3s;
+        }
+        .btn-filter.active { 
+            border-color: var(--primary); 
+            color: var(--primary); 
+        }
 
-        /* КАРТКИ */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; padding: 0 5% 50px; }
-        .card { background: var(--white); border-radius: 30px; padding: 25px; text-align: center; box-shadow: var(--shadow); transition: 0.3s; }
-        .card img { width: 100%; height: 140px; object-fit: contain; margin-bottom: 15px; }
-        .price { font-size: 20px; font-weight: 800; color: var(--primary); margin: 10px 0; }
-        .btn-buy { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 18px; width: 100%; font-weight: 800; cursor: pointer; transition: 0.2s; }
-
-        /* ГАРНИЙ КОШИК */
-        .cart-panel { position: fixed; right: -100%; top: 0; width: 350px; height: 100%; background: var(--white); z-index: 2500; transition: 0.5s; display: flex; flex-direction: column; box-shadow: -10px 0 40px rgba(0,0,0,0.2); }
-        .cart-panel.active { right: 0; }
-        .cart-header { padding: 25px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
-        .cart-items { flex: 1; overflow-y: auto; padding: 20px; }
-        .cart-item { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; background: #fafafa; padding: 10px; border-radius: 15px; }
-        .cart-item img { width: 50px; height: 50px; object-fit: contain; }
-        .cart-footer { padding: 25px; border-top: 1px solid #eee; background: var(--white); }
-        .del-btn { background: none; border: none; color: #ff4757; cursor: pointer; font-size: 18px; }
+        /* КАРТКИ ТОВАРІВ */
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+            gap: 30px; 
+            padding: 0 8% 60px; 
+        }
+        .card { 
+            background: var(--white); 
+            border-radius: 35px; 
+            padding: 30px; 
+            text-align: center; 
+            box-shadow: var(--shadow); 
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+        }
+        .card:hover { transform: translateY(-10px); }
+        .card img { width: 100%; height: 180px; object-fit: contain; margin-bottom: 20px; }
+        .stock-tag { 
+            background: #f1f3f2; 
+            color: var(--primary); 
+            padding: 4px 15px; 
+            border-radius: 10px; 
+            font-size: 12px; 
+            font-weight: 700; 
+            display: inline-block; 
+            margin-bottom: 10px; 
+        }
+        .price { font-size: 22px; font-weight: 800; color: var(--primary); margin: 15px 0; }
+        .btn-buy { 
+            background: var(--primary); 
+            color: white; 
+            border: none; 
+            padding: 14px; 
+            border-radius: 20px; 
+            width: 100%; 
+            font-weight: 800; 
+            cursor: pointer; 
+            font-size: 16px;
+            transition: 0.2s; 
+        }
+        .btn-buy:active { transform: scale(0.95); }
 
         /* ВІДГУКИ */
-        .reviews-section { padding: 60px 5%; background: var(--white); margin-top: 50px; border-radius: 50px 50px 0 0; text-align: center; box-shadow: var(--shadow); }
-        .rev-card { background: var(--bg); padding: 20px; border-radius: 20px; margin-bottom: 15px; text-align: left; max-width: 600px; margin-inline: auto; }
+        .reviews-section { 
+            padding: 60px 8%; 
+            background: #f9fbfa; 
+            border-radius: 60px 60px 0 0; 
+            text-align: center; 
+        }
+        .rev-form { 
+            background: var(--white); 
+            padding: 40px; 
+            border-radius: 35px; 
+            box-shadow: var(--shadow); 
+            max-width: 700px; 
+            margin: 0 auto 40px; 
+        }
+        .rev-input { 
+            width: 100%; 
+            padding: 15px; 
+            border-radius: 15px; 
+            border: 1px solid #eee; 
+            margin-bottom: 15px; 
+            box-sizing: border-box; 
+            font-family: inherit;
+        }
+        .rev-card { 
+            background: var(--white); 
+            padding: 20px 30px; 
+            border-radius: 20px; 
+            margin-bottom: 15px; 
+            text-align: left; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02); 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+
+        /* КОШИК */
+        .cart-panel { 
+            position: fixed; 
+            right: -100%; 
+            top: 0; 
+            width: 380px; 
+            height: 100%; 
+            background: var(--white); 
+            z-index: 2500; 
+            transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1); 
+            display: flex; 
+            flex-direction: column; 
+            box-shadow: -15px 0 45px rgba(0,0,0,0.1); 
+        }
+        .cart-panel.active { right: 0; }
+        .cart-header { padding: 30px; border-bottom: 1px solid #f1f1f1; display: flex; justify-content: space-between; align-items: center; }
+        .cart-items { flex: 1; overflow-y: auto; padding: 25px; }
+        .cart-item { 
+            display: flex; 
+            align-items: center; 
+            gap: 15px; 
+            margin-bottom: 20px; 
+            padding-bottom: 15px; 
+            border-bottom: 1px solid #f9f9f9; 
+        }
+        .cart-item img { width: 60px; height: 60px; object-fit: contain; }
+        .cart-footer { padding: 30px; background: #fcfdfc; border-top: 1px solid #f1f1f1; }
+        .badge { background: var(--primary); color: white; padding: 2px 6px; border-radius: 50%; font-size: 11px; position: absolute; top: -5px; right: -5px; }
     </style>
 </head>
 <body>
 
 <nav class="navbar">
-    <a href="#" class="logo">СОНЕЧКО ☀️</a>
+    <a href="#" class="logo">СОНЕЧКО <span>☀️</span></a>
+    
     <div class="nav-btns">
         <button class="icon-btn" onclick="toggleM('callM')">📞</button>
         <div class="drop-menu" id="callM">
             <a href="tel:+380684900068" class="drop-item">📞 <span data-l="c1">Подзвонити</span></a>
             <a href="viber://chat?number=%2B380684900068" class="drop-item">💬 Viber</a>
         </div>
+
         <button class="icon-btn" onclick="toggleM('setM')">⚙️</button>
         <div class="drop-menu" id="setM">
             <div class="drop-item">
                 <span data-l="s1">Мова</span>
-                <div class="lang-switch">
-                    <span class="l-btn active" onclick="setL('uk', this)">UA</span>
-                    <span class="l-btn" onclick="setL('ru', this)">RU</span>
-                    <span class="l-btn" onclick="setL('en', this)">EN</span>
-                </div>
+                <select onchange="setL(this.value)" style="border:none; background:none; font-weight:700; cursor:pointer">
+                    <option value="uk">UA</option>
+                    <option value="ru">RU</option>
+                </select>
             </div>
             <div class="drop-item" onclick="document.body.classList.toggle('dark-mode')">
-                <span data-l="s2">Темна тема</span> <span>🌓</span>
+                <span data-l="s2">Темна тема</span> 🌓
             </div>
         </div>
-        <button class="icon-btn" onclick="tCart(true)">🛒 <span id="count" style="font-size:12px; margin-left:4px; font-weight:bold; color:var(--primary)">0</span></button>
+
+        <button class="icon-btn" onclick="tCart(true)" style="position:relative">
+            🛒 <span id="count" class="badge">0</span>
+        </button>
     </div>
 </nav>
 
 <div id="shop">
     <div class="slider">
-        <div class="slide active" style="background-image: linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.2)), url('https://i.ibb.co/dsyN5hwf/image-processing20250930-161-45fnds.webp')">
+        <div class="slide active" style="background-image: url('https://i.ibb.co/dsyN5hwf/image-processing20250930-161-45fnds.webp')">
+            <div class="slide-overlay"></div>
             <div class="slide-text" data-l="t1">НОВЕ НАДХОДЖЕННЯ! 👋</div>
         </div>
-        <div class="slide" style="background-image: linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.2)), url('https://i.ibb.co/vyDyh7g/image.jpg')">
+        <div class="slide" style="background-image: url('https://i.ibb.co/vyDyh7g/image.jpg')">
+            <div class="slide-overlay"></div>
             <div class="slide-text" data-l="t2">КРАЩА ЦІНА ДЛЯ ВАС! ✨</div>
         </div>
     </div>
@@ -106,51 +317,50 @@
     <div class="grid" id="products"></div>
 
     <div class="reviews-section">
-        <h2 data-l="r_h">💬 Відгуки покупців</h2>
-        <div id="rev-list">
-            <div class="rev-card"><b>Олена:</b> "Дуже швидка доставка, памперси супер!"</div>
-            <div class="rev-card"><b>Іван:</b> "Найкраща ціна на корм для котів, дякую!"</div>
+        <h2 data-l="r_h">💬 Відгуки</h2>
+        <div class="rev-form">
+            <input type="text" id="r-name" class="rev-input" placeholder="Ваше ім'я">
+            <textarea id="r-msg" class="rev-input" style="height:100px" placeholder="Ваш коментар"></textarea>
+            <button class="btn-buy" onclick="addR()" data-l="r_b">Залишити відгук</button>
         </div>
-        <div style="max-width:400px; margin: 30px auto;">
-            <input type="text" id="r-name" placeholder="Ваше ім'я" style="width:100%; padding:10px; margin-bottom:10px; border-radius:10px; border:1px solid #ddd;">
-            <textarea id="r-msg" placeholder="Ваш відгук" style="width:100%; padding:10px; border-radius:10px; border:1px solid #ddd;"></textarea>
-            <button class="btn-buy" onclick="addR()" style="margin-top:10px;">Надіслати</button>
+        <div id="rev-list">
+            <div class="rev-card">
+                <div><b>Марія:</b><br>Чудово!</div>
+                <button style="border:none; background:none; cursor:pointer">🗑️</button>
+            </div>
         </div>
     </div>
 </div>
 
 <div class="cart-panel" id="cart-p">
     <div class="cart-header">
-        <h2 style="margin:0" data-l="ct">🛒 Кошик</h2>
+        <h2 style="margin:0" data-l="ct">Кошик</h2>
         <button onclick="tCart(false)" style="background:none; border:none; font-size:24px; cursor:pointer">✕</button>
     </div>
     <div class="cart-items" id="items"></div>
     <div class="cart-footer">
-        <div style="display:flex; justify-content:space-between; font-size:20px; margin-bottom:20px;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:20px; font-size:18px">
             <span data-l="sum">Разом:</span>
             <b><span id="total">0</span> грн</b>
         </div>
-        <button class="btn-buy" onclick="alert('Замовлення прийнято!')" style="padding:18px; font-size:18px;" data-l="bo">ОФОРМИТИ ЗАМОВЛЕННЯ</button>
+        <button class="btn-buy" onclick="alert('Дякуємо!')" style="padding:20px" data-l="bo">ОФОРМИТИ</button>
     </div>
 </div>
 
 <script>
     let cart = [];
     const prods = [
-        { id: 1, name: "Dada Extra Soft 6", price: 250, cat: "baby", img: "https://i.ibb.co/vyDyh7g/image.jpg" },
-        { id: 2, name: "Корм Kitty 2кг", price: 250, cat: "pets", img: "https://i.ibb.co/2FDgpWxPc3/2F619939933.webp" },
-        { id: 3, name: "Ariel Gel 5.5L", price: 600, cat: "chem", img: "https://i.ibb.co/dsyN5hwf/image-processing20250930-161-45fnds.webp" }
+        { id: 1, name: "Dada Extra Soft 6", price: 250, stock: "100 шт.", cat: "baby", img: "https://i.ibb.co/vyDyh7g/image.jpg" },
+        { id: 2, name: "Корм Kitty 2кг", price: 250, stock: "100 шт.", cat: "pets", img: "https://i.ibb.co/2FDgpWxPc3/2F619939933.webp" },
+        { id: 3, name: "Ariel Gel 5.5L", price: 600, stock: "10 шт.", cat: "chem", img: "https://i.ibb.co/dsyN5hwf/image-processing20250930-161-45fnds.webp" }
     ];
 
     const translations = {
-        uk: { t1: "НОВЕ НАДХОДЖЕННЯ! 👋", f1: "Все разом", f2: "Дитяче 👶", f3: "Тварини 🐾", f4: "Хімія 🧼", ct: "Кошик", bo: "Оформити", s1: "Мова", s2: "Темна тема", c1: "Подзвонити", sum: "Разом:", r_h: "Відгуки" },
-        ru: { t1: "НОВОЕ ПОСТУПЛЕНИЕ! 👋", f1: "Все сразу", f2: "Детское 👶", f3: "Животные 🐾", f4: "Химия 🧼", ct: "Корзина", bo: "Оформить", s1: "Язык", s2: "Темная тема", c1: "Позвонить", sum: "Итого:", r_h: "Отзывы" },
-        en: { t1: "NEW ARRIVALS! 👋", f1: "All", f2: "Baby 👶", f3: "Pets 🐾", f4: "Chemicals 🧼", ct: "Cart", bo: "Checkout", s1: "Language", s2: "Dark Mode", c1: "Call", sum: "Total:", r_h: "Reviews" }
+        uk: { t1: "НОВЕ НАДХОДЖЕННЯ! 👋", f1: "Все разом", f2: "Дитяче 👶", f3: "Тварини 🐾", f4: "Хімія 🧼", ct: "Кошик", bo: "Оформити", s1: "Мова", s2: "Темна тема", c1: "Подзвонити", sum: "Разом:", r_h: "Відгуки", r_b: "Залишити відгук" },
+        ru: { t1: "НОВОЕ ПОСТУПЛЕНИЕ! 👋", f1: "Все сразу", f2: "Детское 👶", f3: "Животные 🐾", f4: "Химия 🧼", ct: "Корзина", bo: "Оформить", s1: "Язык", s2: "Темная тема", c1: "Позвонить", sum: "Итого:", r_h: "Отзывы", r_b: "Оставить отзыв" }
     };
 
-    function setL(l, b) {
-        document.querySelectorAll('.l-btn').forEach(x => x.classList.remove('active'));
-        b.classList.add('active');
+    function setL(l) {
         document.querySelectorAll('[data-l]').forEach(el => { el.innerText = translations[l][el.dataset.l]; });
     }
 
@@ -162,39 +372,35 @@
     function render() {
         document.getElementById('products').innerHTML = prods.map(p => `
             <div class="card" data-cat="${p.cat}">
+                <div class="stock-tag">${p.stock}</div>
                 <img src="${p.img}">
-                <div style="font-weight:700; height:40px">${p.name}</div>
+                <div style="font-weight:700; font-size:18px; color:#444">${p.name}</div>
                 <div class="price">${p.price} грн</div>
-                <button class="btn-buy" onclick="add(${p.id})">В кошик</button>
+                <button class="btn-buy" onclick="add(${p.id})">Додати в кошик</button>
             </div>
         `).join('');
     }
 
     function add(id) {
         cart.push(prods.find(x => x.id === id));
-        updateCartUI();
+        updateCart();
         tCart(true);
     }
 
-    function del(idx) {
-        cart.splice(idx, 1);
-        updateCartUI();
-    }
-
-    function updateCartUI() {
+    function updateCart() {
         document.getElementById('count').innerText = cart.length;
         document.getElementById('total').innerText = cart.reduce((a, b) => a + b.price, 0);
         document.getElementById('items').innerHTML = cart.map((i, idx) => `
             <div class="cart-item">
                 <img src="${i.img}">
                 <div style="flex:1"><b>${i.name}</b><br>${i.price} грн</div>
-                <button class="del-btn" onclick="del(${idx})">🗑️</button>
+                <button onclick="del(${idx})" style="border:none; background:none; cursor:pointer">🗑️</button>
             </div>
         `).join('');
     }
 
+    function del(idx) { cart.splice(idx, 1); updateCart(); }
     function tCart(s) { document.getElementById('cart-p').classList.toggle('active', s); }
-
     function fCat(c, b) {
         document.querySelectorAll('.btn-filter').forEach(x => x.classList.remove('active'));
         b.classList.add('active');
@@ -204,12 +410,20 @@
     function addR() {
         const n = document.getElementById('r-name').value, m = document.getElementById('r-msg').value;
         if(n && m) {
-            document.getElementById('rev-list').innerHTML += `<div class="rev-card"><b>${n}:</b> "${m}"</div>`;
+            document.getElementById('rev-list').innerHTML += `<div class="rev-card"><div><b>${n}:</b><br>${m}</div><button style="border:none; background:none; cursor:pointer">🗑️</button></div>`;
             document.getElementById('r-name').value = ''; document.getElementById('r-msg').value = '';
         }
     }
 
     window.onclick = (e) => { if (!e.target.closest('.nav-btns')) document.querySelectorAll('.drop-menu').forEach(m => m.classList.remove('active')); }
+
+    let cur = 0; setInterval(() => {
+        let s = document.querySelectorAll('.slide');
+        s[cur].classList.remove('active');
+        cur = (cur + 1) % s.length;
+        s[cur].classList.add('active');
+    }, 5000);
+
     render();
 </script>
 </body>
