@@ -3,123 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ЯСНО — Супермаркет</title>
+    <title>СОНЕЧКО — Супермаркет</title>
     <style>
-        :root { --primary: #83b735; --bg: #f4f7f6; --white: #ffffff; --text: #333333; }
-        body { font-family: 'Inter', sans-serif; margin: 0; background: var(--bg); color: var(--text); overflow-x: hidden; }
+        :root { --primary: #83b735; --bg: #f4f7f6; --white: #ffffff; --text: #333333; --shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        body.dark-mode { --bg: #1a1a1a; --white: #2d2d2d; --text: #f0f2f5; --shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: var(--bg); color: var(--text); transition: 0.3s; }
 
         /* ШАПКА */
-        .navbar { background: var(--white); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.05); }
-        .logo { font-size: 26px; font-weight: 900; text-decoration: none; color: #333; }
+        .navbar { background: var(--white); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; }
+        .logo { font-size: 26px; font-weight: 900; text-decoration: none; color: var(--text); }
         .logo span { color: #f39c12; }
-        .nav-icons { display: flex; gap: 15px; }
-        .icon-btn { background: #f8f9fa; border: none; width: 45px; height: 45px; border-radius: 14px; cursor: pointer; font-size: 20px; }
+        .nav-icons { display: flex; gap: 15px; position: relative; }
+        .icon-btn { background: #f8f9fa; border: none; width: 45px; height: 45px; border-radius: 14px; cursor: pointer; font-size: 20px; transition: 0.3s; display: flex; align-items: center; justify-content: center; }
+        .icon-btn:hover { background: #eee; }
+
+        /* МЕНЮ НАЛАШТУВАНЬ */
+        .settings-menu { position: absolute; top: 55px; right: 0; background: var(--white); border-radius: 15px; box-shadow: var(--shadow); display: none; flex-direction: column; width: 200px; overflow: hidden; border: 1px solid rgba(0,0,0,0.05); }
+        .settings-menu.active { display: flex; }
+        .menu-item { padding: 12px 15px; cursor: pointer; border-bottom: 1px solid rgba(0,0,0,0.05); font-size: 14px; transition: 0.2s; }
+        .menu-item:hover { background: rgba(0,0,0,0.05); }
 
         /* ВІДЕО-БАНЕР */
-        .hero { width: 94%; margin: 20px auto; height: 350px; border-radius: 40px; position: relative; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .hero { width: 92%; margin: 20px auto; height: 350px; border-radius: 40px; position: relative; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
         .hero video { width: 100%; height: 100%; object-fit: cover; position: absolute; }
-        .hero-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.25); display: flex; align-items: center; justify-content: center; }
-        .glass-box { background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(15px); padding: 40px 60px; border-radius: 35px; border: 1px solid rgba(255,255,255,0.3); text-align: center; }
-        .glass-box h1 { color: white; margin: 0; font-size: 38px; text-transform: uppercase; letter-spacing: 2px; }
+        .hero-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; }
+        .glass-box { background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(15px); padding: 40px 60px; border-radius: 35px; border: 1px solid rgba(255,255,255,0.3); text-align: center; }
+        .glass-box h1 { color: white; margin: 0; font-size: 38px; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
 
-        /* КНОПКИ ФІЛЬТРІВ (ЯКІ ЗНИКЛИ) */
-        .filter-section { display: flex; justify-content: center; gap: 15px; padding: 30px; flex-wrap: wrap; }
-        .btn-f { 
-            background: var(--white); border: 2px solid transparent; padding: 12px 25px; border-radius: 50px; 
-            font-weight: 700; color: #666; cursor: pointer; transition: 0.3s;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.05); display: flex; align-items: center; gap: 8px;
-        }
-        .btn-f:hover { transform: translateY(-3px); }
-        .btn-f.active { border-color: var(--primary); color: var(--primary); background: #f0f9eb; }
+        /* ФІЛЬТРИ */
+        .filters { display: flex; justify-content: center; gap: 15px; padding: 30px; flex-wrap: wrap; }
+        .filter-pill { background: var(--white); border: none; padding: 14px 28px; border-radius: 50px; font-weight: 700; color: #7f8c8d; cursor: pointer; transition: 0.4s; box-shadow: var(--shadow); }
+        .filter-pill.active { background: var(--primary); color: white; transform: scale(1.05); }
 
         /* ТОВАРИ */
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; padding: 0 5% 50px; }
-        .card { background: var(--white); border-radius: 35px; padding: 30px; text-align: center; transition: 0.4s; box-shadow: 0 15px 35px rgba(0,0,0,0.05); }
+        .card { background: var(--white); border-radius: 35px; padding: 30px; text-align: center; transition: 0.4s; box-shadow: var(--shadow); position: relative; }
+        .card:hover { transform: translateY(-10px); }
         .card img { width: 100%; height: 180px; object-fit: contain; margin-bottom: 20px; }
         .price { font-size: 24px; font-weight: 900; color: var(--primary); margin-bottom: 20px; }
-        .buy-btn { background: var(--primary); color: white; border: none; width: 100%; padding: 16px; border-radius: 20px; font-weight: 800; cursor: pointer; transition: 0.3s; }
-        .buy-btn:hover { filter: brightness(1.1); }
+        .buy-btn { background: var(--primary); color: white; border: none; width: 100%; padding: 15px; border-radius: 20px; font-weight: 800; cursor: pointer; transition: 0.3s; }
 
-        /* АНІМАЦІЯ ПОЛЬОТУ */
-        .flyer { position: fixed; z-index: 9999; pointer-events: none; transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 15px; }
+        /* ВІДГУКИ */
+        .reviews-section { width: 92%; margin: 20px auto 60px; padding: 30px; background: var(--white); border-radius: 35px; box-shadow: var(--shadow); }
+        .review-form { display: flex; flex-direction: column; gap: 10px; margin-bottom: 30px; }
+        .review-form input, .review-form textarea { padding: 12px; border-radius: 12px; border: 1px solid #ddd; background: var(--bg); color: var(--text); border: none; font-family: inherit; }
+        .review-list { display: flex; flex-direction: column; gap: 15px; }
+        .review-item { padding: 15px; background: var(--bg); border-radius: 15px; border-left: 5px solid var(--primary); }
+
+        /* КОШИК */
+        .cart-side { position: fixed; right: -100%; top: 0; width: 400px; height: 100%; background: var(--white); z-index: 2000; transition: 0.5s; box-shadow: -10px 0 30px rgba(0,0,0,0.1); padding: 30px; box-sizing: border-box; }
+        .cart-side.active { right: 0; }
+        .flyer { position: fixed; z-index: 9999; pointer-events: none; transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 50%; }
     </style>
 </head>
 <body>
 
 <nav class="navbar">
-    <a href="#" class="logo">ЯСНО<span>☀️</span></a>
+    <a href="#" class="logo">СОНЕЧКО<span>☀️</span></a>
     <div class="nav-icons">
-        <button class="icon-btn">📞</button>
-        <button class="icon-btn">⚙️</button>
-        <button class="icon-btn" id="cart-icon">🛒</button>
+        <button class="icon-btn" onclick="window.location.href='tel:+380000000000'">📞</button>
+        <button class="icon-btn" onclick="document.getElementById('setM').classList.toggle('active')">⚙️</button>
+        <div class="settings-menu" id="setM">
+            <div class="menu-item" onclick="document.body.classList.toggle('dark-mode')">Перемкнути тему 🌓</div>
+            <div class="menu-item">Мова: UA</div>
+        </div>
+        <button class="icon-btn" onclick="toggleCart(true)" id="cart-target">🛒</button>
     </div>
 </nav>
 
 <div class="hero">
     <video autoplay muted loop playsinline>
-        <source src="https://assets.mixkit.co/videos/preview/mixkit-sunny-forest-landscape-with-a-gentle-breeze-41300-large.mp4" type="video/mp4">
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-sun-shining-through-the-leaves-of-a-tree-4322-large.mp4" type="video/mp4">
     </video>
     <div class="hero-overlay">
         <div class="glass-box">
-            <h1>ЯСНО. СВІЖО. ТВОЄ. 👋</h1>
+            <h1>СОНЕЧКО. СВІЖО. ТВОЄ. 👋</h1>
         </div>
     </div>
 </div>
 
-<div class="filter-section">
-    <button class="btn-f active" onclick="filterItems('all', this)">🌈 Все разом</button>
-    <button class="btn-f" onclick="filterItems('baby', this)">👶 Дитяче</button>
-    <button class="btn-f" onclick="filterItems('pets', this)">🐾 Тварини</button>
-    <button class="btn-f" onclick="filterItems('chem', this)">🧼 Хімія</button>
+<div class="filters">
+    <button class="filter-pill active" onclick="filterItems('all', this)">🌈 Все разом</button>
+    <button class="filter-pill" onclick="filterItems('baby', this)">👶 Дитяче</button>
+    <button class="filter-pill" onclick="filterItems('pets', this)">🐾 Тварини</button>
+    <button class="filter-pill" onclick="filterItems('chem', this)">🧼 Хімія</button>
 </div>
 
-<div class="grid" id="product-grid">
+<div class="grid" id="productGrid">
     <div class="card" data-cat="baby">
-        <img src="https://i.ibb.co/vyDyh7g/image.jpg" class="p-img">
+        <img src="https://i.ibb.co/vyDyh7g/image.jpg" class="prod-img">
         <h3>Dada Extra Soft 6</h3>
         <div class="price">250 грн</div>
-        <button class="buy-btn" onclick="flyToCart(this)">В кошик</button>
+        <button class="buy-btn" onclick="animateToCart(this)">В кошик</button>
     </div>
     <div class="card" data-cat="pets">
-        <img src="https://i.ibb.co/2FDgpWxPc3/2F619939933.webp" class="p-img">
+        <img src="https://i.ibb.co/2FDgpWxPc3/2F619939933.webp" class="prod-img">
         <h3>Корм Kitty 2кг</h3>
         <div class="price">250 грн</div>
-        <button class="buy-btn" onclick="flyToCart(this)">В кошик</button>
+        <button class="buy-btn" onclick="animateToCart(this)">В кошик</button>
     </div>
     <div class="card" data-cat="chem">
-        <img src="https://i.ibb.co/dsyN5hwf/image-processing20250930-161-45fnds.webp" class="p-img">
+        <img src="https://i.ibb.co/dsyN5hwf/image-processing20250930-161-45fnds.webp" class="prod-img">
         <h3>Ariel Gel 5.5L</h3>
         <div class="price">600 грн</div>
-        <button class="buy-btn" onclick="flyToCart(this)">В кошик</button>
+        <button class="buy-btn" onclick="animateToCart(this)">В кошик</button>
     </div>
+</div>
+
+<div class="reviews-section">
+    <h3>💬 Відгуки покупців</h3>
+    <div class="review-form">
+        <input type="text" id="revName" placeholder="Ваше ім'я">
+        <textarea id="revText" rows="3" placeholder="Ваш відгук"></textarea>
+        <button class="buy-btn" style="width: 150px;" onclick="addReview()">Надіслати</button>
+    </div>
+    <div class="review-list" id="reviewList">
+        <div class="review-item"><b>Марія:</b> Дуже зручний магазин, товари завжди свіжі!</div>
+    </div>
+</div>
+
+<div class="cart-side" id="cart">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
+        <h2 style="margin:0">Кошик</h2>
+        <button onclick="toggleCart(false)" style="background:none; border:none; font-size:24px; cursor:pointer">✕</button>
+    </div>
+    <div id="cartItems">Кошик порожній...</div>
 </div>
 
 <script>
-    // Логіка фільтрації
+    function toggleCart(show) {
+        document.getElementById('cart').classList.toggle('active', show);
+    }
+
     function filterItems(cat, btn) {
-        document.querySelectorAll('.btn-f').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
         btn.classList.add('active');
-        
         document.querySelectorAll('.card').forEach(card => {
-            if (cat === 'all' || card.getAttribute('data-cat') === cat) {
-                card.style.display = 'block';
-            } else {
-                card.style.display = 'none';
-            }
+            card.style.display = (cat === 'all' || card.dataset.cat === cat) ? 'block' : 'none';
         });
     }
 
-    // Логіка польоту
-    function flyToCart(btn) {
-        const img = btn.parentElement.querySelector('.p-img');
-        const cart = document.getElementById('cart-icon');
+    function addReview() {
+        const name = document.getElementById('revName').value;
+        const text = document.getElementById('revText').value;
+        if(name && text) {
+            const list = document.getElementById('reviewList');
+            const item = document.createElement('div');
+            item.className = 'review-item';
+            item.innerHTML = `<b>${name}:</b> ${text}`;
+            list.prepend(item);
+            document.getElementById('revName').value = '';
+            document.getElementById('revText').value = '';
+        }
+    }
+
+    function animateToCart(btn) {
+        const img = btn.parentElement.querySelector('.prod-img');
+        const cart = document.getElementById('cart-target');
         const clone = img.cloneNode();
-        const r = img.getBoundingClientRect();
-        const cr = cart.getBoundingClientRect();
+        const imgRect = img.getBoundingClientRect();
+        const cartRect = cart.getBoundingClientRect();
 
         Object.assign(clone.style, {
-            position: 'fixed', left: r.left + 'px', top: r.top + 'px',
-            width: r.width + 'px', height: r.height + 'px', zIndex: 10000
+            position: 'fixed', left: imgRect.left + 'px', top: imgRect.top + 'px',
+            width: imgRect.width + 'px', height: imgRect.height + 'px', zIndex: 9999
         });
 
         clone.classList.add('flyer');
@@ -127,12 +174,19 @@
 
         setTimeout(() => {
             Object.assign(clone.style, {
-                left: cr.left + 'px', top: cr.top + 'px',
-                width: '20px', height: '20px', opacity: '0', transform: 'rotate(720deg)'
+                left: cartRect.left + 'px', top: cartRect.top + 'px',
+                width: '20px', height: '20px', opacity: '0.2', transform: 'rotate(720deg)'
             });
         }, 50);
 
         setTimeout(() => clone.remove(), 1200);
+    }
+
+    // Закриття меню налаштувань при кліку зовні
+    window.onclick = function(e) {
+        if (!e.target.closest('.nav-icons')) {
+            document.getElementById('setM').classList.remove('active');
+        }
     }
 </script>
 
