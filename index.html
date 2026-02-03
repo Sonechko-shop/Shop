@@ -6,76 +6,20 @@
     <title>СОНЕЧКО — Супермаркет</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
-        :root { 
-            --primary: #83b735; 
-            --bg: #f4f7f6; 
-            --white: #ffffff; 
-            --text: #333333; 
-            --shadow: 0 10px 25px rgba(0,0,0,0.05); 
-        }
-        body.dark-mode { 
-            --bg: #1a1a1a; 
-            --white: #2d2d2d; 
-            --text: #f0f2f5; 
-            --shadow: 0 10px 30px rgba(0,0,0,0.3); 
-        }
-        body { 
-            font-family: 'Inter', sans-serif; 
-            margin: 0; 
-            background: var(--bg); 
-            color: var(--text); 
-            transition: 0.3s; 
-            overflow-x: hidden;
-        }
+        :root { --primary: #83b735; --bg: #f4f7f6; --white: #ffffff; --text: #333333; --shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        body.dark-mode { --bg: #1a1a1a; --white: #2d2d2d; --text: #f0f2f5; --shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        body { font-family: 'Inter', sans-serif; margin: 0; background: var(--bg); color: var(--text); transition: 0.3s; overflow-x: hidden; }
 
-        /* ШАПКА */
-        .navbar { 
-            background: var(--white); 
-            padding: 12px 5%; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            position: sticky; 
-            top: 0; 
-            z-index: 1000; 
-            box-shadow: 0 2px 15px rgba(0,0,0,0.03); 
-        }
-        .logo { 
-            font-size: 22px; 
-            font-weight: 900; 
-            color: #444; 
-            text-decoration: none; 
-            text-transform: uppercase; 
-        }
+        .navbar { background: var(--white); padding: 12px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.03); }
+        .logo { font-size: 22px; font-weight: 900; color: #444; text-decoration: none; text-transform: uppercase; }
         .logo span { color: #f39c12; }
-
         .nav-btns { display: flex; gap: 10px; align-items: center; position: relative; }
-        .icon-btn { 
-            background: #f8f9fa; 
-            border: none; 
-            width: 42px; 
-            height: 42px; 
-            border-radius: 12px; 
-            cursor: pointer; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            font-size: 18px; 
-            transition: 0.3s; 
-            color: #666; 
-        }
+        .icon-btn { background: #f8f9fa; border: none; width: 42px; height: 42px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: 0.3s; color: #666; }
 
-        /* МЕНЮ */
-        .drop-menu { 
-            position: absolute; top: 55px; right: 0; background: var(--white); 
-            border-radius: 18px; box-shadow: var(--shadow); display: none; 
-            flex-direction: column; width: 200px; z-index: 1001; 
-            border: 1px solid rgba(0,0,0,0.05); overflow: hidden;
-        }
+        .drop-menu { position: absolute; top: 55px; right: 0; background: var(--white); border-radius: 18px; box-shadow: var(--shadow); display: none; flex-direction: column; width: 200px; z-index: 1001; border: 1px solid rgba(0,0,0,0.05); overflow: hidden; }
         .drop-menu.active { display: flex; }
         .drop-item { padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #f1f1f1; cursor: pointer; font-size: 14px; color: var(--text); }
 
-        /* КАТЕГОРІЇ ТА СЛАЙДЕР */
         .slider { width: 92%; margin: 20px auto; height: 320px; border-radius: 35px; overflow: hidden; position: relative; box-shadow: var(--shadow); }
         .slide { width: 100%; height: 100%; position: absolute; opacity: 0; transition: 1s; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; }
         .slide.active { opacity: 1; }
@@ -86,7 +30,6 @@
         .btn-filter { background: var(--white); border: none; padding: 10px 20px; border-radius: 25px; cursor: pointer; font-weight: 700; box-shadow: var(--shadow); color: #666; transition: 0.3s; }
         .btn-filter.active { color: var(--primary); outline: 2px solid var(--primary); }
 
-        /* КАРТКИ ТОВАРІВ */
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; padding: 0 5% 50px; }
         .card { background: var(--white); border-radius: 30px; padding: 25px; text-align: center; box-shadow: var(--shadow); transition: 0.3s; position: relative; }
         .stock-tag { background: #f1f3f2; color: var(--primary); padding: 4px 12px; border-radius: 10px; font-size: 11px; font-weight: 700; margin-bottom: 15px; display: inline-block; }
@@ -94,7 +37,6 @@
         .price { font-size: 20px; font-weight: 800; color: var(--primary); margin: 10px 0; }
         .btn-buy { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 18px; width: 100%; font-weight: 800; cursor: pointer; }
 
-        /* КОШИК */
         .cart-panel { position: fixed; right: -100%; top: 0; width: 380px; height: 100%; background: var(--white); z-index: 2500; transition: 0.5s; display: flex; flex-direction: column; box-shadow: -10px 0 30px rgba(0,0,0,0.1); }
         .cart-panel.active { right: 0; }
         .cart-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
@@ -104,26 +46,13 @@
         .item-info { flex: 1; min-width: 0; }
         .item-name { font-weight: 700; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .item-price { color: var(--primary); font-weight: 800; font-size: 14px; }
-        .item-controls { display: flex; align-items: center; gap: 8px; background: #fff; padding: 4px 8px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
+        .item-controls { display: flex; align-items: center; gap: 8px; background: #fff; padding: 4px 8px; border-radius: 10px; }
         .qty-btn { background: none; border: none; color: var(--primary); font-weight: 900; font-size: 16px; cursor: pointer; }
         .cart-footer { padding: 25px; border-top: 1px solid #eee; background: #fff; }
         .badge { background: var(--primary); color: white; padding: 2px 7px; border-radius: 50%; font-size: 11px; position: absolute; top: -5px; right: -5px; font-weight: bold; }
 
-        /* АНІМАЦІЯ ПОЛЬОТУ */
-        .fly-item {
-            position: fixed;
-            z-index: 9999;
-            width: 50px;
-            height: 50px;
-            object-fit: contain;
-            pointer-events: none;
-            transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-            border-radius: 50%;
-            background: white;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
+        .fly-item { position: fixed; z-index: 9999; width: 60px; height: 60px; object-fit: contain; pointer-events: none; transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 10px; }
 
-        /* ВІДГУКИ */
         .reviews-section { padding: 50px 5%; background: #fcfdfd; text-align: center; border-radius: 40px 40px 0 0; }
         .rev-form { background: var(--white); padding: 30px; border-radius: 25px; box-shadow: var(--shadow); max-width: 600px; margin: 0 auto 30px; }
         .rev-input { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #eee; margin-bottom: 15px; font-family: inherit; }
@@ -137,72 +66,34 @@
     <div class="nav-btns">
         <button class="icon-btn" onclick="toggleM('callM')">📞</button>
         <div class="drop-menu" id="callM">
-            <a href="tel:+380684900068" class="drop-item">📞 <span data-l="c1">Подзвонити</span></a>
-            <a href="viber://chat?number=%2B380684900068" class="drop-item">💬 Viber</a>
+            <a href="tel:+380684900068" class="drop-item">📞 <span>Подзвонити</span></a>
         </div>
         <button class="icon-btn" onclick="toggleM('setM')">⚙️</button>
         <div class="drop-menu" id="setM">
-            <div class="drop-item">
-                <span data-l="s1">Мова</span>
-                <select onchange="setL(this.value)" style="border:none; background:none; font-weight:700; cursor:pointer">
-                    <option value="uk">UA</option>
-                    <option value="ru">RU</option>
-                </select>
-            </div>
-            <div class="drop-item" onclick="document.body.classList.toggle('dark-mode')">
-                <span data-l="s2">Темна тема</span> 🌓
-            </div>
+            <div class="drop-item"><span>Мова</span> <select onchange="setL(this.value)"><option value="uk">UA</option><option value="ru">RU</option></select></div>
+            <div class="drop-item" onclick="document.body.classList.toggle('dark-mode')"><span>Тема</span> 🌓</div>
         </div>
-        <button class="icon-btn" id="cart-btn" onclick="tCart(true)" style="position:relative">
-            🛒 <span id="count" class="badge">0</span>
-        </button>
+        <button class="icon-btn" id="cart-btn" onclick="tCart(true)" style="position:relative">🛒 <span id="count" class="badge">0</span></button>
     </div>
 </nav>
 
 <div id="shop">
-    <div class="slider">
-        <div class="slide active" style="background-image: url('https://i.ibb.co/dsyN5hwf/image-processing20250930-161-45fnds.webp')">
-            <div class="slide-overlay"></div>
-            <div class="slide-text" data-l="t1">НОВЕ НАДХОДЖЕННЯ! 👋</div>
-        </div>
-        <div class="slide" style="background-image: url('https://i.ibb.co/vyDyh7g/image.jpg')">
-            <div class="slide-overlay"></div>
-            <div class="slide-text" data-l="t2">КРАЩА ЦІНА ДЛЯ ВАС! ✨</div>
-        </div>
-    </div>
-
-    <div class="filter-bar">
-        <button class="btn-filter active" onclick="fCat('all', this)" data-l="f1">Все разом</button>
-        <button class="btn-filter" onclick="fCat('baby', this)" data-l="f2">Дитяче 👶</button>
-        <button class="btn-filter" onclick="fCat('pets', this)" data-l="f3">Тварини 🐾</button>
-        <button class="btn-filter" onclick="fCat('chem', this)" data-l="f4">Хімія 🧼</button>
-    </div>
-
+    <div class="slider"><div class="slide active" style="background-image: url('https://i.ibb.co/dsyN5hwf/image-processing20250930-161-45fnds.webp')"><div class="slide-overlay"></div><div class="slide-text">НОВЕ НАДХОДЖЕННЯ! 👋</div></div></div>
+    <div class="filter-bar"><button class="btn-filter active" onclick="fCat('all', this)">Все разом</button></div>
     <div class="grid" id="products"></div>
-
     <div class="reviews-section">
-        <h2 data-l="r_h">💬 Відгуки</h2>
-        <div class="rev-form">
-            <input type="text" id="r-name" class="rev-input" placeholder="Ваше ім'я">
-            <textarea id="r-msg" class="rev-input" style="height:80px" placeholder="Ваш коментар"></textarea>
-            <button class="btn-buy" onclick="addR()" data-l="r_b">Залишити відгук</button>
-        </div>
+        <h2>💬 Відгуки</h2>
+        <div class="rev-form"><input type="text" id="r-name" class="rev-input" placeholder="Ім'я"><textarea id="r-msg" class="rev-input" placeholder="Відгук"></textarea><button class="btn-buy" onclick="addR()">Надіслати</button></div>
         <div id="rev-list"></div>
     </div>
 </div>
 
 <div class="cart-panel" id="cart-p">
-    <div class="cart-header">
-        <h2 style="margin:0" data-l="ct">Кошик</h2>
-        <button onclick="tCart(false)" style="background:none; border:none; font-size:24px; cursor:pointer">✕</button>
-    </div>
+    <div class="cart-header"><h2>Кошик</h2><button onclick="tCart(false)" style="background:none; border:none; font-size:24px; cursor:pointer">✕</button></div>
     <div class="cart-items" id="items"></div>
     <div class="cart-footer">
-        <div style="display:flex; justify-content:space-between; margin-bottom:20px; font-size:18px">
-            <span data-l="sum">Разом:</span>
-            <b><span id="total">0</span> грн</b>
-        </div>
-        <button class="btn-buy" onclick="alert('Замовлення прийнято!')" style="padding:18px" data-l="bo">ОФОРМИТИ</button>
+        <div style="display:flex; justify-content:space-between; margin-bottom:20px;"><span>Разом:</span><b><span id="total">0</span> грн</b></div>
+        <button class="btn-buy" onclick="alert('Оформлено!')">ОФОРМИТИ</button>
     </div>
 </div>
 
@@ -214,121 +105,76 @@
         { id: 3, name: "Ariel Gel 5.5L", price: 600, stock: "10 шт.", cat: "chem", img: "https://i.ibb.co/dsyN5hwf/image-processing20250930-161-45fnds.webp" }
     ];
 
-    const translations = {
-        uk: { t1: "НОВЕ НАДХОДЖЕННЯ! 👋", f1: "Все разом", f2: "Дитяче 👶", f3: "Тварини 🐾", f4: "Хімія 🧼", ct: "Кошик", bo: "Оформити", s1: "Мова", s2: "Темна тема", c1: "Подзвонити", sum: "Разом:", r_h: "Відгуки", r_b: "Залишити відгук" },
-        ru: { t1: "НОВОЕ ПОСТУПЛЕНИЕ! 👋", f1: "Все сразу", f2: "Детское 👶", f3: "Животные 🐾", f4: "Химия 🧼", ct: "Корзина", bo: "Оформить", s1: "Язык", s2: "Темная тема", c1: "Позвонить", sum: "Итого:", r_h: "Отзывы", r_b: "Оставить отзыв" }
-    };
-
-    function setL(l) { document.querySelectorAll('[data-l]').forEach(el => { el.innerText = translations[l][el.dataset.l]; }); }
     function toggleM(id) { document.querySelectorAll('.drop-menu').forEach(m => { if(m.id !== id) m.classList.remove('active'); }); document.getElementById(id).classList.toggle('active'); }
 
     function render() {
         document.getElementById('products').innerHTML = prods.map(p => `
-            <div class="card" data-cat="${p.cat}" id="prod-${p.id}">
+            <div class="card">
                 <div class="stock-tag">${p.stock}</div>
                 <img src="${p.img}" class="prod-img">
-                <div class="item-name" style="font-weight:700; margin-bottom:10px; height:40px">${p.name}</div>
+                <div class="item-name">${p.name}</div>
                 <div class="price">${p.price} грн</div>
-                <button class="btn-buy" onclick="add(${p.id}, this)">Додати в кошик</button>
+                <button class="btn-buy" onclick="addToCart(${p.id}, this)">Додати в кошик</button>
             </div>
         `).join('');
     }
 
-    // АНІМАЦІЯ ПОЛЬОТУ
-    function animateToCart(btn) {
-        const cartBtn = document.getElementById('cart-btn');
+    function addToCart(id, btn) {
         const img = btn.parentElement.querySelector('.prod-img');
-        const clone = img.cloneNode(true);
-        
+        const cartBtn = document.getElementById('cart-btn');
+        const clone = img.cloneNode();
         const rect = img.getBoundingClientRect();
         const cartRect = cartBtn.getBoundingClientRect();
 
-        Object.assign(clone.style, {
-            position: 'fixed',
-            left: rect.left + 'px',
-            top: rect.top + 'px',
-            width: rect.width + 'px',
-            height: rect.height + 'px',
-            zIndex: 9999,
-            transition: 'all 0.8s cubic-bezier(0.19, 1, 0.22, 1)',
-            borderRadius: '50%',
-            opacity: '0.8'
-        });
-
+        Object.assign(clone.style, { position: 'fixed', left: rect.left+'px', top: rect.top+'px', width: rect.width+'px', height: rect.height+'px', zIndex: 10000 });
+        clone.classList.add('fly-item');
         document.body.appendChild(clone);
 
         setTimeout(() => {
-            Object.assign(clone.style, {
-                left: cartRect.left + 10 + 'px',
-                top: cartRect.top + 10 + 'px',
-                width: '10px',
-                height: '10px',
-                opacity: '0'
-            });
-        }, 50);
+            Object.assign(clone.style, { left: cartRect.left+'px', top: cartRect.top+'px', width: '20px', height: '20px', opacity: '0.5' });
+        }, 10);
 
-        setTimeout(() => {
-            clone.remove();
-            cartBtn.classList.add('animate__animated', 'animate__rubberBand');
-            setTimeout(() => cartBtn.classList.remove('animate__rubberBand'), 1000);
-        }, 800);
-    }
+        setTimeout(() => { 
+            clone.remove(); 
+            cartBtn.classList.add('animate__animated', 'animate__bounceIn');
+            setTimeout(() => cartBtn.classList.remove('animate__animated', 'animate__bounceIn'), 500);
+        }, 700);
 
-    function add(id, btn) {
-        animateToCart(btn);
         const item = cart.find(x => x.id === id);
-        if(item) { item.qty++; } else { cart.push({...prods.find(x => x.id === id), qty: 1}); }
-        updateCart();
+        if(item) item.qty++; else cart.push({...prods.find(x => x.id === id), qty: 1});
+        updateUI();
     }
 
     function changeQty(idx, delta) {
         cart[idx].qty += delta;
         if(cart[idx].qty <= 0) cart.splice(idx, 1);
-        updateCart();
+        updateUI();
     }
 
-    function updateCart() {
+    function updateUI() {
         document.getElementById('count').innerText = cart.reduce((a, b) => a + b.qty, 0);
         document.getElementById('total').innerText = cart.reduce((a, b) => a + (b.price * b.qty), 0);
         document.getElementById('items').innerHTML = cart.map((i, idx) => `
             <div class="cart-item">
                 <img src="${i.img}">
-                <div class="item-info">
-                    <div class="item-name">${i.name}</div>
-                    <div class="item-price">${i.price * i.qty} грн</div>
-                </div>
+                <div class="item-info"><div class="item-name">${i.name}</div><div class="item-price">${i.price * i.qty} грн</div></div>
                 <div class="item-controls">
                     <button class="qty-btn" onclick="changeQty(${idx}, -1)">-</button>
-                    <span style="font-weight:bold; min-width:15px; text-align:center">${i.qty}</span>
+                    <span style="font-weight:bold">${i.qty}</span>
                     <button class="qty-btn" onclick="changeQty(${idx}, 1)">+</button>
                 </div>
-                <button onclick="cart.splice(${idx}, 1); updateCart()" style="border:none; background:none; cursor:pointer">🗑️</button>
+                <button onclick="cart.splice(${idx}, 1); updateUI()" style="border:none; background:none; cursor:pointer">🗑️</button>
             </div>
         `).join('');
     }
 
     function tCart(s) { document.getElementById('cart-p').classList.toggle('active', s); }
-    function fCat(c, b) {
-        document.querySelectorAll('.btn-filter').forEach(x => x.classList.remove('active'));
-        b.classList.add('active');
-        document.querySelectorAll('.card').forEach(x => x.style.display = (c === 'all' || x.dataset.cat === c) ? 'block' : 'none');
-    }
-
     function addR() {
         const n = document.getElementById('r-name').value, m = document.getElementById('r-msg').value;
-        if(n && m) {
-            document.getElementById('rev-list').innerHTML += `<div class="rev-card"><div><b>${n}:</b> ${m}</div><button onclick="this.parentElement.remove()" style="border:none; background:none; cursor:pointer">🗑️</button></div>`;
-            document.getElementById('r-name').value = ''; document.getElementById('r-msg').value = '';
-        }
+        if(n && m) { document.getElementById('rev-list').innerHTML += `<div class="rev-card"><div><b>${n}:</b> ${m}</div></div>`; document.getElementById('r-name').value=''; document.getElementById('r-msg').value=''; }
     }
 
     window.onclick = (e) => { if (!e.target.closest('.nav-btns')) document.querySelectorAll('.drop-menu').forEach(m => m.classList.remove('active')); }
-    
-    let cur = 0; setInterval(() => {
-        let s = document.querySelectorAll('.slide');
-        if(s.length) { s[cur].classList.remove('active'); cur = (cur + 1) % s.length; s[cur].classList.add('active'); }
-    }, 5000);
-
     render();
 </script>
 </body>
