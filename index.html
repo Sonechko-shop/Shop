@@ -4,115 +4,203 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>СОНЕЧКО — Супермаркет</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap" rel="stylesheet">
 
 <style>
 :root{
---primary:#83b735;--bg:#f8faf9;--white:#fff;--card-bg:#fff;--text:#333;--nav-bg:rgba(255,255,255,.9)
+--primary:#83b735;--bg:#f8faf9;--card:#fff;--text:#333
 }
-body.dark-mode{
---bg:#121212;--white:#1e1e1e;--card-bg:#1e1e1e;--text:#e0e0e0;--nav-bg:rgba(30,30,30,.95)
+body{
+margin:0;font-family:Segoe UI,Roboto,sans-serif;
+background:var(--bg);color:var(--text)
 }
-body{margin:0;font-family:'Segoe UI';background:var(--bg);color:var(--text);transition:.3s}
-#preloader{position:fixed;inset:0;background:#fff;z-index:9999;display:flex;align-items:center;justify-content:center}
-body.loaded #preloader{opacity:0;pointer-events:none}
-.navbar{display:flex;justify-content:space-between;align-items:center;padding:12px 5%;background:var(--nav-bg);backdrop-filter:blur(15px);position:sticky;top:0;z-index:1000}
-.logo{font-family:Montserrat;font-size:30px;text-decoration:none}
+
+/* PRELOADER */
+#preloader{
+position:fixed;inset:0;
+background:#fff;
+display:flex;align-items:center;justify-content:center;
+z-index:9999;
+}
+body.loaded #preloader{display:none}
+
+/* NAV */
+.navbar{
+display:flex;align-items:center;justify-content:space-between;
+padding:12px 5%;background:white;position:sticky;top:0
+}
+.logo{font-family:Montserrat;font-size:28px}
 .blue{color:#0057b7}.yellow{color:#ffd700}
-.search-container{flex:1;max-width:500px;margin:0 20px;background:rgba(0,0,0,.05);border-radius:40px}
-.search-container input{width:100%;padding:12px;border:none;background:transparent}
-.icon-btn{width:50px;height:50px;border:none;border-radius:18px;background:rgba(0,0,0,.05);cursor:pointer;font-size:22px;position:relative}
-.cart-count{position:absolute;top:-5px;right:-5px;background:#ff4757;color:#fff;font-size:12px;padding:2px 6px;border-radius:10px}
-.hero{width:92%;height:350px;margin:20px auto;border-radius:40px;background:url('https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=1350&q=80') center/cover}
-.hero-overlay{inset:0;position:absolute;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center}
-.glass-box{background:rgba(255,255,255,.15);backdrop-filter:blur(10px);padding:30px;border-radius:30px;color:white}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:25px;padding:20px 5%}
-.card{background:var(--card-bg);border-radius:35px;padding:25px;text-align:center}
-.card img{width:100%;height:180px;object-fit:contain;background:#fff;border-radius:20px}
-.buy-btn{background:var(--primary);border:none;color:white;padding:15px;border-radius:18px;font-weight:800;width:100%;cursor:pointer}
-.cart-panel{position:fixed;right:-100%;top:0;width:380px;height:100%;background:var(--card-bg);transition:.5s;z-index:3000;padding:30px}
+.icon-btn{
+width:46px;height:46px;border:none;border-radius:14px;
+background:#eee;font-size:22px;cursor:pointer;position:relative
+}
+.cart-count{
+position:absolute;top:-6px;right:-6px;
+background:red;color:white;font-size:12px;
+padding:2px 6px;border-radius:10px
+}
+
+/* HERO */
+.hero{
+margin:20px auto;width:92%;height:300px;border-radius:30px;
+background:url('https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=1350&q=80') center/cover;
+display:flex;align-items:center;justify-content:center;color:white
+}
+.hero-box{
+background:rgba(0,0,0,.4);padding:30px;border-radius:25px;text-align:center
+}
+
+/* PRODUCTS */
+.grid{
+display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+gap:20px;padding:20px 5%
+}
+.card{
+background:var(--card);border-radius:25px;padding:20px;text-align:center
+}
+.card img{
+width:100%;height:160px;object-fit:contain;background:white;border-radius:15px
+}
+.buy-btn{
+margin-top:10px;width:100%;padding:12px;
+border:none;border-radius:16px;
+background:var(--primary);color:white;font-weight:800;cursor:pointer
+}
+
+/* CART */
+.cart-panel{
+position:fixed;right:-100%;top:0;width:340px;height:100%;
+background:white;box-shadow:-10px 0 30px rgba(0,0,0,.2);
+transition:.4s;padding:20px;z-index:3000
+}
 .cart-panel.active{right:0}
-.qty-btn{width:28px;height:28px;border:none;border-radius:8px;background:var(--primary);color:white;font-weight:900;cursor:pointer}
-.flying-item{position:fixed;width:50px;height:50px;border-radius:50%;border:2px solid var(--primary);background:white;z-index:9999;transition:.8s}
-.reviews{width:85%;margin:40px auto;background:var(--card-bg);padding:30px;border-radius:35px}
-.rev-input{width:100%;padding:12px;margin-bottom:10px;border-radius:12px;border:1px solid #ccc}
+.qty-btn{
+width:26px;height:26px;border:none;border-radius:8px;
+background:var(--primary);color:white;font-weight:900;cursor:pointer
+}
+
+/* FLY */
+.flying{
+position:fixed;width:40px;height:40px;
+border-radius:50%;border:2px solid var(--primary);
+background:white;z-index:9999;transition:.7s
+}
+
+/* REVIEWS */
+.reviews{
+width:85%;margin:30px auto;
+background:white;padding:25px;border-radius:30px
+}
+.rev-input{
+width:100%;padding:10px;margin-bottom:10px;border-radius:10px;border:1px solid #ccc
+}
 </style>
 </head>
 
 <body>
+
 <div id="preloader"><h2>☀️ СОНЕЧКО...</h2></div>
 
 <nav class="navbar">
-<a class="logo"><span class="blue">СОНЕ</span><span class="yellow">ЧКО</span></a>
-<div class="search-container"><input id="searchInput" placeholder="Пошук..." oninput="searchFunc()"></div>
-<button class="icon-btn" onclick="toggleCart(true)">🛒<span class="cart-count" id="cart-badge" style="display:none">0</span></button>
+<div class="logo"><span class="blue">СОНЕ</span><span class="yellow">ЧКО</span></div>
+<button class="icon-btn" onclick="openCart()">🛒
+<span class="cart-count" id="cartCount" style="display:none">0</span>
+</button>
 </nav>
 
-<div class="hero"><div class="hero-overlay"><div class="glass-box">
-<h1 id="t-hero-h1">СОНЕЧКО ДАРУЄ ТЕПЛО 👋</h1>
-<p id="t-hero-p">Найкращі товари для родини</p>
-</div></div></div>
+<div class="hero">
+<div class="hero-box">
+<h1>СОНЕЧКО ДАРУЄ ТЕПЛО 👋</h1>
+<p>Найкращі товари для родини</p>
+</div>
+</div>
 
 <div class="grid">
-<div class="card" data-name="Dada">
+<div class="card">
 <img src="https://i.ibb.co/vyDyh7g/image.jpg">
 <h3>Dada Extra Soft</h3>
-<div>250 грн</div>
+<b>250 грн</b>
 <button class="buy-btn" onclick="addToCart(this,'Dada',250,'https://i.ibb.co/vyDyh7g/image.jpg')">В кошик</button>
+</div>
+
+<div class="card">
+<img src="https://i.ibb.co/L64M6S9/ariel.jpg">
+<h3>Ariel Pods</h3>
+<b>320 грн</b>
+<button class="buy-btn" onclick="addToCart(this,'Ariel',320,'https://i.ibb.co/L64M6S9/ariel.jpg')">В кошик</button>
 </div>
 </div>
 
 <div class="cart-panel" id="cartPanel">
 <h2>Кошик</h2>
-<div id="cartContent"></div>
-<h3>Разом: <span id="totalSum">0</span> грн</h3>
+<div id="cartItems"></div>
+<h3>Разом: <span id="total">0</span> грн</h3>
+<button class="buy-btn" onclick="closeCart()">Закрити</button>
 </div>
 
 <div class="reviews">
-<h2 id="t-rev-h">Відгуки 💬</h2>
-<div id="reviewsList"></div>
-<input class="rev-input" id="revName" placeholder="Імʼя">
-<textarea class="rev-input" id="revText" placeholder="Відгук"></textarea>
+<h2>Відгуки 💬</h2>
+<div id="reviews"></div>
+<input class="rev-input" id="rName" placeholder="Імʼя">
+<textarea class="rev-input" id="rText" placeholder="Відгук"></textarea>
 <button class="buy-btn" onclick="addReview()">Надіслати</button>
 </div>
 
 <script>
-let cart={},reviews=[];
-function toggleCart(s){cartPanel.classList.toggle('active',s)}
-function addToCart(btn,n,p,img){
-let b=btn.getBoundingClientRect(),c=document.querySelector('.icon-btn').getBoundingClientRect();
-let f=document.createElement('img');f.src=img;f.className='flying-item';
-f.style.left=b.left+'px';f.style.top=b.top+'px';document.body.appendChild(f);
-setTimeout(()=>{f.style.left=c.left+'px';f.style.top=c.top+'px';f.style.transform='scale(.1)';f.style.opacity=0},50);
-setTimeout(()=>f.remove(),800);
-cart[n]?cart[n].qty++:cart[n]={price:p,qty:1,img};updateCart()
+/* PRELOADER */
+window.onload=()=>document.body.classList.add('loaded')
+
+/* CART */
+let cart={}
+function openCart(){cartPanel.classList.add('active')}
+function closeCart(){cartPanel.classList.remove('active')}
+
+function addToCart(btn,name,price,img){
+const b=btn.getBoundingClientRect()
+const c=document.querySelector('.icon-btn').getBoundingClientRect()
+const f=document.createElement('img')
+f.src=img;f.className='flying'
+f.style.left=b.left+'px';f.style.top=b.top+'px'
+document.body.appendChild(f)
+setTimeout(()=>{
+f.style.left=c.left+'px';f.style.top=c.top+'px';f.style.transform='scale(.1)';f.style.opacity=0
+},50)
+setTimeout(()=>f.remove(),700)
+
+cart[name]?cart[name].q++:cart[name]={p:price,q:1}
+renderCart()
 }
-function updateCart(){
-let h='',t=0,c=0;
+
+function renderCart(){
+let h='',sum=0,count=0
 for(let n in cart){
-t+=cart[n].price*cart[n].qty;c+=cart[n].qty;
-h+=`<div>${n} ${cart[n].qty}
+sum+=cart[n].p*cart[n].q
+count+=cart[n].q
+h+=`${n} ${cart[n].q}
 <button class="qty-btn" onclick="chg('${n}',-1)">-</button>
-<button class="qty-btn" onclick="chg('${n}',1)">+</button></div>`
+<button class="qty-btn" onclick="chg('${n}',1)">+</button><br>`
 }
-cartContent.innerHTML=h||'Порожньо';totalSum.innerText=t;
-cart-badge.style.display=c?'block':'none';cart-badge.innerText=c
+cartItems.innerHTML=h||'Порожньо'
+total.innerText=sum
+cartCount.innerText=count
+cartCount.style.display=count?'block':'none'
 }
-function chg(n,d){cart[n].qty+=d;if(cart[n].qty<=0)delete cart[n];updateCart()}
+
+function chg(n,d){
+cart[n].q+=d
+if(cart[n].q<=0)delete cart[n]
+renderCart()
+}
+
+/* REVIEWS */
 function addReview(){
-let n=revName.value,t=revText.value;if(!n||!t)return;
-reviews.push({n,t});revName.value=revText.value='';renderReviews()
+if(!rName.value||!rText.value)return
+reviews.innerHTML+=`<div><b>${rName.value}</b><br>${rText.value}</div>`
+rName.value=rText.value=''
 }
-function renderReviews(){
-reviewsList.innerHTML=reviews.map(r=>`<div><b>${r.n}</b><br>${r.t}</div>`).join('')
-}
-function searchFunc(){
-let v=searchInput.value.toLowerCase();
-document.querySelectorAll('.card').forEach(c=>{
-c.style.display=c.dataset.name.toLowerCase().includes(v)?'block':'none'
-})
-}
-window.onload=()=>setTimeout(()=>document.body.classList.add('loaded'),800)
 </script>
+
 </body>
 </html>
