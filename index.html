@@ -1,206 +1,329 @@
 <!DOCTYPE html>
+
 <html lang="uk">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>СОНЕЧКО — Супермаркет</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
 
-<style>
-:root{
---primary:#83b735;--bg:#f8faf9;--card:#fff;--text:#333
-}
-body{
-margin:0;font-family:Segoe UI,Roboto,sans-serif;
-background:var(--bg);color:var(--text)
-}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-/* PRELOADER */
-#preloader{
-position:fixed;inset:0;
-background:#fff;
-display:flex;align-items:center;justify-content:center;
-z-index:9999;
-}
-body.loaded #preloader{display:none}
+    <title>СОНЕЧКО — Супермаркет</title>
 
-/* NAV */
-.navbar{
-display:flex;align-items:center;justify-content:space-between;
-padding:12px 5%;background:white;position:sticky;top:0
-}
-.logo{font-family:Montserrat;font-size:28px}
-.blue{color:#0057b7}.yellow{color:#ffd700}
-.icon-btn{
-width:46px;height:46px;border:none;border-radius:14px;
-background:#eee;font-size:22px;cursor:pointer;position:relative
-}
-.cart-count{
-position:absolute;top:-6px;right:-6px;
-background:red;color:white;font-size:12px;
-padding:2px 6px;border-radius:10px
-}
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap" rel="stylesheet">
 
-/* HERO */
-.hero{
-margin:20px auto;width:92%;height:300px;border-radius:30px;
-background:url('https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=1350&q=80') center/cover;
-display:flex;align-items:center;justify-content:center;color:white
-}
-.hero-box{
-background:rgba(0,0,0,.4);padding:30px;border-radius:25px;text-align:center
-}
+    <style>
 
-/* PRODUCTS */
-.grid{
-display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
-gap:20px;padding:20px 5%
-}
-.card{
-background:var(--card);border-radius:25px;padding:20px;text-align:center
-}
-.card img{
-width:100%;height:160px;object-fit:contain;background:white;border-radius:15px
-}
-.buy-btn{
-margin-top:10px;width:100%;padding:12px;
-border:none;border-radius:16px;
-background:var(--primary);color:white;font-weight:800;cursor:pointer
-}
+        :root { 
 
-/* CART */
-.cart-panel{
-position:fixed;right:-100%;top:0;width:340px;height:100%;
-background:white;box-shadow:-10px 0 30px rgba(0,0,0,.2);
-transition:.4s;padding:20px;z-index:3000
-}
-.cart-panel.active{right:0}
-.qty-btn{
-width:26px;height:26px;border:none;border-radius:8px;
-background:var(--primary);color:white;font-weight:900;cursor:pointer
-}
+            --primary: #83b735; 
 
-/* FLY */
-.flying{
-position:fixed;width:40px;height:40px;
-border-radius:50%;border:2px solid var(--primary);
-background:white;z-index:9999;transition:.7s
-}
+            --bg: #f8faf9; 
 
-/* REVIEWS */
-.reviews{
-width:85%;margin:30px auto;
-background:white;padding:25px;border-radius:30px
-}
-.rev-input{
-width:100%;padding:10px;margin-bottom:10px;border-radius:10px;border:1px solid #ccc
-}
-</style>
+            --white: #ffffff; 
+
+            --card-bg: #ffffff;
+
+            --text: #333333;
+
+            --nav-bg: rgba(255, 255, 255, 0.9);
+
+        }
+
+        
+
+        body.dark-mode { 
+
+            --bg: #121212; 
+
+            --white: #1e1e1e; 
+
+            --card-bg: #1e1e1e;
+
+            --text: #e0e0e0; 
+
+            --nav-bg: rgba(30, 30, 30, 0.95);
+
+        }
+
+        
+
+        body { 
+
+            font-family: 'Segoe UI', Roboto, sans-serif; 
+
+            margin: 0; background: var(--bg); color: var(--text); 
+
+            transition: 0.3s; overflow-x: hidden; 
+
+        }
+
+
+
+        #preloader { position: fixed; inset: 0; background: #ffffff; z-index: 10000; display: flex; align-items: center; justify-content: center; transition: 1s; }
+
+        body.loaded #preloader { opacity: 0; pointer-events: none; }
+
+
+
+        .navbar { 
+
+            background: var(--nav-bg); backdrop-filter: blur(15px);
+
+            padding: 12px 5%; display: flex; justify-content: space-between; align-items: center;
+
+            box-shadow: 0 4px 30px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; 
+
+        }
+
+        .logo { font-family: 'Montserrat', sans-serif; font-size: 30px; font-weight: 900; text-decoration: none; }
+
+        .logo .blue { color: #0057b7; } .logo .yellow { color: #ffd700; }
+
+
+
+        .search-container { flex-grow: 1; max-width: 500px; display: flex; align-items: center; background: rgba(128,128,128,0.1); padding: 5px 25px; border-radius: 40px; margin: 0 20px; }
+
+        .search-container input { width: 100%; border: none; background: transparent; padding: 12px; outline: none; font-size: 16px; color: var(--text); }
+
+
+
+        .icon-btn { background: rgba(128,128,128,0.1); border: none; width: 50px; height: 50px; border-radius: 18px; cursor: pointer; font-size: 22px; position: relative; color: var(--text); }
+
+        .cart-count { position: absolute; top: -5px; right: -5px; background: #ff4757; color: white; font-size: 12px; padding: 2px 6px; border-radius: 10px; border: 2px solid var(--white); }
+
+
+
+        .hero { width: 92%; margin: 20px auto; height: 350px; border-radius: 40px; background: url('https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=1350&q=80') center/cover; position: relative; overflow: hidden; }
+
+        .hero-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; }
+
+        .glass-box { background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); padding: 30px; border-radius: 30px; text-align: center; color: white; }
+
+
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; padding: 20px 5%; }
+
+        .card { background: var(--card-bg); border-radius: 35px; padding: 25px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.3s; }
+
+        .card img { width: 100%; height: 180px; object-fit: contain; background: white; border-radius: 20px; padding: 10px; margin-bottom: 15px; }
+
+
+
+        .pill { background: var(--card-bg); border: none; padding: 10px 22px; border-radius: 25px; cursor: pointer; color: var(--text); font-weight: bold; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+
+        .pill.active { background: var(--primary); color: white; }
+
+
+
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 5000; }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal-card { background: var(--card-bg); color: var(--text); padding: 40px; border-radius: 35px; width: 90%; max-width: 400px; text-align: center; }
+
+
+
+        .cart-panel { position: fixed; right: -100%; top: 0; width: 380px; height: 100%; background: var(--card-bg); z-index: 4000; transition: 0.5s; padding: 30px; display: flex; flex-direction: column; color: var(--text); box-shadow: -10px 0 50px rgba(0,0,0,0.2); }
+
+        .cart-panel.active { right: 0; }
+
+        .cart-footer { border-top: 1px solid rgba(128,128,128,0.2); padding-top: 20px; margin-bottom: 50px; }
+
+
+
+        .buy-btn { background: var(--primary); color: white; border: none; width: 100%; padding: 15px; border-radius: 18px; font-weight: 800; cursor: pointer; transition: 0.3s; }
+
+
+
+        /* АНІМАЦІЯ ПОЛЬОТУ */
+
+        .flying-item {
+
+            position: fixed; z-index: 9999; pointer-events: none;
+
+            width: 50px; height: 50px; object-fit: contain;
+
+            background: white; border-radius: 50%; border: 2px solid var(--primary);
+
+            transition: all 0.8s cubic-bezier(0.1, 0.7, 0.1, 1);
+
+        }
+
+
+
+        .reviews { width: 85%; margin: 30px auto; padding: 30px; background: var(--card-bg); border-radius: 35px; }
+
+        .rev-input { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 12px; border: 1px solid rgba(128,128,128,0.2); background: rgba(128,128,128,0.05); color: var(--text); }
+
+    </style>
+
 </head>
 
 <body>
 
+
+
 <div id="preloader"><h2>☀️ СОНЕЧКО...</h2></div>
 
+
+
 <nav class="navbar">
-<div class="logo"><span class="blue">СОНЕ</span><span class="yellow">ЧКО</span></div>
-<button class="icon-btn" onclick="openCart()">🛒
-<span class="cart-count" id="cartCount" style="display:none">0</span>
-</button>
+
+    <a href="#" class="logo"><span class="blue">СОНЕ</span><span class="yellow">ЧКО</span></a>
+
+    <div class="search-container">
+
+        <input type="text" id="searchInput" placeholder="Шукати товари..." oninput="searchFunc()">
+
+    </div>
+
+    <div class="nav-icons">
+
+        <button class="icon-btn" onclick="openModal('callModal')">📞</button>
+
+        <button class="icon-btn" onclick="openModal('settingsModal')">⚙️</button>
+
+        <button class="icon-btn" id="cart-btn-nav" onclick="toggleCart(true)">
+
+            🛒 <span class="cart-count" id="cart-badge" style="display:none">0</span>
+
+        </button>
+
+    </div>
+
 </nav>
 
+
+
 <div class="hero">
-<div class="hero-box">
-<h1>СОНЕЧКО ДАРУЄ ТЕПЛО 👋</h1>
-<p>Найкращі товари для родини</p>
-</div>
+
+    <div class="hero-overlay">
+
+        <div class="glass-box">
+
+            <h1 id="t-hero-h1">СОНЕЧКО ДАРУЄ ТЕПЛО 👋</h1>
+
+            <p id="t-hero-p">Найкращі товари для вашої родини з любов'ю</p>
+
+        </div>
+
+    </div>
+
 </div>
 
-<div class="grid">
-<div class="card">
-<img src="https://i.ibb.co/vyDyh7g/image.jpg">
-<h3>Dada Extra Soft</h3>
-<b>250 грн</b>
-<button class="buy-btn" onclick="addToCart(this,'Dada',250,'https://i.ibb.co/vyDyh7g/image.jpg')">В кошик</button>
+
+
+<div style="display: flex; justify-content: center; gap: 10px; padding: 20px; flex-wrap: wrap;">
+
+    <button class="pill active" onclick="filter('all', this)">🌈 <span class="t-all">Все</span></button>
+
+    <button class="pill" onclick="filter('baby', this)">👶 <span class="t-baby">Дитяче</span></button>
+
+    <button class="pill" onclick="filter('pets', this)">🐾 <span class="t-pets">Тварини</span></button>
+
+    <button class="pill" onclick="filter('chem', this)">🧼 <span class="t-chem">Хімія</span></button>
+
 </div>
 
-<div class="card">
-<img src="https://i.ibb.co/L64M6S9/ariel.jpg">
-<h3>Ariel Pods</h3>
-<b>320 грн</b>
-<button class="buy-btn" onclick="addToCart(this,'Ariel',320,'https://i.ibb.co/L64M6S9/ariel.jpg')">В кошик</button>
+
+
+<div class="grid" id="productGrid">
+
+    <div class="card" data-cat="baby" data-name="Dada Extra Soft 6">
+
+        <img src="https://i.ibb.co/vyDyh7g/image.jpg" class="prod-img">
+
+        <h3>Dada Extra Soft 6</h3>
+
+        <div style="font-size: 22px; font-weight: 900; color: var(--primary); margin-bottom: 10px;">250 грн</div>
+
+        <button class="buy-btn t-add-btn" onclick="addToCart(this, 'Dada Extra Soft 6', 250, 'https://i.ibb.co/vyDyh7g/image.jpg')">В кошик</button>
+
+    </div>
+
+    <div class="card" data-cat="chem" data-name="Ariel Pods">
+
+        <img src="https://i.ibb.co/L64M6S9/ariel.jpg" class="prod-img">
+
+        <h3>Ariel Pods 3in1</h3>
+
+        <div style="font-size: 22px; font-weight: 900; color: var(--primary); margin-bottom: 10px;">320 грн</div>
+
+        <button class="buy-btn t-add-btn" onclick="addToCart(this, 'Ariel Pods', 320, 'https://i.ibb.co/L64M6S9/ariel.jpg')">В кошик</button>
+
+    </div>
+
+    <div class="card" data-cat="pets" data-name="Корм Felix">
+
+        <img src="https://i.ibb.co/0Yf9mXm/felix.jpg" onerror="this.src='https://via.placeholder.com/200?text=Felix'" class="prod-img">
+
+        <h3>Корм Felix</h3>
+
+        <div style="font-size: 22px; font-weight: 900; color: var(--primary); margin-bottom: 10px;">15 грн</div>
+
+        <button class="buy-btn t-add-btn" onclick="addToCart(this, 'Корм Felix', 15, 'https://via.placeholder.com/200?text=Felix')">В кошик</button>
+
+    </div>
+
 </div>
+
+
+
+<div class="modal-overlay" id="callModal">
+
+    <div class="modal-card">
+
+        <h2 class="t-call-h">Зв'язок 📞</h2>
+
+        <p style="font-size:22px; font-weight:900;">+38 (068) 490 00 68</p>
+
+        <button class="buy-btn" onclick="location.href='tel:+380684900068'">ДЗВІНОК</button>
+
+        <p onclick="closeModal('callModal')" style="cursor:pointer; margin-top:15px; opacity:0.6;">Закрити</p>
+
+    </div>
+
 </div>
+
+
+
+<div class="modal-overlay" id="settingsModal">
+
+    <div class="modal-card">
+
+        <h2 class="t-set-h">Налаштування ⚙️</h2>
+
+        <button class="buy-btn" style="background:#444; margin-bottom:15px;" onclick="document.body.classList.toggle('dark-mode')">Змінити тему 🌗</button>
+
+        <select class="rev-input" id="langSelect" onchange="changeLang()">
+
+            <option value="ua">🇺🇦 Українська</option>
+
+            <option value="en">🇺🇸 English</option>
+
+            <option value="pl">🇵🇱 Polski</option>
+
+        </select>
+
+        <p onclick="closeModal('settingsModal')" style="cursor:pointer; margin-top:15px; opacity:0.6;">OK</p>
+
+    </div>
+
+</div>
+
+
 
 <div class="cart-panel" id="cartPanel">
-<h2>Кошик</h2>
-<div id="cartItems"></div>
-<h3>Разом: <span id="total">0</span> грн</h3>
-<button class="buy-btn" onclick="closeCart()">Закрити</button>
-</div>
 
-<div class="reviews">
-<h2>Відгуки 💬</h2>
-<div id="reviews"></div>
-<input class="rev-input" id="rName" placeholder="Імʼя">
-<textarea class="rev-input" id="rText" placeholder="Відгук"></textarea>
-<button class="buy-btn" onclick="addReview()">Надіслати</button>
-</div>
+    <div style="display:flex; justify-content:space-between; align-items:center;">
 
-<script>
-/* PRELOADER */
-window.onload=()=>document.body.classList.add('loaded')
+        <h2 class="t-cart-h">Кошик</h2>
 
-/* CART */
-let cart={}
-function openCart(){cartPanel.classList.add('active')}
-function closeCart(){cartPanel.classList.remove('active')}
+        <button onclick="toggleCart(false)" style="background:none; border:none; font-size:30px; cursor:pointer; color:var(--text)">✕</button>
 
-function addToCart(btn,name,price,img){
-const b=btn.getBoundingClientRect()
-const c=document.querySelector('.icon-btn').getBoundingClientRect()
-const f=document.createElement('img')
-f.src=img;f.className='flying'
-f.style.left=b.left+'px';f.style.top=b.top+'px'
-document.body.appendChild(f)
-setTimeout(()=>{
-f.style.left=c.left+'px';f.style.top=c.top+'px';f.style.transform='scale(.1)';f.style.opacity=0
-},50)
-setTimeout(()=>f.remove(),700)
+    </div>
 
-cart[name]?cart[name].q++:cart[name]={p:price,q:1}
-renderCart()
-}
+    <div id="cartContent" style="flex-grow:1; overflow-y:auto; margin-top:15px;"></div>
 
-function renderCart(){
-let h='',sum=0,count=0
-for(let n in cart){
-sum+=cart[n].p*cart[n].q
-count+=cart[n].q
-h+=`${n} ${cart[n].q}
-<button class="qty-btn" onclick="chg('${n}',-1)">-</button>
-<button class="qty-btn" onclick="chg('${n}',1)">+</button><br>`
-}
-cartItems.innerHTML=h||'Порожньо'
-total.innerText=sum
-cartCount.innerText=count
-cartCount.style.display=count?'block':'none'
-}
-
-function chg(n,d){
-cart[n].q+=d
-if(cart[n].q<=0)delete cart[n]
-renderCart()
-}
-
-/* REVIEWS */
-function addReview(){
-if(!rName.value||!rText.value)return
-reviews.innerHTML+=`<div><b>${rName.value}</b><br>${rText.value}</div>`
-rName.value=rText.value=''
-}
-</script>
-
-</body>
-</html>
+    <div class="cart-footer">
