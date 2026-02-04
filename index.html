@@ -11,7 +11,7 @@
         
         a { color: inherit; text-decoration: none; }
 
-        /* ПРЕЛОАДЕР */
+        /* ПРЕЛОАДЕР (ЗАВІСА) */
         #preloader {
             position: fixed;
             inset: 0;
@@ -22,19 +22,19 @@
             justify-content: center;
             transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
         }
+        /* Кошик їде передом (зліва направо) */
         .loader-cart { font-size: 60px; position: relative; animation: drive 1.8s ease-in-out infinite; }
         @keyframes drive {
-            0% { transform: translateX(-150vw); }
-            50% { transform: translateX(0); }
-            100% { transform: translateX(150vw); }
+            0% { transform: translateX(-120vw); }
+            100% { transform: translateX(120vw); }
         }
         .loaded #preloader { transform: translateY(-100%); }
 
         /* ШАПКА */
         .navbar { background: var(--white); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 1000; }
         
-        /* НОВИЙ ЛОГОТИП (БЕЗ СОНЕЧКА, КОЛІР УКРАЇНИ) */
-        .logo { font-size: 28px; font-weight: 900; cursor: pointer; letter-spacing: -1px; }
+        /* ЛОГОТИП В КОЛЬОРАХ УКРАЇНИ */
+        .logo { font-size: 26px; font-weight: 900; cursor: pointer; text-transform: uppercase; }
         .logo span.blue { color: #0057b7; }
         .logo span.yellow { color: #ffd700; }
 
@@ -76,8 +76,8 @@
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 4000; }
         .modal-overlay.active { display: flex; }
         .modal-card { background: var(--white); padding: 40px; border-radius: 40px; width: 90%; max-width: 380px; text-align: center; }
-        
-        .lang-btn { width: 100%; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px; border-radius: 15px; border: 1px solid #eee; background: #fff; cursor: pointer; font-weight: 600; }
+        .lang-select { width: 100%; margin-top: 15px; display: flex; flex-direction: column; gap: 10px; }
+        .lang-option { display: flex; align-items: center; gap: 10px; padding: 12px; border: 1px solid #eee; border-radius: 15px; cursor: pointer; background: #fff; font-weight: 600; }
     </style>
 </head>
 <body>
@@ -115,7 +115,7 @@
         <div class="info-side">
             <h1 id="p-page-name">Назва товару</h1>
             <div class="price" id="p-page-price" style="font-size:32px">0 грн</div>
-            <p style="line-height:1.6; color:#666">Це якісний товар з нашого магазину "Сонечко". Найкращий вибір для вашої родини.</p>
+            <p id="p-page-desc" style="line-height:1.6; color:#666">Це якісний товар з нашого магазину "Сонечко". Найкращий вибір для вашої родини.</p>
             <button class="buy-btn" style="width:250px" id="p-page-btn">Купити</button>
         </div>
     </div>
@@ -148,11 +148,11 @@
     <div class="modal-card">
         <h2 id="lang-set-title">Налаштування ⚙️</h2>
         <button class="buy-btn" style="background:#444" onclick="document.body.classList.toggle('dark-mode')">Тема 🌓</button>
-        <div style="margin-top:25px">
-            <p>Мова / Language:</p>
-            <button class="lang-btn" onclick="setLang('uk')">🇺🇦 Українська</button>
-            <button class="lang-btn" onclick="setLang('en')">🇺🇸 English</button>
-            <button class="lang-btn" onclick="setLang('pl')">🇵🇱 Polski</button>
+        <div class="lang-select">
+            <p>Виберіть мову:</p>
+            <div class="lang-option" onclick="setLang('uk')">🇺🇦 UA - Українська</div>
+            <div class="lang-option" onclick="setLang('en')">🇺🇸 EN - English</div>
+            <div class="lang-option" onclick="setLang('pl')">🇵🇱 PL - Polski</div>
         </div>
         <button onclick="closeModal('settingsModal')" class="buy-btn" style="margin-top:20px">OK</button>
     </div>
@@ -167,8 +167,9 @@
 
     let cart = {};
 
+    // ПРЕЛОАДЕР: чекаємо завантаження
     window.addEventListener('load', () => {
-        setTimeout(() => document.body.classList.add('loaded'), 2000);
+        setTimeout(() => document.body.classList.add('loaded'), 1500);
     });
 
     function initProducts() {
@@ -183,16 +184,16 @@
     }
 
     function setLang(l) {
-        const t = {
+        const translations = {
             uk: { hero: "СОНЕЧКО: НОВЕ НАДХОДЖЕННЯ! 👋", cart: "Ваш кошик", total: "Разом:", check: "ОФОРМИТИ", set: "Налаштування" },
             en: { hero: "SONECHKO: NEW ARRIVAL! 👋", cart: "Your Cart", total: "Total:", check: "CHECKOUT", set: "Settings" },
             pl: { hero: "SONECHKO: NOWA DOSTAWA! 👋", cart: "Twój Koszyk", total: "Razem:", check: "ZAMÓW", set: "Ustawienia" }
         };
-        document.getElementById('lang-hero').innerText = t[l].hero;
-        document.getElementById('lang-cart-title').innerText = t[l].cart;
-        document.getElementById('lang-total').innerText = t[l].total;
-        document.getElementById('lang-checkout').innerText = t[l].check;
-        document.getElementById('lang-set-title').innerText = t[l].set;
+        document.getElementById('lang-hero').innerText = translations[l].hero;
+        document.getElementById('lang-cart-title').innerText = translations[l].cart;
+        document.getElementById('lang-total').innerText = translations[l].total;
+        document.getElementById('lang-checkout').innerText = translations[l].check;
+        document.getElementById('lang-set-title').innerText = translations[l].set;
     }
 
     function openProductPage(name, price, img) {
@@ -227,7 +228,7 @@
             html += `
                 <div class="cart-item">
                     <img src="${item.img}">
-                    <div style="flex-grow:1; font-weight:700; font-size:14px; margin:0 10px">${name}</div>
+                    <div style="flex-grow:1; font-weight:700; font-size:14px; margin: 0 10px">${name}</div>
                     <div class="qty-box">
                         <button class="qty-btn" onclick="changeQty('${name}', -1)">-</button>
                         <span>${item.qty}</span>
