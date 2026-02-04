@@ -6,9 +6,23 @@
     <title>СОНЕЧКО — Супермаркет</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #83b735; --bg: #f0f4f3; --white: #ffffff; --text: #333333; }
-        body.dark-mode { --bg: #121212; --white: #1e1e1e; --text: #e0e0e0; }
-        body { font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; background: var(--bg); color: var(--text); transition: 0.3s; overflow-x: hidden; }
+        :root { 
+            --primary: #83b735; 
+            --bg: #fdfdfd; 
+            --white: #ffffff; 
+            --text: #333333;
+            --grad: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%); 
+        }
+        body.dark-mode { --bg: #121212; --white: #1e1e1e; --text: #e0e0e0; --grad: #121212; }
+        
+        body { 
+            font-family: 'Segoe UI', Roboto, sans-serif; 
+            margin: 0; 
+            background: var(--grad); 
+            color: var(--text); 
+            transition: 0.3s; 
+            overflow-x: hidden; 
+        }
 
         /* ПРЕЛОАДЕР - ДУЖЕ ПОВІЛЬНИЙ */
         #preloader {
@@ -19,18 +33,30 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 1.5s cubic-bezier(0.65, 0, 0.35, 1);
+            transition: transform 1.8s cubic-bezier(0.65, 0, 0.35, 1);
         }
-        .loader-cart { font-size: 80px; animation: driveForward 3.5s ease-in-out infinite; } 
+        .loader-cart { font-size: 90px; animation: driveForward 3.8s ease-in-out infinite; } 
         @keyframes driveForward {
-            0% { transform: translateX(-150vw); }
-            100% { transform: translateX(150vw); }
+            0% { transform: translateX(-160vw); }
+            100% { transform: translateX(160vw); }
         }
         body.loaded #preloader { transform: translateY(-100%); }
 
         /* ШАПКА */
-        .navbar { background: var(--white); padding: 10px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 20px rgba(0,0,0,0.08); position: sticky; top: 0; z-index: 1000; gap: 20px; }
-        .logo { font-family: 'Montserrat', sans-serif; font-size: 28px; font-weight: 900; text-decoration: none; display: flex; letter-spacing: -1.5px; }
+        .navbar { 
+            background: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(10px);
+            padding: 10px 5%; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            box-shadow: 0 4px 25px rgba(0,0,0,0.06); 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+            gap: 20px; 
+        }
+        .logo { font-family: 'Montserrat', sans-serif; font-size: 30px; font-weight: 900; text-decoration: none; display: flex; letter-spacing: -1.5px; }
         .logo .blue { color: #0057b7; }
         .logo .yellow { color: #ffd700; }
 
@@ -39,44 +65,52 @@
         .search-container:focus-within { background: #fff; border-color: var(--primary); box-shadow: 0 8px 20px rgba(0,0,0,0.06); }
         .search-container input { width: 100%; border: none; background: transparent; padding: 12px; outline: none; font-size: 16px; font-family: inherit; }
 
-        .nav-icons { display: flex; gap: 12px; }
-        .icon-btn { background: #f8f9fa; border: none; width: 50px; height: 50px; border-radius: 18px; cursor: pointer; font-size: 22px; position: relative; transition: 0.4s; }
-        .icon-btn:hover { transform: translateY(-4px); background: var(--white); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        .cart-count { position: absolute; top: -5px; right: -5px; background: #ff4757; color: white; font-size: 12px; padding: 2px 7px; border-radius: 20px; font-weight: 700; border: 2px solid var(--white); }
+        .nav-icons { display: flex; gap: 15px; }
+        .icon-btn { background: #f8f9fa; border: none; width: 55px; height: 55px; border-radius: 20px; cursor: pointer; font-size: 24px; position: relative; transition: 0.5s; }
+        .icon-btn:hover { transform: translateY(-5px); background: var(--white); box-shadow: 0 12px 25px rgba(0,0,0,0.1); }
+        .cart-count { position: absolute; top: -5px; right: -5px; background: #ff4757; color: white; font-size: 12px; padding: 3px 8px; border-radius: 20px; font-weight: 700; border: 2px solid var(--white); }
 
         /* ВІДЕО-БАНЕР */
-        .hero { width: 92%; margin: 25px auto; height: 380px; border-radius: 45px; position: relative; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.15); }
+        .hero { width: 92%; margin: 30px auto; height: 400px; border-radius: 50px; position: relative; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.2); }
         .hero video { width: 100%; height: 100%; object-fit: cover; position: absolute; }
-        .hero-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; }
-        .glass-box { background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(12px); padding: 40px 60px; border-radius: 35px; border: 1px solid rgba(255,255,255,0.3); text-align: center; color: white; }
+        .hero-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.25); display: flex; align-items: center; justify-content: center; }
+        .glass-box { background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(15px); padding: 45px 70px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.4); text-align: center; color: white; animation: float 6s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
         /* ФІЛЬТРИ */
-        .filters { display: flex; justify-content: center; gap: 12px; padding: 25px; flex-wrap: wrap; }
-        .pill { background: var(--white); border: none; padding: 12px 28px; border-radius: 50px; cursor: pointer; font-weight: 700; color: #777; transition: 0.4s; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .pill.active { background: var(--primary); color: white; transform: scale(1.05); }
+        .filters { display: flex; justify-content: center; gap: 15px; padding: 30px; flex-wrap: wrap; }
+        .pill { background: var(--white); border: none; padding: 14px 32px; border-radius: 50px; cursor: pointer; font-weight: 700; color: #666; transition: 0.4s; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .pill.active { background: var(--primary); color: white; transform: scale(1.1); box-shadow: 0 10px 20px rgba(131, 183, 53, 0.3); }
 
         /* КАРТКИ */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 35px; padding: 0 5% 60px; }
-        .card { background: var(--white); border-radius: 45px; padding: 35px; text-align: center; box-shadow: 0 15px 40px rgba(0,0,0,0.04); transition: 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
-        .card:hover { transform: translateY(-18px) scale(1.02); box-shadow: 0 30px 60px rgba(0,0,0,0.12); }
-        .card img { width: 100%; height: 200px; object-fit: contain; margin-bottom: 25px; transition: 0.6s; }
-        .card:hover img { transform: scale(1.1) rotate(3deg); }
-        .price { font-size: 28px; font-weight: 900; color: var(--primary); margin: 15px 0; }
-        .buy-btn { background: var(--primary); color: white; border: none; width: 100%; padding: 18px; border-radius: 25px; font-weight: 800; cursor: pointer; transition: 0.4s; font-size: 16px; }
-        .buy-btn:hover { background: #6da32b; box-shadow: 0 12px 25px rgba(131, 183, 53, 0.35); letter-spacing: 0.5px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 40px; padding: 0 5% 70px; }
+        .card { 
+            background: var(--white); 
+            border-radius: 50px; 
+            padding: 40px; 
+            text-align: center; 
+            box-shadow: 0 15px 45px rgba(0,0,0,0.05); 
+            transition: 0.7s cubic-bezier(0.2, 1, 0.3, 1); 
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+        .card:hover { transform: translateY(-20px); box-shadow: 0 35px 70px rgba(0,0,0,0.15); }
+        .card img { width: 100%; height: 220px; object-fit: contain; margin-bottom: 30px; transition: 0.8s ease; }
+        .card:hover img { transform: scale(1.15) rotate(4deg); }
+        
+        .price { font-size: 30px; font-weight: 900; color: var(--primary); margin: 20px 0; }
+        .buy-btn { background: var(--primary); color: white; border: none; width: 100%; padding: 20px; border-radius: 30px; font-weight: 800; cursor: pointer; transition: 0.4s; font-size: 18px; }
+        .buy-btn:hover { background: #6da32b; box-shadow: 0 15px 30px rgba(131, 183, 53, 0.4); }
 
-        /* КОШИК */
-        .cart-panel { position: fixed; right: -100%; top: 0; width: 420px; height: 100%; background: var(--white); z-index: 3000; transition: 1s cubic-bezier(0.16, 1, 0.3, 1); padding: 40px; box-sizing: border-box; box-shadow: -20px 0 50px rgba(0,0,0,0.15); display: flex; flex-direction: column; }
+        /* КОШИК - ПОВІЛЬНО */
+        .cart-panel { position: fixed; right: -100%; top: 0; width: 450px; height: 100%; background: var(--white); z-index: 3000; transition: 1.2s cubic-bezier(0.16, 1, 0.3, 1); padding: 45px; box-sizing: border-box; box-shadow: -25px 0 60px rgba(0,0,0,0.2); display: flex; flex-direction: column; }
         .cart-panel.active { right: 0; }
-        .cart-item { display: flex; align-items: center; background: #f8f9fa; padding: 15px; border-radius: 25px; margin-bottom: 15px; transition: 0.3s; }
+        .cart-item { display: flex; align-items: center; background: #f9fbfb; padding: 20px; border-radius: 30px; margin-bottom: 15px; }
 
         /* ВІДГУКИ */
-        .reviews { width: 92%; margin: 0 auto 60px; padding: 45px; background: var(--white); border-radius: 50px; box-shadow: 0 15px 45px rgba(0,0,0,0.04); box-sizing: border-box; }
-        .rev-input { width: 100%; padding: 18px; margin-bottom: 15px; border-radius: 20px; border: 1px solid #eee; background: #fafafa; font-family: inherit; font-size: 16px; outline: none; }
-        .rev-item { background: #f8f9fa; padding: 20px; border-radius: 25px; margin-top: 20px; border-left: 6px solid var(--primary); animation: fadeIn 0.8s ease; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .flyer { position: fixed; z-index: 9999; pointer-events: none; transition: all 1.5s cubic-bezier(0.19, 1, 0.22, 1); border-radius: 50%; }
+        .reviews { width: 92%; margin: 0 auto 80px; padding: 50px; background: var(--white); border-radius: 60px; box-shadow: 0 20px 50px rgba(0,0,0,0.05); box-sizing: border-box; }
+        .rev-input { width: 100%; padding: 20px; margin-bottom: 20px; border-radius: 25px; border: 1px solid #eee; background: #fcfcfc; font-family: inherit; font-size: 16px; outline: none; }
+        
+        .flyer { position: fixed; z-index: 9999; pointer-events: none; transition: all 1.6s cubic-bezier(0.19, 1, 0.22, 1); border-radius: 30px; }
     </style>
 </head>
 <body>
@@ -89,7 +123,7 @@
     </a>
     <div class="search-container">
         <span>🔍</span>
-        <input type="text" id="searchInput" placeholder="Шукати улюблені товари..." oninput="searchFunc()">
+        <input type="text" id="searchInput" placeholder="Пошук товарів..." oninput="searchFunc()">
     </div>
     <div class="nav-icons">
         <button class="icon-btn" onclick="openModal('callModal')">📞</button>
@@ -102,12 +136,12 @@
 
 <div class="hero">
     <video autoplay muted loop playsinline>
-        <source src="https://assets.mixkit.co/videos/preview/mixkit-sun-shining-through-the-leaves-of-a-tree-4322-large.mp4" type="video/mp4">
+        <source src="https://v1.pexels.com/video-files/3195394/3195394-uhd_2560_1440_25fps.mp4" type="video/mp4">
     </video>
     <div class="hero-overlay">
         <div class="glass-box">
-            <h1 style="margin:0; font-size: 36px; font-family: 'Montserrat';">СОНЕЧКО ДАРУЄ ТЕПЛО 👋</h1>
-            <p style="margin-top:10px; opacity:0.9">Найкращі товари для вашої родини</p>
+            <h1 style="margin:0; font-size: 42px; font-family: 'Montserrat';">СОНЕЧКО ДАРУЄ ТЕПЛО 👋</h1>
+            <p style="margin-top:15px; font-size: 18px; opacity:0.95">Найкращі товари для вашої родини з любов'ю</p>
         </div>
     </div>
 </div>
@@ -122,66 +156,62 @@
 <div class="grid" id="productGrid">
     <div class="card" data-cat="baby" data-name="Dada Extra Soft 6">
         <img src="https://i.ibb.co/vyDyh7g/image.jpg" class="prod-img">
-        <div style="font-weight:800; font-size:18px;">Dada Extra Soft 6</div>
+        <div style="font-weight:800; font-size:20px;">Dada Extra Soft 6</div>
         <div class="price">250 грн</div>
         <button class="buy-btn" onclick="addToCart('Dada Extra Soft 6', 250, 'https://i.ibb.co/vyDyh7g/image.jpg', this)">В кошик</button>
     </div>
     <div class="card" data-cat="pets" data-name="Корм Kitty 2кг">
         <img src="https://i.ibb.co/2FDgpWxPc3/2F619939933.webp" class="prod-img">
-        <div style="font-weight:800; font-size:18px;">Корм Kitty 2кг</div>
+        <div style="font-weight:800; font-size:20px;">Корм Kitty 2кг</div>
         <div class="price">250 грн</div>
         <button class="buy-btn" onclick="addToCart('Корм Kitty 2кг', 250, 'https://i.ibb.co/2FDgpWxPc3/2F619939933.webp', this)">В кошик</button>
     </div>
     <div class="card" data-cat="chem" data-name="Ariel Gel 5.5L">
         <img src="https://i.ibb.co/dsyN5hwf/image-processing20250930-161-45fnds.webp" class="prod-img">
-        <div style="font-weight:800; font-size:18px;">Ariel Gel 5.5L</div>
+        <div style="font-weight:800; font-size:20px;">Ariel Gel 5.5L</div>
         <div class="price">600 грн</div>
         <button class="buy-btn" onclick="addToCart('Ariel Gel 5.5L', 600, 'https://i.ibb.co/dsyN5hwf/image-processing20250930-161-45fnds.webp', this)">В кошик</button>
     </div>
 </div>
 
 <div class="reviews">
-    <h3 style="font-family: 'Montserrat'; font-size: 24px;">💬 Відгуки наших покупців</h3>
-    <div style="display: flex; gap: 15px; margin-bottom: 25px;">
+    <h3 style="font-family: 'Montserrat'; font-size: 28px; margin-bottom: 30px;">💬 Відгуки покупців</h3>
+    <div style="display: flex; gap: 20px; margin-bottom: 20px;">
         <input type="text" id="rName" class="rev-input" style="flex: 1;" placeholder="Ваше ім'я">
-        <button class="buy-btn" style="width:160px" onclick="addRev()">Надіслати</button>
+        <button class="buy-btn" style="width:200px" onclick="addRev()">Залишити відгук</button>
     </div>
-    <textarea id="rText" class="rev-input" rows="3" placeholder="Розкажіть про ваші враження..."></textarea>
+    <textarea id="rText" class="rev-input" rows="3" placeholder="Ваші враження від покупок..."></textarea>
     <div id="rList"></div>
 </div>
 
 <div class="cart-panel" id="cartPanel">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 30px;">
-        <h2 style="margin:0; font-family: 'Montserrat';">Кошик</h2>
-        <button onclick="toggleCart(false)" style="background:none; border:none; font-size:32px; cursor:pointer">✕</button>
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2 style="margin:0; font-family: 'Montserrat';">Ваш Кошик</h2>
+        <button onclick="toggleCart(false)" style="background:none; border:none; font-size:36px; cursor:pointer">✕</button>
     </div>
-    <div id="cartContent" style="flex-grow:1; overflow-y:auto;"></div>
-    <div style="border-top: 2px solid #eee; padding-top: 25px; margin-top: 20px;">
-        <div style="display:flex; justify-content:space-between; font-size:24px; font-weight:900; margin-bottom:25px;">
+    <div id="cartContent" style="flex-grow:1; overflow-y:auto; margin-top:30px;"></div>
+    <div style="border-top: 2px solid #eee; padding-top: 30px; margin-top: 20px;">
+        <div style="display:flex; justify-content:space-between; font-size:26px; font-weight:900; margin-bottom:30px;">
             <span>Разом:</span> <span id="totalSum">0 грн</span>
         </div>
-        <button class="buy-btn" style="font-size:18px; padding: 22px;">ОФОРМИТИ ЗАМОВЛЕННЯ</button>
+        <button class="buy-btn" style="padding: 25px;">ПЕРЕЙТИ ДО ОПЛАТИ</button>
     </div>
 </div>
 
 <div class="modal-overlay" id="callModal">
     <div class="modal-card">
         <h2 style="font-family:'Montserrat'">Зв'язок 📞</h2>
-        <p style="font-size:26px; font-weight:900; color:var(--primary); margin: 30px 0;">+38 (068) 490 00 68</p>
-        <button class="buy-btn" onclick="window.location.href='tel:+380684900068'">ЗАТЕЛЕФОНУВАТИ ЗАРАЗ</button>
+        <p style="font-size:28px; font-weight:900; color:var(--primary); margin: 30px 0;">+38 (068) 490 00 68</p>
+        <button class="buy-btn" onclick="window.location.href='tel:+380684900068'">ЗАТЕЛЕФОНУВАТИ</button>
         <button onclick="closeModal('callModal')" style="margin-top:20px; border:none; background:none; cursor:pointer; color:#999; font-weight:700">Закрити</button>
     </div>
 </div>
 
 <div class="modal-overlay" id="settingsModal">
     <div class="modal-card">
-        <h2 style="font-family:'Montserrat'">Налаштування ⚙️</h2>
+        <h2 style="font-family:'Montserrat'">Налаштування</h2>
         <button class="buy-btn" style="background:#333; margin-bottom: 20px;" onclick="document.body.classList.toggle('dark-mode')">Змінити тему 🌗</button>
-        <div style="display:flex; flex-direction:column; gap:12px;">
-            <button class="pill" onclick="setLang('uk')" style="width:100%">🇺🇦 Українська</button>
-            <button class="pill" onclick="setLang('en')" style="width:100%">🇺🇸 English</button>
-        </div>
-        <button onclick="closeModal('settingsModal')" class="buy-btn" style="margin-top:30px; background:#eee; color:#333">Готово</button>
+        <button onclick="closeModal('settingsModal')" class="buy-btn" style="background:#eee; color:#333">Готово</button>
     </div>
 </div>
 
@@ -189,7 +219,7 @@
     let cart = {};
 
     window.addEventListener('load', () => {
-        setTimeout(() => document.body.classList.add('loaded'), 2500);
+        setTimeout(() => document.body.classList.add('loaded'), 2800);
     });
 
     function toggleCart(s) { document.getElementById('cartPanel').classList.toggle('active', s); }
@@ -217,16 +247,16 @@
             total += item.price * item.qty;
             count += item.qty;
             html += `<div class="cart-item">
-                <img src="${item.img}" style="width:50px; height:50px; object-fit:contain;">
-                <div style="flex-grow:1; margin:0 15px; font-weight:700; font-size:14px;">${name}</div>
-                <div style="display:flex; align-items:center; gap:8px;">
-                    <button onclick="changeQty('${name}', -1)" style="border:none; border-radius:8px; width:28px; height:28px; cursor:pointer">-</button>
-                    <span style="font-weight:900">${item.qty}</span>
-                    <button onclick="changeQty('${name}', 1)" style="border:none; border-radius:8px; width:28px; height:28px; cursor:pointer">+</button>
+                <img src="${item.img}" style="width:60px; height:60px; object-fit:contain;">
+                <div style="flex-grow:1; margin:0 20px; font-weight:700;">${name}</div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <button onclick="changeQty('${name}', -1)" style="border:none; border-radius:10px; width:32px; height:32px; cursor:pointer">-</button>
+                    <span style="font-weight:900; font-size:18px;">${item.qty}</span>
+                    <button onclick="changeQty('${name}', 1)" style="border:none; border-radius:10px; width:32px; height:32px; cursor:pointer">+</button>
                 </div>
             </div>`;
         }
-        list.innerHTML = html || '<p style="text-align:center; color:#999; margin-top:50px; font-size:18px;">Кошик поки що порожній 🛒</p>';
+        list.innerHTML = html || '<p style="text-align:center; color:#999; margin-top:50px; font-size:20px;">Кошик порожній 🛒</p>';
         badge.innerText = count;
         badge.style.display = count > 0 ? 'block' : 'none';
         document.getElementById('totalSum').innerText = total + ' грн';
@@ -235,10 +265,10 @@
     function animateFly(img) {
         const anchor = document.getElementById('cart-anchor');
         const clone = img.cloneNode(), r = img.getBoundingClientRect(), tr = anchor.getBoundingClientRect();
-        Object.assign(clone.style, { position:'fixed', left:r.left+'px', top:r.top+'px', width:r.width+'px', zIndex:9999, transition:'all 1.5s cubic-bezier(0.19, 1, 0.22, 1)', borderRadius: '20px' });
-        clone.classList.add('flyer'); document.body.appendChild(clone);
-        setTimeout(() => { Object.assign(clone.style, { left:tr.left+10+'px', top:tr.top+10+'px', width:'20px', opacity:'0', transform:'rotate(720deg)' }); }, 50);
-        setTimeout(() => clone.remove(), 1500);
+        Object.assign(clone.style, { position:'fixed', left:r.left+'px', top:r.top+'px', width:r.width+'px', zIndex:9999, transition:'all 1.6s cubic-bezier(0.19, 1, 0.22, 1)', borderRadius: '30px' });
+        document.body.appendChild(clone);
+        setTimeout(() => { Object.assign(clone.style, { left:tr.left+15+'px', top:tr.top+15+'px', width:'25px', opacity:'0', transform:'rotate(720deg)' }); }, 50);
+        setTimeout(() => clone.remove(), 1600);
     }
 
     function searchFunc() {
@@ -260,7 +290,7 @@
     function addRev() {
         const n = document.getElementById('rName').value, t = document.getElementById('rText').value;
         if(n && t) {
-            document.getElementById('rList').insertAdjacentHTML('afterbegin', `<div class="rev-item"><b>${n}</b>: ${t}</div>`);
+            document.getElementById('rList').insertAdjacentHTML('afterbegin', `<div style="background:#f8f9fa; padding:25px; border-radius:30px; margin-top:20px; border-left:8px solid var(--primary);"><b>${n}</b>: ${t}</div>`);
             document.getElementById('rName').value = ''; document.getElementById('rText').value = '';
         }
     }
