@@ -15,7 +15,6 @@
             --nav-bg: rgba(255, 255, 255, 0.9);
         }
         
-        /* ТЕМНА ТЕМА — ВИПРАВЛЕНО ВСЕ */
         body.dark-mode { 
             --bg: #121212; 
             --white: #1e1e1e; 
@@ -26,21 +25,13 @@
         
         body { 
             font-family: 'Segoe UI', Roboto, sans-serif; 
-            margin: 0; 
-            background: var(--bg); 
-            color: var(--text); 
-            transition: 0.3s; 
-            overflow-x: hidden; 
+            margin: 0; background: var(--bg); color: var(--text); 
+            transition: 0.3s; overflow-x: hidden; 
         }
 
-        #preloader {
-            position: fixed; inset: 0; background: #ffffff; z-index: 10000;
-            display: flex; align-items: center; justify-content: center;
-            transition: 1s ease;
-        }
+        #preloader { position: fixed; inset: 0; background: #ffffff; z-index: 10000; display: flex; align-items: center; justify-content: center; transition: 1s; }
         body.loaded #preloader { opacity: 0; pointer-events: none; }
 
-        /* ШАПКА */
         .navbar { 
             background: var(--nav-bg); backdrop-filter: blur(15px);
             padding: 12px 5%; display: flex; justify-content: space-between; align-items: center;
@@ -52,58 +43,40 @@
         .search-container { flex-grow: 1; max-width: 500px; display: flex; align-items: center; background: rgba(128,128,128,0.1); padding: 5px 25px; border-radius: 40px; margin: 0 20px; }
         .search-container input { width: 100%; border: none; background: transparent; padding: 12px; outline: none; font-size: 16px; color: var(--text); }
 
-        .icon-btn { background: rgba(128,128,128,0.1); border: none; width: 50px; height: 50px; border-radius: 18px; cursor: pointer; font-size: 22px; position: relative; transition: 0.3s; color: var(--text); }
-        .icon-btn:hover { background: var(--primary); color: white; }
+        .icon-btn { background: rgba(128,128,128,0.1); border: none; width: 50px; height: 50px; border-radius: 18px; cursor: pointer; font-size: 22px; position: relative; color: var(--text); }
+        .cart-count { position: absolute; top: -5px; right: -5px; background: #ff4757; color: white; font-size: 12px; padding: 2px 6px; border-radius: 10px; border: 2px solid var(--white); }
 
-        /* БАНЕР */
-        .hero { 
-            width: 92%; margin: 20px auto; height: 380px; border-radius: 40px; position: relative; overflow: hidden; 
-            background: url('https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=1350&q=80') center/cover;
-        }
+        .hero { width: 92%; margin: 20px auto; height: 350px; border-radius: 40px; background: url('https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=1350&q=80') center/cover; position: relative; overflow: hidden; }
         .hero-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; }
-        .glass-box { background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); padding: 40px; border-radius: 30px; text-align: center; color: white; border: 1px solid rgba(255,255,255,0.2); }
+        .glass-box { background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); padding: 30px; border-radius: 30px; text-align: center; color: white; }
 
-        /* КАРТКИ (ВИПРАВЛЕНО ФОН КАРТИНКИ) */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; padding: 20px 5%; }
-        .card { background: var(--card-bg); border-radius: 40px; padding: 30px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.4s; }
-        .card:hover { transform: translateY(-10px); }
-        .card img { 
-            width: 100%; height: 200px; object-fit: contain; margin-bottom: 20px; 
-            background: white; border-radius: 20px; padding: 10px; /* Додаємо білу підкладку під товар, щоб на темному фоні було гарно */
-        }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; padding: 20px 5%; }
+        .card { background: var(--card-bg); border-radius: 35px; padding: 25px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.3s; }
+        .card img { width: 100%; height: 180px; object-fit: contain; background: white; border-radius: 20px; padding: 10px; margin-bottom: 15px; }
 
-        /* МОДАЛКИ (ЦЕНТРУВАННЯ ТА ТЕМА) */
-        .modal-overlay { 
-            position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); 
-            display: none; align-items: center; justify-content: center; z-index: 5000; 
-        }
-        .modal-overlay.active { display: flex !important; }
-        .modal-card { background: var(--card-bg); color: var(--text); padding: 40px; border-radius: 40px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
-
-        /* КОШИК (КНОПКА ВИЩЕ) */
-        .cart-panel { 
-            position: fixed; right: -100%; top: 0; width: 400px; height: 100%; background: var(--card-bg); 
-            z-index: 4000; transition: 0.5s; padding: 30px; box-shadow: -10px 0 50px rgba(0,0,0,0.2); 
-            display: flex; flex-direction: column; color: var(--text);
-        }
-        .cart-panel.active { right: 0; }
-        .cart-item { display: flex; align-items: center; margin-bottom: 15px; background: rgba(128,128,128,0.1); padding: 15px; border-radius: 20px; }
-        .qty-btn { background: var(--primary); color: white; border: none; width: 30px; height: 30px; border-radius: 8px; cursor: pointer; font-weight: bold; }
-
-        .cart-footer { 
-            border-top: 2px solid rgba(128,128,128,0.2); 
-            padding-top: 20px; 
-            margin-bottom: 40px; /* ПІДНЯВ КНОПКУ ВИЩЕ */
-        }
-
-        .buy-btn { background: var(--primary); color: white; border: none; width: 100%; padding: 18px; border-radius: 20px; font-weight: 800; cursor: pointer; transition: 0.3s; }
-        .buy-btn:hover { filter: brightness(1.1); }
-
-        .reviews { width: 85%; margin: 40px auto; padding: 40px; background: var(--card-bg); border-radius: 40px; }
-        .rev-input { width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 15px; border: 1px solid rgba(128,128,128,0.2); background: rgba(128,128,128,0.05); color: var(--text); }
-
-        .pill { background: var(--card-bg); border: none; padding: 12px 25px; border-radius: 30px; cursor: pointer; color: var(--text); font-weight: bold; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .pill { background: var(--card-bg); border: none; padding: 10px 22px; border-radius: 25px; cursor: pointer; color: var(--text); font-weight: bold; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         .pill.active { background: var(--primary); color: white; }
+
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 5000; }
+        .modal-overlay.active { display: flex; }
+        .modal-card { background: var(--card-bg); color: var(--text); padding: 40px; border-radius: 35px; width: 90%; max-width: 400px; text-align: center; }
+
+        .cart-panel { position: fixed; right: -100%; top: 0; width: 380px; height: 100%; background: var(--card-bg); z-index: 4000; transition: 0.5s; padding: 30px; display: flex; flex-direction: column; color: var(--text); box-shadow: -10px 0 50px rgba(0,0,0,0.2); }
+        .cart-panel.active { right: 0; }
+        .cart-footer { border-top: 1px solid rgba(128,128,128,0.2); padding-top: 20px; margin-bottom: 50px; }
+
+        .buy-btn { background: var(--primary); color: white; border: none; width: 100%; padding: 15px; border-radius: 18px; font-weight: 800; cursor: pointer; transition: 0.3s; }
+
+        /* АНІМАЦІЯ ПОЛЬОТУ */
+        .flying-item {
+            position: fixed; z-index: 9999; pointer-events: none;
+            width: 50px; height: 50px; object-fit: contain;
+            background: white; border-radius: 50%; border: 2px solid var(--primary);
+            transition: all 0.8s cubic-bezier(0.1, 0.7, 0.1, 1);
+        }
+
+        .reviews { width: 85%; margin: 30px auto; padding: 30px; background: var(--card-bg); border-radius: 35px; }
+        .rev-input { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 12px; border: 1px solid rgba(128,128,128,0.2); background: rgba(128,128,128,0.05); color: var(--text); }
     </style>
 </head>
 <body>
@@ -118,8 +91,8 @@
     <div class="nav-icons">
         <button class="icon-btn" onclick="openModal('callModal')">📞</button>
         <button class="icon-btn" onclick="openModal('settingsModal')">⚙️</button>
-        <button class="icon-btn" onclick="toggleCart(true)">
-            🛒 <span id="cart-badge" style="display:none; position:absolute; top:-5px; right:-5px; background:red; color:white; border-radius:50%; width:20px; height:20px; font-size:12px; line-height:20px;">0</span>
+        <button class="icon-btn" id="cart-btn-nav" onclick="toggleCart(true)">
+            🛒 <span class="cart-count" id="cart-badge" style="display:none">0</span>
         </button>
     </div>
 </nav>
@@ -127,47 +100,46 @@
 <div class="hero">
     <div class="hero-overlay">
         <div class="glass-box">
-            <h1 id="t-hero-h1" style="margin:0;">СОНЕЧКО ДАРУЄ ТЕПЛО 👋</h1>
+            <h1 id="t-hero-h1">СОНЕЧКО ДАРУЄ ТЕПЛО 👋</h1>
             <p id="t-hero-p">Найкращі товари для вашої родини з любов'ю</p>
         </div>
     </div>
 </div>
 
-<div style="display: flex; justify-content: center; gap: 10px; padding: 20px;">
+<div style="display: flex; justify-content: center; gap: 10px; padding: 20px; flex-wrap: wrap;">
     <button class="pill active" onclick="filter('all', this)">🌈 <span class="t-all">Все</span></button>
     <button class="pill" onclick="filter('baby', this)">👶 <span class="t-baby">Дитяче</span></button>
+    <button class="pill" onclick="filter('pets', this)">🐾 <span class="t-pets">Тварини</span></button>
     <button class="pill" onclick="filter('chem', this)">🧼 <span class="t-chem">Хімія</span></button>
 </div>
 
 <div class="grid" id="productGrid">
     <div class="card" data-cat="baby" data-name="Dada Extra Soft 6">
-        <img src="https://i.ibb.co/vyDyh7g/image.jpg">
-        <h3 style="margin: 10px 0;">Dada Extra Soft 6</h3>
-        <div style="font-size: 24px; font-weight: 900; color: var(--primary); margin-bottom: 15px;">250 грн</div>
-        <button class="buy-btn t-add-btn" onclick="addToCart('Dada Extra Soft 6', 250, 'https://i.ibb.co/vyDyh7g/image.jpg')">В кошик</button>
+        <img src="https://i.ibb.co/vyDyh7g/image.jpg" class="prod-img">
+        <h3>Dada Extra Soft 6</h3>
+        <div style="font-size: 22px; font-weight: 900; color: var(--primary); margin-bottom: 10px;">250 грн</div>
+        <button class="buy-btn t-add-btn" onclick="addToCart(this, 'Dada Extra Soft 6', 250, 'https://i.ibb.co/vyDyh7g/image.jpg')">В кошик</button>
     </div>
     <div class="card" data-cat="chem" data-name="Ariel Pods">
-        <img src="https://i.ibb.co/L64M6S9/ariel.jpg">
-        <h3 style="margin: 10px 0;">Ariel Pods 3in1</h3>
-        <div style="font-size: 24px; font-weight: 900; color: var(--primary); margin-bottom: 15px;">320 грн</div>
-        <button class="buy-btn t-add-btn" onclick="addToCart('Ariel Pods', 320, 'https://i.ibb.co/L64M6S9/ariel.jpg')">В кошик</button>
+        <img src="https://i.ibb.co/L64M6S9/ariel.jpg" class="prod-img">
+        <h3>Ariel Pods 3in1</h3>
+        <div style="font-size: 22px; font-weight: 900; color: var(--primary); margin-bottom: 10px;">320 грн</div>
+        <button class="buy-btn t-add-btn" onclick="addToCart(this, 'Ariel Pods', 320, 'https://i.ibb.co/L64M6S9/ariel.jpg')">В кошик</button>
     </div>
-</div>
-
-<div class="reviews">
-    <h3 id="t-rev-title">💬 Відгуки покупців</h3>
-    <input type="text" id="rName" class="rev-input" placeholder="Ваше ім'я">
-    <textarea id="rText" class="rev-input" rows="3" placeholder="Ваш відгук..."></textarea>
-    <button class="buy-btn t-send" style="width:180px" onclick="addRev()">Надіслати</button>
-    <div id="rList" style="margin-top: 20px;"></div>
+    <div class="card" data-cat="pets" data-name="Корм Felix">
+        <img src="https://i.ibb.co/0Yf9mXm/felix.jpg" onerror="this.src='https://via.placeholder.com/200?text=Felix'" class="prod-img">
+        <h3>Корм Felix</h3>
+        <div style="font-size: 22px; font-weight: 900; color: var(--primary); margin-bottom: 10px;">15 грн</div>
+        <button class="buy-btn t-add-btn" onclick="addToCart(this, 'Корм Felix', 15, 'https://via.placeholder.com/200?text=Felix')">В кошик</button>
+    </div>
 </div>
 
 <div class="modal-overlay" id="callModal">
     <div class="modal-card">
         <h2 class="t-call-h">Зв'язок 📞</h2>
-        <p style="font-size:24px; font-weight:900; color:var(--primary);">+38 (068) 490 00 68</p>
+        <p style="font-size:22px; font-weight:900;">+38 (068) 490 00 68</p>
         <button class="buy-btn" onclick="location.href='tel:+380684900068'">ДЗВІНОК</button>
-        <p onclick="closeModal('callModal')" style="cursor:pointer; margin-top:20px; opacity:0.6;">Закрити</p>
+        <p onclick="closeModal('callModal')" style="cursor:pointer; margin-top:15px; opacity:0.6;">Закрити</p>
     </div>
 </div>
 
@@ -178,8 +150,9 @@
         <select class="rev-input" id="langSelect" onchange="changeLang()">
             <option value="ua">🇺🇦 Українська</option>
             <option value="en">🇺🇸 English</option>
+            <option value="pl">🇵🇱 Polski</option>
         </select>
-        <p onclick="closeModal('settingsModal')" style="cursor:pointer; margin-top:20px; opacity:0.6;">OK</p>
+        <p onclick="closeModal('settingsModal')" style="cursor:pointer; margin-top:15px; opacity:0.6;">OK</p>
     </div>
 </div>
 
@@ -188,18 +161,19 @@
         <h2 class="t-cart-h">Кошик</h2>
         <button onclick="toggleCart(false)" style="background:none; border:none; font-size:30px; cursor:pointer; color:var(--text)">✕</button>
     </div>
-    <div id="cartContent" style="flex-grow:1; overflow-y:auto; margin-top:20px;"></div>
+    <div id="cartContent" style="flex-grow:1; overflow-y:auto; margin-top:15px;"></div>
     <div class="cart-footer">
         <h3 id="t-total">Разом: <span id="totalSum">0</span> грн</h3>
-        <button class="buy-btn t-order">ОФОРМИТИ ЗАМОВЛЕННЯ</button>
+        <button class="buy-btn t-order">ОФОРМИТИ</button>
     </div>
 </div>
 
 <script>
     let cart = {};
     const langData = {
-        ua: { heroH1: "СОНЕЧКО ДАРУЄ ТЕПЛО 👋", heroP: "Найкращі товари для вашої родини з любов'ю", all: "Все", baby: "Дитяче", chem: "Хімія", add: "В кошик", revT: "💬 Відгуки покупців", send: "Надіслати", callH: "Зв'язок 📞", setH: "Налаштування ⚙️", cartH: "Кошик", total: "Разом: ", order: "ОФОРМИТИ ЗАМОВЛЕННЯ" },
-        en: { heroH1: "SUNSHINE GIVES WARMTH 👋", heroP: "Best products for your family with love", all: "All", baby: "Baby", chem: "Household", add: "To cart", revT: "💬 Customer Reviews", send: "Send", callH: "Contact 📞", setH: "Settings ⚙️", cartH: "Cart", total: "Total: ", order: "PLACE ORDER" }
+        ua: { heroH1: "СОНЕЧКО ДАРУЄ ТЕПЛО 👋", heroP: "Найкращі товари для вашої родини з любов'ю", all: "Все", baby: "Дитяче", pets: "Тварини", chem: "Хімія", add: "В кошик", callH: "Зв'язок 📞", setH: "Налаштування ⚙️", cartH: "Кошик", total: "Разом: ", order: "ОФОРМИТИ" },
+        en: { heroH1: "SUNSHINE GIVES WARMTH 👋", heroP: "Best products for your family", all: "All", baby: "Baby", pets: "Pets", chem: "Household", add: "To cart", callH: "Contact 📞", setH: "Settings ⚙️", cartH: "Cart", total: "Total: ", order: "CHECKOUT" },
+        pl: { heroH1: "SŁONECZKO DAJE CIEPŁO 👋", heroP: "Najlepsze produkty dla rodziny", all: "Wszystko", baby: "Dziecięce", pets: "Zwierzęta", chem: "Chemia", add: "Do koszyka", callH: "Kontakt 📞", setH: "Ustawienia ⚙️", cartH: "Koszyk", total: "Suma: ", order: "ZAMÓW" }
     };
 
     window.onload = () => { setTimeout(() => document.body.classList.add('loaded'), 1000); };
@@ -211,10 +185,9 @@
         document.getElementById('t-hero-p').innerText = d.heroP;
         document.querySelector('.t-all').innerText = d.all;
         document.querySelector('.t-baby').innerText = d.baby;
+        document.querySelector('.t-pets').innerText = d.pets;
         document.querySelector('.t-chem').innerText = d.chem;
         document.querySelectorAll('.t-add-btn').forEach(b => b.innerText = d.add);
-        document.getElementById('t-rev-title').innerText = d.revT;
-        document.querySelector('.t-send').innerText = d.send;
         document.querySelector('.t-call-h').innerText = d.callH;
         document.querySelector('.t-set-h').innerText = d.setH;
         document.querySelector('.t-cart-h').innerText = d.cartH;
@@ -226,14 +199,30 @@
     function openModal(id) { document.getElementById(id).classList.add('active'); }
     function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
-    function addToCart(name, price, img) {
-        if (cart[name]) cart[name].qty++; else cart[name] = { price, img, qty: 1 };
-        updateUI();
-    }
+    function addToCart(btn, name, price, img) {
+        // Анімація польоту
+        const btnRect = btn.getBoundingClientRect();
+        const cartBtn = document.getElementById('cart-btn-nav');
+        const cartRect = cartBtn.getBoundingClientRect();
 
-    function changeQty(name, delta) {
-        cart[name].qty += delta;
-        if (cart[name].qty <= 0) delete cart[name];
+        const flyer = document.createElement('img');
+        flyer.src = img;
+        flyer.className = 'flying-item';
+        flyer.style.left = btnRect.left + 'px';
+        flyer.style.top = btnRect.top + 'px';
+        document.body.appendChild(flyer);
+
+        setTimeout(() => {
+            flyer.style.left = cartRect.left + 'px';
+            flyer.style.top = cartRect.top + 'px';
+            flyer.style.transform = 'scale(0.1)';
+            flyer.style.opacity = '0';
+        }, 50);
+
+        setTimeout(() => flyer.remove(), 800);
+
+        // Логіка кошика
+        if (cart[name]) cart[name].qty++; else cart[name] = { price, img, qty: 1 };
         updateUI();
     }
 
@@ -243,10 +232,10 @@
         for (let name in cart) {
             total += cart[name].price * cart[name].qty;
             count += cart[name].qty;
-            html += `<div class="cart-item">
-                <img src="${cart[name].img}" style="width:50px; border-radius:10px; background:white;">
+            html += `<div style="display:flex; align-items:center; margin-bottom:10px; background:rgba(128,128,128,0.1); padding:10px; border-radius:15px;">
+                <img src="${cart[name].img}" style="width:40px; height:40px; border-radius:10px; background:white;">
                 <div style="flex-grow:1; margin-left:10px;"><b>${name}</b><br>${cart[name].price} грн</div>
-                <div style="display:flex; align-items:center; gap:8px;">
+                <div style="display:flex; align-items:center; gap:5px;">
                     <button class="qty-btn" onclick="changeQty('${name}', -1)">-</button>
                     <span>${cart[name].qty}</span>
                     <button class="qty-btn" onclick="changeQty('${name}', 1)">+</button>
@@ -258,20 +247,26 @@
         document.getElementById('totalSum').innerText = total;
     }
 
+    function changeQty(name, d) {
+        cart[name].qty += d;
+        if (cart[name].qty <= 0) delete cart[name];
+        updateUI();
+    }
+
+    function searchFunc() {
+        let val = document.getElementById('searchInput').value.toLowerCase();
+        document.querySelectorAll('.card').forEach(c => {
+            const name = c.getAttribute('data-name').toLowerCase();
+            c.style.display = name.includes(val) ? 'block' : 'none';
+        });
+    }
+
     function filter(cat, btn) {
         document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
         btn.classList.add('active');
         document.querySelectorAll('.card').forEach(c => {
             c.style.display = (cat === 'all' || c.dataset.cat === cat) ? 'block' : 'none';
         });
-    }
-
-    function addRev() {
-        const n = document.getElementById('rName').value, t = document.getElementById('rText').value;
-        if(n && t) {
-            document.getElementById('rList').insertAdjacentHTML('afterbegin', `<div style="background:rgba(128,128,128,0.1); padding:15px; border-radius:15px; margin-bottom:10px;"><b>${n}:</b> ${t}</div>`);
-            document.getElementById('rName').value = ''; document.getElementById('rText').value = '';
-        }
     }
 </script>
 </body>
