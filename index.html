@@ -9,7 +9,36 @@
         body.dark-mode { --bg: #1a1a1a; --white: #2d2d2d; --text: #f0f2f5; }
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); color: var(--text); transition: 0.3s; overflow-x: hidden; }
         
-        /* Прибираємо синій колір посилань */
+        /* ПРЕЛОАДЕР (ЗАВІСА) */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            background: #ffffff;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        /* Анімація кошика */
+        .loader-cart {
+            font-size: 60px;
+            position: relative;
+            animation: drive 1.8s ease-in-out infinite;
+        }
+
+        @keyframes drive {
+            0% { transform: translateX(-150vw); }
+            50% { transform: translateX(0); }
+            100% { transform: translateX(150vw); }
+        }
+
+        /* Коли завантажено — піднімаємо білий план вгору */
+        .loaded #preloader {
+            transform: translateY(-100%);
+        }
+        
         a { color: inherit; text-decoration: none; }
 
         /* ШАПКА */
@@ -33,14 +62,6 @@
         .price { font-size: 24px; font-weight: 800; color: var(--primary); margin: 15px 0; }
         .buy-btn { background: var(--primary); color: white; border: none; width: 100%; padding: 15px; border-radius: 20px; font-weight: 800; cursor: pointer; }
 
-        /* СТОРІНКА ТОВАРУ (MODAL) */
-        .product-page { position: fixed; inset: 0; background: var(--white); z-index: 5000; display: none; overflow-y: auto; padding: 50px 5%; }
-        .product-page.active { display: block; }
-        .close-page { position: absolute; top: 20px; right: 20px; font-size: 30px; cursor: pointer; }
-        .product-container { display: flex; gap: 50px; flex-wrap: wrap; align-items: center; justify-content: center; }
-        .product-container img { width: 100%; max-width: 400px; border-radius: 30px; }
-        .info-side { max-width: 500px; }
-
         /* КОШИК В ОДИН РЯДОК */
         .cart-panel { position: fixed; right: -100%; top: 0; width: 380px; height: 100%; background: var(--white); z-index: 3000; transition: 0.4s; padding: 30px; box-sizing: border-box; box-shadow: -10px 0 30px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
         .cart-panel.active { right: 0; }
@@ -48,18 +69,13 @@
         .cart-item img { width: 50px; height: 50px; object-fit: contain; }
         .qty-box { display: flex; align-items: center; gap: 10px; background: white; padding: 5px 10px; border-radius: 12px; }
         .qty-btn { border: none; background: none; font-size: 18px; font-weight: 900; cursor: pointer; color: var(--primary); }
-
-        /* ВІДГУКИ */
-        .reviews { width: 92%; margin: 20px auto 50px; padding: 30px; background: var(--white); border-radius: 40px; }
-        .rev-input { width: 100%; padding: 15px; border-radius: 15px; border: 1px solid #eee; margin-bottom: 10px; font-family: inherit; }
-
-        /* МОДАЛКА ВИКЛИКУ */
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 4000; }
-        .modal-overlay.active { display: flex; }
-        .modal-card { background: var(--white); padding: 40px; border-radius: 40px; width: 90%; max-width: 380px; text-align: center; }
     </style>
 </head>
 <body>
+
+<div id="preloader">
+    <div class="loader-cart">🛒</div>
+</div>
 
 <nav class="navbar">
     <div class="logo" onclick="location.reload()">СОНЕЧКО ☀️</div>
@@ -77,47 +93,23 @@
         <source src="https://assets.mixkit.co/videos/preview/mixkit-sun-shining-through-the-leaves-of-a-tree-4322-large.mp4" type="video/mp4">
     </video>
     <div class="hero-overlay">
-        <div class="hero-tag" id="lang-hero">СОНЕЧКО: НОВЕ НАДХОДЖЕННЯ! 👋</div>
+        <div class="hero-tag">СОНЕЧКО: НОВЕ НАДХОДЖЕННЯ! 👋</div>
     </div>
 </div>
 
-<div class="grid" id="mainGrid">
-    </div>
-
-<div class="reviews">
-    <h3 id="lang-rev-title">💬 Відгуки покупців</h3>
-    <input type="text" id="rName" class="rev-input" placeholder="Ваше ім'я">
-    <textarea id="rText" class="rev-input" rows="3" placeholder="Ваш відгук"></textarea>
-    <button class="buy-btn" style="width:160px" onclick="addRev()" id="lang-rev-send">Надіслати</button>
-    <div id="rList"></div>
-</div>
-
-<div class="product-page" id="productPage">
-    <div class="close-page" onclick="closeProductPage()">✕</div>
-    <div class="product-container">
-        <img id="p-page-img" src="">
-        <div class="info-side">
-            <h1 id="p-page-name">Назва товару</h1>
-            <div class="price" id="p-page-price" style="font-size:32px">0 грн</div>
-            <p id="p-page-desc" style="line-height:1.6; color:#666">
-                Це якісний товар з нашого магазину "Сонечко". Найкращий вибір для вашої родини.
-            </p>
-            <button class="buy-btn" style="width:250px" id="p-page-btn">Купити</button>
-        </div>
-    </div>
-</div>
+<div class="grid" id="mainGrid"></div>
 
 <div class="cart-panel" id="cartPanel">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px">
-        <h2 id="lang-cart-title" style="margin:0">Ваш кошик</h2>
+        <h2 style="margin:0">Ваш кошик</h2>
         <button onclick="toggleCart(false)" style="background:none; border:none; font-size:24px; cursor:pointer">✕</button>
     </div>
     <div class="cart-items" id="cartContent"></div>
-    <div style="border-top:2px solid #eee; padding-top:20px;">
+    <div style="border-top:2px solid #eee; padding-top:20px; margin-top: auto;">
         <div style="display:flex; justify-content:space-between; font-size:20px; font-weight:900; margin-bottom:20px;">
-            <span id="lang-total">Разом:</span> <span id="totalSum">0 грн</span>
+            <span>Разом:</span> <span id="totalSum">0 грн</span>
         </div>
-        <button class="buy-btn" id="lang-checkout">ОФОРМИТИ</button>
+        <button class="buy-btn" onclick="alert('Дякуємо за замовлення!')">ОФОРМИТИ</button>
     </div>
 </div>
 
@@ -130,59 +122,36 @@
     </div>
 </div>
 
-<div class="modal-overlay" id="settingsModal">
-    <div class="modal-card">
-        <h2 id="lang-set-title">Налаштування ⚙️</h2>
-        <button class="buy-btn" style="background:#444" onclick="document.body.classList.toggle('dark-mode')">Тема 🌓</button>
-        <div style="margin-top:25px">
-            <p>Мова:</p>
-            <button class="icon-btn" style="width:auto; padding:0 15px" onclick="setLang('uk')">UA</button>
-            <button class="icon-btn" style="width:auto; padding:0 15px" onclick="setLang('en')">EN</button>
-            <button class="icon-btn" style="width:auto; padding:0 15px" onclick="setLang('ru')">RU</button>
-        </div>
-        <button onclick="closeModal('settingsModal')" class="buy-btn" style="margin-top:20px">OK</button>
-    </div>
-</div>
-
 <script>
+    // СКРИПТ ДЛЯ ПРЕЛОАДЕРА
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            document.body.classList.add('loaded');
+        }, 2000); // Затримка 2 секунди, щоб встигнути побачити кошик
+    });
+
     const products = [
-        { id: 1, name: 'Dada Extra Soft 6', price: 250, img: 'https://i.ibb.co/vyDyh7g/image.jpg' },
-        { id: 2, name: 'Корм Kitty 2кг', price: 250, img: 'https://i.ibb.co/2FDgpWxPc3/2F619939933.webp' },
-        { id: 3, name: 'Ariel Gel 5.5L', price: 600, img: 'https://i.ibb.co/dsyN5hwf/image-processing20250930-161-45fnds.webp' }
+        { name: 'Dada Extra Soft 6', price: 250, img: 'https://i.ibb.co/vyDyh7g/image.jpg' },
+        { name: 'Корм Kitty 2кг', price: 250, img: 'https://i.ibb.co/2FDgpWxPc3/2F619939933.webp' },
+        { name: 'Ariel Gel 5.5L', price: 600, img: 'https://i.ibb.co/dsyN5hwf/image-processing20250930-161-45fnds.webp' }
     ];
 
     let cart = {};
 
-    function initProducts() {
-        const grid = document.getElementById('mainGrid');
-        grid.innerHTML = products.map(p => `
-            <div class="card" onclick="openProductPage('${p.name}', ${p.price}, '${p.img}')">
+    function init() {
+        document.getElementById('mainGrid').innerHTML = products.map(p => `
+            <div class="card">
                 <img src="${p.img}">
                 <div style="font-weight:700; margin-top:10px">${p.name}</div>
                 <div class="price">${p.price} грн</div>
-                <button class="buy-btn" onclick="event.stopPropagation(); addToCart('${p.name}', ${p.price}, '${p.img}')">В кошик</button>
+                <button class="buy-btn" onclick="addToCart('${p.name}', ${p.price}, '${p.img}')">В кошик</button>
             </div>
         `).join('');
     }
 
-    function openProductPage(name, price, img) {
-        document.getElementById('p-page-name').innerText = name;
-        document.getElementById('p-page-price').innerText = price + ' грн';
-        document.getElementById('p-page-img').src = img;
-        document.getElementById('p-page-btn').onclick = () => addToCart(name, price, img);
-        document.getElementById('productPage').classList.add('active');
-    }
-
-    function closeProductPage() { document.getElementById('productPage').classList.remove('active'); }
-
     function addToCart(name, price, img) {
-        if (cart[name]) { cart[name].qty++; } else { cart[name] = { price, img, qty: 1 }; }
-        updateUI();
-    }
-
-    function changeQty(name, delta) {
-        cart[name].qty += delta;
-        if (cart[name].qty <= 0) delete cart[name];
+        if (cart[name]) { cart[name].qty++; } 
+        else { cart[name] = { price, img, qty: 1 }; }
         updateUI();
     }
 
@@ -198,15 +167,13 @@
             html += `
                 <div class="cart-item">
                     <img src="${item.img}">
-                    <div style="flex-grow:1; font-weight:700; font-size:14px">${name}</div>
+                    <div style="flex-grow:1; font-weight:700; font-size:14px; margin-left:10px">${name}</div>
                     <div class="qty-box">
-                        <button class="qty-btn" onclick="changeQty('${name}', -1)">-</button>
-                        <span>${item.qty}</span>
-                        <button class="qty-btn" onclick="changeQty('${name}', 1)">+</button>
+                        <span style="font-weight:800">${item.qty} шт.</span>
                     </div>
                 </div>`;
         }
-        list.innerHTML = html || '<p style="text-align:center; color:#999; margin-top:50px;">Порожньо</p>';
+        list.innerHTML = html || '<p style="text-align:center; color:#999; margin-top:50px;">Кошик порожній</p>';
         badge.innerText = count;
         badge.style.display = count > 0 ? 'block' : 'none';
         document.getElementById('totalSum').innerText = total + ' грн';
@@ -216,15 +183,7 @@
     function openModal(id) { document.getElementById(id).classList.add('active'); }
     function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
-    function addRev() {
-        const n = document.getElementById('rName').value, t = document.getElementById('rText').value;
-        if(n && t) {
-            document.getElementById('rList').insertAdjacentHTML('afterbegin', `<div style="background:#f8f9fa; padding:15px; border-radius:15px; margin-top:10px"><b>${n}:</b> ${t}</div>`);
-            document.getElementById('rName').value = ''; document.getElementById('rText').value = '';
-        }
-    }
-
-    initProducts();
+    init();
 </script>
 </body>
 </html>
