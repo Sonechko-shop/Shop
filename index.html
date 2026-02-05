@@ -3,265 +3,569 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>СОНЕЧКО PRO — Гіпермаркет</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <title>СОНЕЧКО — New Generation Shop + Ігри!</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
+    
     <style>
-        /* ЦЕ ВЕЛИКИЙ БЛОК СТИЛІВ (CSS)
-           Тут прописані всі стани: Dark Mode, Анімації, Адаптивність
-        */
         :root {
-            --primary: #83b735; --primary-dark: #6a962a;
-            --accent-orange: #ff9f43; --accent-red: #ee5253;
-            --bg-light: #f4f7f6; --bg-dark: #121212;
-            --card-white: #ffffff; --card-dark: #1e1e1e;
-            --text-main: #2d3436; --text-grey: #636e72;
-            --header-h: 80px; --transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            /* Брендові кольори */
+            --brand-green: #83b735;
+            --brand-blue: #0057b7;
+            --brand-yellow: #ffd700;
+            
+            /* UI кольори */
+            --bg-body: #f4f7f6;
+            --white: #ffffff;
+            --text-main: #1d1d1f;
+            --text-muted: #86868b;
+            
+            /* Ефекти */
+            --shadow-soft: 0 8px 30px rgba(0,0,0,0.04);
+            --shadow-hover: 0 15px 45px rgba(0,0,0,0.1);
+            --radius-lg: 32px;
+            --radius-md: 18px;
+            --transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        body { font-family: 'Montserrat', sans-serif; margin: 0; background: var(--bg-light); color: var(--text-main); transition: background 0.3s; }
-        body.dark-mode { --bg-light: var(--bg-dark); --text-main: #f5f5f5; --card-white: var(--card-dark); }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-        /* HEADER - COMPLEX NAVIGATION */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            margin: 0;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        /* --- HEADER (Modern Minimalist) --- */
         header {
-            background: var(--card-white); height: var(--header-h);
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 0 5%; position: sticky; top: 0; z-index: 5000;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 12px 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
         }
 
-        .logo { font-size: 32px; font-weight: 900; text-decoration: none; letter-spacing: -1px; }
-        .logo span.b { color: #0057b7; } .logo span.y { color: #ffd700; }
-
-        .search-container { flex-grow: 1; max-width: 600px; margin: 0 40px; position: relative; }
-        .search-container input {
-            width: 100%; padding: 14px 25px 14px 50px; border-radius: 15px;
-            border: 2px solid #eee; background: #f9f9f9; outline: none; font-size: 16px;
+        .logo {
+            font-size: 26px;
+            font-weight: 900;
+            text-decoration: none;
+            letter-spacing: -1px;
         }
-        .search-container::before { content: '🔍'; position: absolute; left: 20px; top: 15px; opacity: 0.5; }
+        .logo .blue { color: var(--brand-blue); }
+        .logo .yellow { color: var(--brand-yellow); }
 
-        .nav-actions { display: flex; gap: 25px; align-items: center; }
-        .nav-icon { background: none; border: none; cursor: pointer; position: relative; font-size: 22px; color: var(--text-main); transition: 0.2s; }
-        .nav-icon:hover { color: var(--primary); transform: scale(1.1); }
-        .badge { position: absolute; top: -8px; right: -8px; background: var(--accent-red); color: white; font-size: 11px; padding: 2px 7px; border-radius: 10px; font-weight: 800; }
-
-        /* MAIN LAYOUT */
-        .container { display: flex; padding: 30px 5%; gap: 30px; }
-
-        /* SIDEBAR FILTERS */
-        aside { width: 280px; flex-shrink: 0; }
-        .filter-block { background: var(--card-white); padding: 20px; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); margin-bottom: 20px; }
-        .filter-block h4 { margin-top: 0; border-bottom: 2px solid var(--bg-light); padding-bottom: 10px; }
-        .filter-group { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
-        .checkbox-item { display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 14px; }
-
-        /* CONTENT AREA */
-        main { flex-grow: 1; }
-        .promo-banner {
-            width: 100%; height: 250px; background: linear-gradient(135deg, #83b735 0%, #0057b7 100%);
-            border-radius: 30px; margin-bottom: 30px; display: flex; align-items: center; padding: 0 50px; color: white;
-            position: relative; overflow: hidden;
+        .search-bar {
+            flex-grow: 1;
+            max-width: 500px;
+            margin: 0 30px;
+            position: relative;
         }
-        .promo-banner h2 { font-size: 42px; margin: 0; z-index: 2; }
 
-        /* PRODUCT GRID */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; }
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            border-radius: var(--radius-md);
+            border: 1px solid transparent;
+            background: rgba(0,0,0,0.04);
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .search-bar input:focus {
+            background: var(--white);
+            border-color: var(--brand-green);
+            box-shadow: 0 0 0 4px rgba(131, 183, 53, 0.1);
+        }
+
+        .nav-actions { display: flex; gap: 12px; }
+
+        .icon-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            position: relative;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .icon-btn:hover { background: rgba(0,0,0,0.05); transform: translateY(-2px); }
+
+        .badge {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            background: var(--brand-green);
+            color: white;
+            font-size: 10px;
+            font-weight: 800;
+            min-width: 18px;
+            height: 18px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--white);
+        }
+
+        /* --- PRODUCT GRID --- */
+        .container {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 4%;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
         .card {
-            background: var(--card-white); border-radius: 25px; padding: 20px;
-            transition: var(--transition); position: relative; display: flex; flex-direction: column;
-            border: 1px solid rgba(0,0,0,0.05);
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            transition: var(--transition);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(0,0,0,0.02);
+            will-change: transform;
         }
-        .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-        
-        .stock-status { font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--primary); margin-bottom: 10px; }
-        .card-img { width: 100%; height: 180px; object-fit: contain; margin-bottom: 15px; }
-        .card-title { font-size: 15px; font-weight: 600; margin-bottom: 10px; height: 36px; overflow: hidden; }
-        .card-price { font-size: 24px; font-weight: 900; color: var(--text-main); margin-top: auto; }
-        .card-old-price { font-size: 14px; text-decoration: line-through; opacity: 0.5; }
 
-        .add-to-cart {
-            background: var(--primary); color: white; border: none; width: 100%; padding: 14px;
-            border-radius: 15px; font-weight: 800; cursor: pointer; margin-top: 15px; transition: 0.3s;
+        .card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: var(--shadow-hover);
         }
-        .add-to-cart:hover { background: var(--primary-dark); }
 
-        /* FLYING ITEM (2 SECONDS) */
+        .stock-tag {
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            padding: 6px 14px;
+            background: rgba(131, 183, 53, 0.1);
+            color: var(--brand-green);
+            font-size: 12px;
+            font-weight: 700;
+            border-radius: 12px;
+            z-index: 10;
+        }
+
+        .img-container {
+            width: 100%;
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            border-radius: var(--radius-md);
+            background: #fafafa;
+            overflow: hidden;
+        }
+
+        .img-container img {
+            max-width: 85%;
+            max-height: 85%;
+            object-fit: contain;
+            transition: var(--transition);
+        }
+
+        .card:hover .img-container img { transform: scale(1.1); }
+
+        .product-info h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+            color: var(--text-main);
+        }
+
+        .price-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: auto;
+            padding-top: 20px;
+        }
+
+        .price {
+            font-size: 26px;
+            font-weight: 900;
+            color: var(--brand-green);
+        }
+
+        .buy-btn {
+            background: var(--brand-green);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 18px;
+            font-weight: 800;
+            font-size: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 10px 20px rgba(131, 183, 53, 0.2);
+        }
+
+        .buy-btn:hover {
+            background: #72a12d;
+            box-shadow: 0 15px 30px rgba(131, 183, 53, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .buy-btn:active { transform: scale(0.95); }
+
+        /* --- FLYING ANIMATION (Optimized) --- */
         .flyer {
-            position: fixed; z-index: 9999; pointer-events: none;
-            width: 80px; height: 80px; object-fit: contain; border-radius: 50%;
-            background: white; border: 2px solid var(--primary);
-            transition: all 2.0s cubic-bezier(0.19, 1, 0.22, 1);
+            position: fixed;
+            z-index: 9999;
+            pointer-events: none;
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            border-radius: 50%;
+            background: var(--white);
+            box-shadow: var(--shadow-hover);
+            transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
-        /* MODAL */
-        .modal-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; z-index: 9000;
+        /* --- GAME ZONE STYLES --- */
+        .game-zone {
+            background: linear-gradient(135deg, var(--brand-blue), var(--brand-green));
+            padding: 60px 4%;
+            margin-top: 60px;
+            color: white;
+            text-align: center;
+            border-radius: var(--radius-lg);
+            max-width: 1400px;
+            margin: 60px auto;
+            box-shadow: var(--shadow-hover);
         }
-        .modal-overlay.active { display: flex; }
-        .modal-body {
-            background: var(--card-white); width: 90%; max-width: 900px; height: 600px;
-            border-radius: 40px; display: flex; overflow: hidden; position: relative;
+        .game-zone h2 {
+            font-size: 38px;
+            font-weight: 900;
+            margin-bottom: 40px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
-        .modal-left { width: 50%; background: #f9f9f9; display: flex; align-items: center; justify-content: center; }
-        .modal-right { width: 50%; padding: 40px; overflow-y: auto; }
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .game-card {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: var(--shadow-soft);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .game-card h3 { font-size: 24px; margin-top: 0; }
+        .game-card p { opacity: 0.8; font-size: 15px; line-height: 1.6; }
+        .game-card button {
+            background: var(--brand-green);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: var(--radius-md);
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: var(--transition);
+        }
+        .game-card button:hover { background: var(--brand-blue); transform: scale(1.05); }
 
-        /* FOOTER */
-        footer { background: var(--card-white); padding: 60px 5%; margin-top: 50px; border-top: 1px solid #eee; }
-        .footer-cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
-        .f-col h5 { font-size: 18px; margin-bottom: 20px; }
-        .f-col ul { list-style: none; padding: 0; opacity: 0.7; font-size: 14px; line-height: 2.5; }
+        /* Game 1: Clicker */
+        #fruit-spawn-area {
+            width: 100%; height: 200px; border: 1px dashed rgba(255,255,255,0.5);
+            border-radius: var(--radius-md); position: relative; overflow: hidden;
+            margin-bottom: 20px; cursor: crosshair;
+        }
+        .fruit {
+            position: absolute; font-size: 40px; cursor: pointer;
+            animation: fadeInOut 2s forwards; opacity: 0;
+            transform: scale(0);
+        }
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: scale(0); }
+            20% { opacity: 1; transform: scale(1); }
+            80% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0); }
+        }
 
-        @media (max-width: 1024px) { aside { display: none; } .footer-cols { grid-template-columns: 1fr 1fr; } }
+        /* Game 3: Maze Button */
+        #maze-button {
+            position: relative; width: 150px; height: 50px; background: var(--accent-orange);
+            color: white; font-weight: 800; border: none; border-radius: 10px; cursor: pointer;
+            transition: all 0.2s linear; margin-top: 20px;
+        }
+
     </style>
 </head>
 <body>
 
 <header>
-    <a href="#" class="logo"><span class="b">СОНЕ</span><span class="y">ЧКО</span></a>
-    
-    <div class="search-container">
-        <input type="text" placeholder="Шукати серед 10,000 товарів..." id="mainSearch">
+    <a href="#" class="logo">
+        <span class="blue">СОНЕ</span><span class="yellow">ЧКО</span>
+    </a>
+
+    <div class="search-bar">
+        <input type="text" placeholder="Шукати товари майбутнього..." id="searchInput">
     </div>
 
     <div class="nav-actions">
-        <button class="nav-icon" onclick="toggleTheme()">🌗</button>
-        <button class="nav-icon">👤</button>
-        <button class="nav-icon">❤️<span class="badge">0</span></button>
-        <button class="nav-icon" id="cartTrigger">🛒<span class="badge" id="cartCount">0</span></button>
+        <button class="icon-btn">⚙️</button>
+        <button class="icon-btn" id="cart-nav">
+            🛒 <span class="badge" id="cart-count">0</span>
+        </button>
     </div>
 </header>
 
 <div class="container">
-    <aside>
-        <div class="filter-block">
-            <h4>Категорії</h4>
-            <div class="filter-group">
-                <label class="checkbox-item"><input type="checkbox" checked> Все підряд</label>
-                <label class="checkbox-item"><input type="checkbox"> Дитяче харчування</label>
-                <label class="checkbox-item"><input type="checkbox"> Побутова хімія</label>
-                <label class="checkbox-item"><input type="checkbox"> Товари для котів</label>
-            </div>
+    <div class="grid" id="productGrid">
         </div>
-        <div class="filter-block">
-            <h4>Ціна, грн</h4>
-            <input type="range" style="width: 100%; accent-color: var(--primary);">
-            <div style="display:flex; justify-content: space-between; font-size: 12px; margin-top:10px;">
-                <span>0 грн</span><span>50,000 грн</span>
-            </div>
-        </div>
-    </aside>
-
-    <main>
-        <div class="promo-banner">
-            <div>
-                <h2>ЗНИЖКИ ДО -50%</h2>
-                <p>Тільки цього тижня на всі товари бренду Dada!</p>
-            </div>
-        </div>
-
-        <div class="grid" id="productGrid">
-            </div>
-    </main>
 </div>
 
-<footer>
-    <div class="footer-cols">
-        <div class="f-col"><h5>Покупцям</h5><ul><li>Доставка</li><li>Оплата</li><li>Кредит</li></ul></div>
-        <div class="f-col"><h5>Компанія</h5><ul><li>Про нас</li><li>Контакти</li><li>Вакансії</li></ul></div>
-        <div class="f-col"><h5>Сервіс</h5><ul><li>Бонуси</li><li>Повернення</li><li>Гарантія</li></ul></div>
-        <div class="f-col"><h5>Контакти</h5><p><strong>+38 (068) 490 00 68</strong></p></div>
-    </div>
-</footer>
+<section class="game-zone">
+    <h2>🚀 Зона Розваг від СОНЕЧКО! 🚀</h2>
+    <div class="game-grid">
+        <div class="game-card">
+            <h3>Збери врожай 🍎</h3>
+            <p>Швидко клікай на фрукти, що з'являються, і збирай бали!</p>
+            <div id="fruit-spawn-area"></div>
+            <p>Очки: <span id="clicker-score">0</span></p>
+            <button onclick="startGame1()">Почати гру</button>
+        </div>
 
-<div class="modal-overlay" id="productModal">
-    <div class="modal-body">
-        <div class="modal-left"><img id="m-img" style="max-width: 80%;"></div>
-        <div class="modal-right">
-            <h1 id="m-title">Назва товару</h1>
-            <p id="m-desc">Детальний опис товару...</p>
-            <div class="card-price" id="m-price" style="font-size: 42px;">0 грн</div>
-            <button class="add-to-cart" id="m-buy-btn" style="padding: 20px; font-size: 18px;">КУПИТИ ЗАРАЗ</button>
-            <p onclick="closeModal()" style="cursor:pointer; margin-top:30px; text-align:center; opacity:0.5;">Закрити вікно</p>
+        <div class="game-card">
+            <h3>Відгадай ціну 🤔</h3>
+            <p>Спробуй вгадати ціну товару з нашого магазину і отримай бонус!</p>
+            <p id="guess-product-name"></p>
+            <input type="number" id="guess-input" placeholder="Ваша ціна" style="padding: 10px; border-radius: 8px; border: none; margin: 15px 0;">
+            <p id="guess-feedback"></p>
+            <button onclick="startGame2()">Нова гра</button>
+            <button onclick="checkGuess()" style="background: var(--accent-orange); margin-left: 10px;">Перевірити</button>
+        </div>
+
+        <div class="game-card">
+            <h3>Лабіринт знижок 🏃</h3>
+            <p>Спробуй впіймати кнопку знижки, яка тікає від тебе!</p>
+            <div style="width: 100%; height: 150px; border: 1px dashed rgba(255,255,255,0.5); border-radius: var(--radius-md); position: relative; overflow: hidden; margin-bottom: 20px;">
+                <button id="maze-button" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">Знижка!</button>
+            </div>
+            <button onclick="startGame3()">Почати лабіринт</button>
         </div>
     </div>
-</div>
+</section>
 
 <script>
-    /* ЦЕ ВЕЛИКИЙ БЛОК ЛОГІКИ (JavaScript)
-       Тут реалізовано все: генерація, політ, кошик, модалки
-    */
-    
-    // БАЗА ДАНИХ (Можна розширювати до нескінченності)
-    const productDatabase = [
-        { id: 1, name: "Dada Extra Soft 6 XXL", price: 450, stock: 24, img: "https://i.ibb.co/vyDyh7g/image.jpg", desc: "Найкращі підгузки для вашої дитини." },
-        { id: 2, name: "Ariel Pods Color 70 шт", price: 890, stock: 12, img: "https://i.ibb.co/L64M6S9/ariel.jpg", desc: "Капсули для прання професійного рівня." },
-        { id: 3, name: "Корм Felix 24x85г", price: 380, stock: 50, img: "https://i.ibb.co/0Yf9mXm/felix.jpg", desc: "Збалансоване харчування для котів." }
+    // Масив даних (Можна отримувати з API)
+    const products = [
+        { id: 1, name: "Dada Premium Care 6", price: 250, stock: 12, img: "https://i.ibb.co/vyDyh7g/image.jpg" },
+        { id: 2, name: "Ariel Pods Pro Clean", price: 320, stock: 7, img: "https://i.ibb.co/L64M6S9/ariel.jpg" },
+        { id: 3, name: "Felix Crunchy Treats", price: 15, stock: 35, img: "https://i.ibb.co/0Yf9mXm/felix.jpg" },
+        { id: 4, name: "Pampers Active Baby", price: 410, stock: 20, img: "https://i.ibb.co/vyDyh7g/image.jpg" }
     ];
 
-    // ГЕНЕРАТОР ТОВАРІВ (Щоб сайт здавався величезним)
-    // Ми клонуємо базу кілька разів, щоб отримати багато карток
-    const bigData = [];
-    for(let i=0; i<30; i++) {
-        productDatabase.forEach(p => bigData.push({...p, id: Math.random() + i}));
-    }
+    let cart = 0;
 
-    let cartTotal = 0;
-
-    function renderGrid() {
+    // Рендер карток (Чистий та швидкий)
+    function initApp() {
         const grid = document.getElementById('productGrid');
-        grid.innerHTML = bigData.map(p => `
-            <div class="card" onclick="openProduct('${p.name}', ${p.price}, '${p.img}', '${p.desc}')">
-                <div class="stock-status">В наявності: ${p.stock} шт</div>
-                <img src="${p.img}" class="card-img" id="img-${p.id}">
-                <div class="card-title">${p.name}</div>
-                <div class="card-old-price">${p.price + 100} грн</div>
-                <div class="card-price">${p.price} грн</div>
-                <button class="add-to-cart" onclick="event.stopPropagation(); buyAction(${p.id})">У кошик</button>
-            </div>
+        grid.innerHTML = products.map(p => `
+            <article class="card">
+                <div class="stock-tag">В наявності: ${p.stock} шт</div>
+                <div class="img-container">
+                    <img src="${p.img}" alt="${p.name}" id="img-${p.id}" loading="lazy">
+                </div>
+                <div class="product-info">
+                    <h3>${p.name}</h3>
+                    <div class="price-row">
+                        <div class="price">${p.price} грн</div>
+                        <button class="buy-btn" onclick="addToCart(${p.id}, event)">Купити</button>
+                    </div>
+                </div>
+            </article>
         `).join('');
     }
 
-    function buyAction(id) {
+    // Покращена анімація польоту
+    function addToCart(id, event) {
+        const btn = event.currentTarget;
         const img = document.getElementById(`img-${id}`);
-        const cartIcon = document.getElementById('cartTrigger');
+        const cartIcon = document.getElementById('cart-nav');
+        
+        const flyer = img.cloneNode();
         const rect = img.getBoundingClientRect();
         const cartRect = cartIcon.getBoundingClientRect();
 
-        const flyer = img.cloneNode();
-        flyer.className = 'flyer';
-        flyer.style.left = rect.left + 'px';
-        flyer.style.top = rect.top + 'px';
+        Object.assign(flyer.style, {
+            position: 'fixed',
+            left: rect.left + 'px',
+            top: rect.top + 'px',
+            width: rect.width + 'px',
+            height: rect.height + 'px',
+            zIndex: '10000',
+            transition: 'all 1s cubic-bezier(0.42, 0, 0.58, 1)',
+            pointerEvents: 'none'
+        });
+
         document.body.appendChild(flyer);
 
-        // ПОЛІТ 2 СЕКУНДИ
-        setTimeout(() => {
-            flyer.style.left = cartRect.left + 'px';
-            flyer.style.top = cartRect.top + 'px';
-            flyer.style.transform = 'scale(0.1) rotate(720deg)';
-            flyer.style.opacity = '0';
-        }, 50);
+        requestAnimationFrame(() => {
+            Object.assign(flyer.style, {
+                left: (cartRect.left + 10) + 'px',
+                top: (cartRect.top + 10) + 'px',
+                width: '20px',
+                height: '20px',
+                opacity: '0.4',
+                transform: 'rotate(360deg)'
+            });
+        });
 
         setTimeout(() => {
             flyer.remove();
-            cartTotal++;
-            document.getElementById('cartCount').innerText = cartTotal;
-        }, 2000);
+            cart++;
+            document.getElementById('cart-count').innerText = cart;
+            
+            cartIcon.style.transform = 'scale(1.3)';
+            setTimeout(() => cartIcon.style.transform = 'scale(1)', 200);
+        }, 1000);
     }
 
-    function openProduct(name, price, img, desc) {
-        document.getElementById('m-title').innerText = name;
-        document.getElementById('m-price').innerText = price + " грн";
-        document.getElementById('m-img').src = img;
-        document.getElementById('m-desc').innerText = desc;
-        document.getElementById('productModal').classList.add('active');
+    initApp();
+
+
+    // --- GAME 1: CLICKER GAME ---
+    let clickerScore = 0;
+    let game1Interval;
+    const fruits = ['🍎', '🍌', '🍓', '🍇', '🍉'];
+
+    function startGame1() {
+        clickerScore = 0;
+        document.getElementById('clicker-score').innerText = clickerScore;
+        const spawnArea = document.getElementById('fruit-spawn-area');
+        spawnArea.innerHTML = ''; // Очистити попередні фрукти
+
+        if (game1Interval) clearInterval(game1Interval);
+        
+        game1Interval = setInterval(() => {
+            const fruit = document.createElement('span');
+            fruit.className = 'fruit';
+            fruit.innerText = fruits[Math.floor(Math.random() * fruits.length)];
+            
+            const areaRect = spawnArea.getBoundingClientRect();
+            fruit.style.left = Math.random() * (areaRect.width - 40) + 'px';
+            fruit.style.top = Math.random() * (areaRect.height - 40) + 'px';
+            
+            fruit.onclick = () => {
+                clickerScore++;
+                document.getElementById('clicker-score').innerText = clickerScore;
+                fruit.remove();
+            };
+            
+            spawnArea.appendChild(fruit);
+            setTimeout(() => fruit.remove(), 1900); // Fruit disappears after animation
+        }, 700); // New fruit every 0.7 seconds
+
+        // Stop game after 15 seconds
+        setTimeout(() => {
+            clearInterval(game1Interval);
+            alert(`Час вийшов! Ви набрали ${clickerScore} очок.`);
+        }, 15000);
     }
 
-    function closeModal() { document.getElementById('productModal').classList.remove('active'); }
-    function toggleTheme() { document.body.classList.toggle('dark-mode'); }
+    // --- GAME 2: GUESS THE PRICE ---
+    let currentGuessProduct;
+    let currentGuessPrice;
 
-    // ЗАПУСК
-    renderGrid();
+    function startGame2() {
+        const randomProduct = products[Math.floor(Math.random() * products.length)];
+        currentGuessProduct = randomProduct.name;
+        currentGuessPrice = randomProduct.price;
+        
+        document.getElementById('guess-product-name').innerText = `Ціна на "${currentGuessProduct}"?`;
+        document.getElementById('guess-input').value = '';
+        document.getElementById('guess-feedback').innerText = '';
+    }
+
+    function checkGuess() {
+        const userGuess = parseInt(document.getElementById('guess-input').value);
+        const feedback = document.getElementById('guess-feedback');
+
+        if (isNaN(userGuess)) {
+            feedback.innerText = 'Будь ласка, введіть число!';
+            feedback.style.color = 'red';
+            return;
+        }
+
+        if (userGuess === currentGuessPrice) {
+            feedback.innerText = `Вірно! Ціна на ${currentGuessProduct} - ${currentGuessPrice} грн. Ви отримуєте бонус!`;
+            feedback.style.color = 'lightgreen';
+            // Можна додати логіку бонусу, наприклад, cart++
+        } else if (userGuess < currentGuessPrice) {
+            feedback.innerText = 'Замало. Спробуйте більше!';
+            feedback.style.color = 'orange';
+        } else {
+            feedback.innerText = 'Забагато. Спробуйте менше!';
+            feedback.style.color = 'orange';
+        }
+    }
+
+    // Initialize the first product for the game
+    startGame2();
+
+
+    // --- GAME 3: MAZE BUTTON ---
+    const mazeButton = document.getElementById('maze-button');
+    let game3Interval;
+
+    function startGame3() {
+        if (game3Interval) clearInterval(game3Interval);
+        mazeButton.style.left = '50%';
+        mazeButton.style.top = '50%';
+        mazeButton.style.transform = 'translate(-50%, -50%)';
+        mazeButton.style.opacity = '1';
+        mazeButton.style.pointerEvents = 'auto';
+
+        game3Interval = setInterval(() => {
+            const parentRect = mazeButton.parentElement.getBoundingClientRect();
+            const btnRect = mazeButton.getBoundingClientRect();
+
+            const newX = Math.random() * (parentRect.width - btnRect.width);
+            const newY = Math.random() * (parentRect.height - btnRect.height);
+
+            mazeButton.style.left = newX + 'px';
+            mazeButton.style.top = newY + 'px';
+        }, 800); // Button moves every 0.8 seconds
+
+        mazeButton.onclick = () => {
+            clearInterval(game3Interval);
+            alert('Ви впіймали знижку! Вітаємо!');
+            mazeButton.style.opacity = '0';
+            mazeButton.style.pointerEvents = 'none';
+        };
+    }
 
 </script>
+
 </body>
 </html>
