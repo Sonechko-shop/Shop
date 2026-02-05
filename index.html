@@ -3,396 +3,265 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>СОНЕЧКО — PRO Market</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>СОНЕЧКО PRO — Гіпермаркет</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800;900&display=swap" rel="stylesheet">
     <style>
+        /* ЦЕ ВЕЛИКИЙ БЛОК СТИЛІВ (CSS)
+           Тут прописані всі стани: Dark Mode, Анімації, Адаптивність
+        */
         :root {
-            --primary: #83b735;
-            --dark: #1a1a1a;
-            --light-grey: #f0f2f1;
-            --white: #ffffff;
-            --shadow-lg: 0 20px 40px rgba(0,0,0,0.1);
-            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --primary: #83b735; --primary-dark: #6a962a;
+            --accent-orange: #ff9f43; --accent-red: #ee5253;
+            --bg-light: #f4f7f6; --bg-dark: #121212;
+            --card-white: #ffffff; --card-dark: #1e1e1e;
+            --text-main: #2d3436; --text-grey: #636e72;
+            --header-h: 80px; --transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        body {
-            font-family: 'Montserrat', sans-serif;
-            margin: 0;
-            background: var(--light-grey);
-            color: var(--dark);
-            overflow-x: hidden;
-        }
+        body { font-family: 'Montserrat', sans-serif; margin: 0; background: var(--bg-light); color: var(--text-main); transition: background 0.3s; }
+        body.dark-mode { --bg-light: var(--bg-dark); --text-main: #f5f5f5; --card-white: var(--card-dark); }
 
-        /* HEADER - FOXTROT STYLE */
+        /* HEADER - COMPLEX NAVIGATION */
         header {
-            background: var(--white);
-            padding: 10px 5%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 2000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            background: var(--card-white); height: var(--header-h);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 5%; position: sticky; top: 0; z-index: 5000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
 
-        .logo { font-size: 32px; font-weight: 900; text-decoration: none; display: flex; align-items: center; }
-        .logo .blue { color: #0057b7; }
-        .logo .yellow { color: #ffd700; }
+        .logo { font-size: 32px; font-weight: 900; text-decoration: none; letter-spacing: -1px; }
+        .logo span.b { color: #0057b7; } .logo span.y { color: #ffd700; }
 
-        .catalog-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            margin-left: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .search-container {
-            flex-grow: 1;
-            margin: 0 30px;
-            position: relative;
-        }
-
+        .search-container { flex-grow: 1; max-width: 600px; margin: 0 40px; position: relative; }
         .search-container input {
-            width: 100%;
-            padding: 14px 20px;
-            border-radius: 12px;
-            border: 2px solid var(--light-grey);
-            background: var(--light-grey);
-            outline: none;
-            font-family: inherit;
+            width: 100%; padding: 14px 25px 14px 50px; border-radius: 15px;
+            border: 2px solid #eee; background: #f9f9f9; outline: none; font-size: 16px;
         }
+        .search-container::before { content: '🔍'; position: absolute; left: 20px; top: 15px; opacity: 0.5; }
 
-        .user-nav { display: flex; gap: 20px; }
-        .nav-item {
-            text-align: center;
-            cursor: pointer;
-            position: relative;
-            background: none;
-            border: none;
-            font-size: 20px;
-        }
-        .nav-item span { display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; margin-top: 4px; }
+        .nav-actions { display: flex; gap: 25px; align-items: center; }
+        .nav-icon { background: none; border: none; cursor: pointer; position: relative; font-size: 22px; color: var(--text-main); transition: 0.2s; }
+        .nav-icon:hover { color: var(--primary); transform: scale(1.1); }
+        .badge { position: absolute; top: -8px; right: -8px; background: var(--accent-red); color: white; font-size: 11px; padding: 2px 7px; border-radius: 10px; font-weight: 800; }
 
-        .badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: #ff4757;
-            color: white;
-            font-size: 11px;
-            padding: 2px 6px;
-            border-radius: 50%;
-            font-weight: 900;
-        }
+        /* MAIN LAYOUT */
+        .container { display: flex; padding: 30px 5%; gap: 30px; }
 
-        /* CATEGORY SLIDER */
-        .cat-nav {
-            display: flex;
-            gap: 15px;
-            padding: 20px 5%;
-            overflow-x: auto;
-            scrollbar-width: none;
-        }
-        .cat-nav::-webkit-scrollbar { display: none; }
+        /* SIDEBAR FILTERS */
+        aside { width: 280px; flex-shrink: 0; }
+        .filter-block { background: var(--card-white); padding: 20px; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); margin-bottom: 20px; }
+        .filter-block h4 { margin-top: 0; border-bottom: 2px solid var(--bg-light); padding-bottom: 10px; }
+        .filter-group { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
+        .checkbox-item { display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 14px; }
 
-        .cat-item {
-            background: var(--white);
-            padding: 15px 30px;
-            border-radius: 20px;
-            white-space: nowrap;
-            cursor: pointer;
-            font-weight: 700;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-            transition: var(--transition);
+        /* CONTENT AREA */
+        main { flex-grow: 1; }
+        .promo-banner {
+            width: 100%; height: 250px; background: linear-gradient(135deg, #83b735 0%, #0057b7 100%);
+            border-radius: 30px; margin-bottom: 30px; display: flex; align-items: center; padding: 0 50px; color: white;
+            position: relative; overflow: hidden;
         }
-        .cat-item.active { background: var(--primary); color: white; }
+        .promo-banner h2 { font-size: 42px; margin: 0; z-index: 2; }
 
         /* PRODUCT GRID */
-        .main-container { padding: 0 5% 50px 5%; }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; }
+        .card {
+            background: var(--card-white); border-radius: 25px; padding: 20px;
+            transition: var(--transition); position: relative; display: flex; flex-direction: column;
+            border: 1px solid rgba(0,0,0,0.05);
         }
-
-        .product-card {
-            background: var(--white);
-            border-radius: 24px;
-            padding: 20px;
-            position: relative;
-            transition: var(--transition);
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-        }
-        .product-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-lg); }
-
-        .stock-info {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: #e1f5fe;
-            color: #0288d1;
-            padding: 4px 10px;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 700;
-            z-index: 10;
-        }
-
-        .img-box {
-            width: 100%;
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 15px;
-        }
-        .img-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
-
-        .product-name { font-size: 16px; font-weight: 700; margin-bottom: 10px; height: 40px; overflow: hidden; }
-        .product-price { font-size: 24px; font-weight: 900; color: var(--primary); margin: 10px 0; }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
         
-        .buy-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 15px;
-            border-radius: 14px;
-            font-weight: 900;
-            cursor: pointer;
-            transition: 0.2s;
-            margin-top: auto;
-        }
-        .buy-btn:active { transform: scale(0.95); }
+        .stock-status { font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--primary); margin-bottom: 10px; }
+        .card-img { width: 100%; height: 180px; object-fit: contain; margin-bottom: 15px; }
+        .card-title { font-size: 15px; font-weight: 600; margin-bottom: 10px; height: 36px; overflow: hidden; }
+        .card-price { font-size: 24px; font-weight: 900; color: var(--text-main); margin-top: auto; }
+        .card-old-price { font-size: 14px; text-decoration: line-through; opacity: 0.5; }
 
-        /* FLYING ANIMATION - FIXED 2 SECONDS */
+        .add-to-cart {
+            background: var(--primary); color: white; border: none; width: 100%; padding: 14px;
+            border-radius: 15px; font-weight: 800; cursor: pointer; margin-top: 15px; transition: 0.3s;
+        }
+        .add-to-cart:hover { background: var(--primary-dark); }
+
+        /* FLYING ITEM (2 SECONDS) */
         .flyer {
-            position: fixed;
-            z-index: 9999;
-            pointer-events: none;
-            width: 100px;
-            height: 100px;
-            object-fit: contain;
-            transition: all 2s cubic-bezier(0.42, 0, 0.58, 1);
+            position: fixed; z-index: 9999; pointer-events: none;
+            width: 80px; height: 80px; object-fit: contain; border-radius: 50%;
+            background: white; border: 2px solid var(--primary);
+            transition: all 2.0s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
-        /* MODAL DETAIL */
+        /* MODAL */
         .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(10px);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 3000;
+            position: fixed; inset: 0; background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; z-index: 9000;
         }
         .modal-overlay.active { display: flex; }
-        .modal-content {
-            background: var(--white);
-            width: 90%;
-            max-width: 600px;
-            border-radius: 30px;
-            padding: 40px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            position: relative;
+        .modal-body {
+            background: var(--card-white); width: 90%; max-width: 900px; height: 600px;
+            border-radius: 40px; display: flex; overflow: hidden; position: relative;
         }
-        .close-modal { position: absolute; top: 20px; right: 20px; cursor: pointer; font-size: 24px; }
+        .modal-left { width: 50%; background: #f9f9f9; display: flex; align-items: center; justify-content: center; }
+        .modal-right { width: 50%; padding: 40px; overflow-y: auto; }
 
         /* FOOTER */
-        footer {
-            background: var(--white);
-            padding: 60px 5%;
-            margin-top: 40px;
-            border-top: 1px solid #eee;
-        }
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-        }
-        .footer-col h4 { margin-bottom: 20px; font-size: 18px; }
-        .footer-col p { opacity: 0.6; font-size: 14px; line-height: 1.8; }
+        footer { background: var(--card-white); padding: 60px 5%; margin-top: 50px; border-top: 1px solid #eee; }
+        .footer-cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
+        .f-col h5 { font-size: 18px; margin-bottom: 20px; }
+        .f-col ul { list-style: none; padding: 0; opacity: 0.7; font-size: 14px; line-height: 2.5; }
 
-        @media (max-width: 768px) {
-            .modal-content { grid-template-columns: 1fr; }
-            .search-container { display: none; }
-        }
+        @media (max-width: 1024px) { aside { display: none; } .footer-cols { grid-template-columns: 1fr 1fr; } }
     </style>
 </head>
 <body>
 
 <header>
-    <a href="#" class="logo">
-        <span class="blue">СОНЕ</span><span class="yellow">ЧКО</span>
-    </a>
+    <a href="#" class="logo"><span class="b">СОНЕ</span><span class="y">ЧКО</span></a>
     
-    <button class="catalog-btn">
-        <div style="display:inline-block; width:18px; height:2px; background:white; position:relative; box-shadow: 0 6px 0 white, 0 -6px 0 white;"></div>
-        Каталог
-    </button>
-
     <div class="search-container">
-        <input type="text" placeholder="Я шукаю..." id="searchInput" oninput="liveSearch()">
+        <input type="text" placeholder="Шукати серед 10,000 товарів..." id="mainSearch">
     </div>
 
-    <div class="user-nav">
-        <button class="nav-item">👤<span>Вхід</span></button>
-        <button class="nav-item">⚖️<span>Порівняти</span></button>
-        <button class="nav-item" onclick="toggleCartPanel()">
-            🛒<span id="cartCount" class="badge">0</span>
-            <span>Кошик</span>
-        </button>
+    <div class="nav-actions">
+        <button class="nav-icon" onclick="toggleTheme()">🌗</button>
+        <button class="nav-icon">👤</button>
+        <button class="nav-icon">❤️<span class="badge">0</span></button>
+        <button class="nav-icon" id="cartTrigger">🛒<span class="badge" id="cartCount">0</span></button>
     </div>
 </header>
 
-<div class="cat-nav">
-    <div class="cat-item active" onclick="setFilter('all', this)">Всі товари</div>
-    <div class="cat-item" onclick="setFilter('baby', this)">Для малюків</div>
-    <div class="cat-item" onclick="setFilter('cleaning', this)">Побутова хімія</div>
-    <div class="cat-item" onclick="setFilter('pets', this)">Зоотовари</div>
-    <div class="cat-item" onclick="setFilter('food', this)">Харчування</div>
-</div>
+<div class="container">
+    <aside>
+        <div class="filter-block">
+            <h4>Категорії</h4>
+            <div class="filter-group">
+                <label class="checkbox-item"><input type="checkbox" checked> Все підряд</label>
+                <label class="checkbox-item"><input type="checkbox"> Дитяче харчування</label>
+                <label class="checkbox-item"><input type="checkbox"> Побутова хімія</label>
+                <label class="checkbox-item"><input type="checkbox"> Товари для котів</label>
+            </div>
+        </div>
+        <div class="filter-block">
+            <h4>Ціна, грн</h4>
+            <input type="range" style="width: 100%; accent-color: var(--primary);">
+            <div style="display:flex; justify-content: space-between; font-size: 12px; margin-top:10px;">
+                <span>0 грн</span><span>50,000 грн</span>
+            </div>
+        </div>
+    </aside>
 
-<div class="main-container">
-    <h2 id="catTitle">Всі пропозиції</h2>
-    <div class="grid" id="productGrid"></div>
+    <main>
+        <div class="promo-banner">
+            <div>
+                <h2>ЗНИЖКИ ДО -50%</h2>
+                <p>Тільки цього тижня на всі товари бренду Dada!</p>
+            </div>
+        </div>
+
+        <div class="grid" id="productGrid">
+            </div>
+    </main>
 </div>
 
 <footer>
-    <div class="footer-grid">
-        <div class="footer-col">
-            <h4>Про компанію</h4>
-            <p>Мережа маркетів "Сонечко" — ми дбаємо про ваш комфорт з 2024 року. Доставка по всій Україні за 1 день.</p>
-        </div>
-        <div class="footer-col">
-            <h4>Контакти</h4>
-            <p>Гаряча лінія:<br><strong>+38 (068) 490 00 68</strong></p>
-            <p>Email: support@sonechko.ua</p>
-        </div>
-        <div class="footer-col">
-            <h4>Допомога</h4>
-            <p>Оплата і доставка<br>Повернення товару<br>Гарантія</p>
-        </div>
+    <div class="footer-cols">
+        <div class="f-col"><h5>Покупцям</h5><ul><li>Доставка</li><li>Оплата</li><li>Кредит</li></ul></div>
+        <div class="f-col"><h5>Компанія</h5><ul><li>Про нас</li><li>Контакти</li><li>Вакансії</li></ul></div>
+        <div class="f-col"><h5>Сервіс</h5><ul><li>Бонуси</li><li>Повернення</li><li>Гарантія</li></ul></div>
+        <div class="f-col"><h5>Контакти</h5><p><strong>+38 (068) 490 00 68</strong></p></div>
     </div>
 </footer>
 
-<div class="modal-overlay" id="detailModal">
-    <div class="modal-content">
-        <span class="close-modal" onclick="closeModal()">×</span>
-        <div class="img-box">
-            <img id="mImg" src="">
-        </div>
-        <div>
-            <h2 id="mName"></h2>
-            <p id="mDesc"></p>
-            <div class="product-price" id="mPrice"></div>
-            <button class="buy-btn" style="width:100%" id="mBuyBtn">Додати у кошик</button>
+<div class="modal-overlay" id="productModal">
+    <div class="modal-body">
+        <div class="modal-left"><img id="m-img" style="max-width: 80%;"></div>
+        <div class="modal-right">
+            <h1 id="m-title">Назва товару</h1>
+            <p id="m-desc">Детальний опис товару...</p>
+            <div class="card-price" id="m-price" style="font-size: 42px;">0 грн</div>
+            <button class="add-to-cart" id="m-buy-btn" style="padding: 20px; font-size: 18px;">КУПИТИ ЗАРАЗ</button>
+            <p onclick="closeModal()" style="cursor:pointer; margin-top:30px; text-align:center; opacity:0.5;">Закрити вікно</p>
         </div>
     </div>
 </div>
 
 <script>
-    const products = [
-        { id: 1, cat: 'baby', stock: 15, price: 250, name: "Dada Extra Soft 6 (15-25 кг)", img: "https://i.ibb.co/vyDyh7g/image.jpg", desc: "Підгузки Dada Extra Soft забезпечують надійний захист та сухість шкіри малюка." },
-        { id: 2, cat: 'cleaning', stock: 8, price: 340, name: "Ariel Pods All-in-1 Color", img: "https://i.ibb.co/L64M6S9/ariel.jpg", desc: "Інноваційні капсули для прання кольорових речей." },
-        { id: 3, cat: 'pets', stock: 120, price: 18, name: "Felix з куркою у желе", img: "https://i.ibb.co/0Yf9mXm/felix.jpg", desc: "Повнораціонний вологий корм для дорослих котів." },
-        { id: 4, cat: 'food', stock: 45, price: 120, name: "Дитяче пюре Gerber", img: "https://i.ibb.co/L64M6S9/ariel.jpg", desc: "Натуральне пюре без цукру та крохмалю." },
-        { id: 5, cat: 'baby', stock: 10, price: 580, name: "Набір Dada Gold", img: "https://i.ibb.co/vyDyh7g/image.jpg", desc: "Преміум серія підгузків для найчутливішої шкіри." }
+    /* ЦЕ ВЕЛИКИЙ БЛОК ЛОГІКИ (JavaScript)
+       Тут реалізовано все: генерація, політ, кошик, модалки
+    */
+    
+    // БАЗА ДАНИХ (Можна розширювати до нескінченності)
+    const productDatabase = [
+        { id: 1, name: "Dada Extra Soft 6 XXL", price: 450, stock: 24, img: "https://i.ibb.co/vyDyh7g/image.jpg", desc: "Найкращі підгузки для вашої дитини." },
+        { id: 2, name: "Ariel Pods Color 70 шт", price: 890, stock: 12, img: "https://i.ibb.co/L64M6S9/ariel.jpg", desc: "Капсули для прання професійного рівня." },
+        { id: 3, name: "Корм Felix 24x85г", price: 380, stock: 50, img: "https://i.ibb.co/0Yf9mXm/felix.jpg", desc: "Збалансоване харчування для котів." }
     ];
 
-    let cartCount = 0;
-    let currentFilter = 'all';
+    // ГЕНЕРАТОР ТОВАРІВ (Щоб сайт здавався величезним)
+    // Ми клонуємо базу кілька разів, щоб отримати багато карток
+    const bigData = [];
+    for(let i=0; i<30; i++) {
+        productDatabase.forEach(p => bigData.push({...p, id: Math.random() + i}));
+    }
+
+    let cartTotal = 0;
 
     function renderGrid() {
         const grid = document.getElementById('productGrid');
-        const search = document.getElementById('searchInput').value.toLowerCase();
-        
-        const filtered = products.filter(p => {
-            const matchesCat = currentFilter === 'all' || p.cat === currentFilter;
-            const matchesSearch = p.name.toLowerCase().includes(search);
-            return matchesCat && matchesSearch;
-        });
-
-        grid.innerHTML = filtered.map(p => `
-            <div class="product-card" onclick="openProduct(${p.id})">
-                <div class="stock-info">В наявності: ${p.stock} шт</div>
-                <div class="img-box">
-                    <img src="${p.img}" id="prod-img-${p.id}">
-                </div>
-                <div class="product-name">${p.name}</div>
-                <div class="product-price">${p.price} грн</div>
-                <button class="buy-btn" onclick="event.stopPropagation(); addToCart(${p.id})">У кошик</button>
+        grid.innerHTML = bigData.map(p => `
+            <div class="card" onclick="openProduct('${p.name}', ${p.price}, '${p.img}', '${p.desc}')">
+                <div class="stock-status">В наявності: ${p.stock} шт</div>
+                <img src="${p.img}" class="card-img" id="img-${p.id}">
+                <div class="card-title">${p.name}</div>
+                <div class="card-old-price">${p.price + 100} грн</div>
+                <div class="card-price">${p.price} грн</div>
+                <button class="add-to-cart" onclick="event.stopPropagation(); buyAction(${p.id})">У кошик</button>
             </div>
         `).join('');
     }
 
-    function openProduct(id) {
-        const p = products.find(x => x.id === id);
-        document.getElementById('mImg').src = p.img;
-        document.getElementById('mName').innerText = p.name;
-        document.getElementById('mDesc').innerText = p.desc;
-        document.getElementById('mPrice').innerText = p.price + " грн";
-        document.getElementById('mBuyBtn').onclick = () => { addToCart(id); closeModal(); };
-        document.getElementById('detailModal').classList.add('active');
-    }
-
-    function closeModal() { document.getElementById('detailModal').classList.remove('active'); }
-
-    function addToCart(id) {
-        const p = products.find(x => x.id === id);
-        if(p.stock <= 0) return alert("Немає в наявності!");
-
-        // ANIMATION (2 SECONDS)
-        const img = document.getElementById(`prod-img-${id}`);
-        const cartIcon = document.getElementById('cartCount');
+    function buyAction(id) {
+        const img = document.getElementById(`img-${id}`);
+        const cartIcon = document.getElementById('cartTrigger');
         const rect = img.getBoundingClientRect();
         const cartRect = cartIcon.getBoundingClientRect();
 
         const flyer = img.cloneNode();
-        flyer.classList.add('flyer');
+        flyer.className = 'flyer';
         flyer.style.left = rect.left + 'px';
         flyer.style.top = rect.top + 'px';
         document.body.appendChild(flyer);
 
+        // ПОЛІТ 2 СЕКУНДИ
         setTimeout(() => {
             flyer.style.left = cartRect.left + 'px';
             flyer.style.top = cartRect.top + 'px';
-            flyer.style.width = '20px';
-            flyer.style.height = '20px';
+            flyer.style.transform = 'scale(0.1) rotate(720deg)';
             flyer.style.opacity = '0';
-            flyer.style.transform = 'rotate(720deg)';
         }, 50);
 
-        setTimeout(() => flyer.remove(), 2000);
-
-        p.stock--;
-        cartCount++;
-        document.getElementById('cartCount').innerText = cartCount;
-        renderGrid();
+        setTimeout(() => {
+            flyer.remove();
+            cartTotal++;
+            document.getElementById('cartCount').innerText = cartTotal;
+        }, 2000);
     }
 
-    function setFilter(cat, el) {
-        document.querySelectorAll('.cat-item').forEach(i => i.classList.remove('active'));
-        el.classList.add('active');
-        currentFilter = cat;
-        renderGrid();
+    function openProduct(name, price, img, desc) {
+        document.getElementById('m-title').innerText = name;
+        document.getElementById('m-price').innerText = price + " грн";
+        document.getElementById('m-img').src = img;
+        document.getElementById('m-desc').innerText = desc;
+        document.getElementById('productModal').classList.add('active');
     }
 
-    function liveSearch() { renderGrid(); }
+    function closeModal() { document.getElementById('productModal').classList.remove('active'); }
+    function toggleTheme() { document.body.classList.toggle('dark-mode'); }
 
+    // ЗАПУСК
     renderGrid();
+
 </script>
 </body>
 </html>
